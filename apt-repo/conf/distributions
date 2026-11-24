@@ -5,4 +5,4 @@ Codename: dde25
 Architectures: amd64
 Components: main
 Description: Deepin Desktop Environment rebuilt for Debian 13 trixie
-Sign-With: DDE Repository Signing Key
+SignWith: 63DF1C4609EA94E0
