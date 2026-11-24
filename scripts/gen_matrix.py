@@ -56,7 +56,9 @@ def main():
             fh.write(json.dumps({"include": entries}, ensure_ascii=False))
             fh.write("\n__MATRIX_DELIM__\n")
             fh.write(f"count_{layer}={len(entries)}\n")
-            print(f"{layer}: {len(entries)} enabled package(s)")
+            # Diagnostics MUST go to stderr: stdout is redirected into
+            # $GITHUB_OUTPUT, which only accepts key=value / heredoc lines.
+            print(f"{layer}: {len(entries)} enabled package(s)", file=sys.stderr)
 
 
 if __name__ == "__main__":
