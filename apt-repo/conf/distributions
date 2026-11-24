@@ -1,0 +1,8 @@
+Origin: dde-debian
+Label: DDE for Debian
+Suite: trixie
+Codename: dde25
+Architectures: amd64
+Components: main
+Description: Deepin Desktop Environment rebuilt for Debian 13 trixie
+Sign-With: DDE Repository Signing Key

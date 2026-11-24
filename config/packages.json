@@ -1,0 +1,157 @@
+{
+  "_comment": "DDE for Debian 包清单。enabled=true 才会被构建。repo 为 github.com 下的 owner/name，ref 为分支或 tag。source=git 表示从 GitHub 拉源码；source=apt 表示从 apt 源 apt source（用于 L0 私有依赖）。",
+  "suite": "trixie",
+  "codename": "dde25",
+  "layers": {
+    "L0": [
+      {
+        "name": "qt6-wayland",
+        "repo": "linuxdeepin/qt6-wayland",
+        "ref": "dev",
+        "source": "git",
+        "enabled": false,
+        "_note": "必须是 deepin 补丁版（含 QtKeyExtensionGlobal），Debian 官方 qt6-wayland 不行"
+      },
+      {
+        "name": "treeland-protocols",
+        "repo": "linuxdeepin/treeland-protocols",
+        "ref": "master",
+        "source": "git",
+        "enabled": false,
+        "_note": "treeland 私有 Wayland 协议 XML"
+      },
+      {
+        "name": "waylib",
+        "repo": "linuxdeepin/waylib",
+        "ref": "master",
+        "source": "git",
+        "enabled": false,
+        "_note": "treeland 依赖，基于 wlroots + QtQuick；可能需 submodules"
+      },
+      {
+        "name": "qwlroots",
+        "repo": "linuxdeepin/qwlroots",
+        "ref": "master",
+        "source": "git",
+        "enabled": false,
+        "_note": "wlroots 的 Qt 绑定，waylib 依赖"
+      }
+    ],
+    "L1": [
+      {
+        "name": "dtkcommon",
+        "repo": "linuxdeepin/dtkcommon",
+        "ref": "master",
+        "source": "git",
+        "enabled": true,
+        "_note": "SMOKE TEST 用：DTK 基础库，依赖少，先跑通链路"
+      },
+      {
+        "name": "dtkcore",
+        "repo": "linuxdeepin/dtkcore",
+        "ref": "master",
+        "source": "git",
+        "enabled": false,
+        "_note": "含 DConfig 机制；Debian sid 已有，可先复用再决定是否自建"
+      },
+      {
+        "name": "dtkgui",
+        "repo": "linuxdeepin/dtkgui",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      },
+      {
+        "name": "dtkwidget",
+        "repo": "linuxdeepin/dtkwidget",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      },
+      {
+        "name": "dtkdeclarative",
+        "repo": "linuxdeepin/dtkdeclarative",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      }
+    ],
+    "L2": [
+      {
+        "name": "ddm",
+        "repo": "linuxdeepin/ddm",
+        "ref": "master",
+        "source": "git",
+        "enabled": false,
+        "_note": "deepin Qt 重写版 ddm"
+      },
+      {
+        "name": "treeland",
+        "repo": "linuxdeepin/treeland",
+        "ref": "master",
+        "source": "git",
+        "enabled": false,
+        "_note": "需要 WITH_SUBMODULE_WAYLIB=ON 或系统 waylib"
+      },
+      {
+        "name": "dde-application-manager",
+        "repo": "linuxdeepin/dde-application-manager",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      },
+      {
+        "name": "dde-tray-loader",
+        "repo": "linuxdeepin/dde-tray-loader",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      },
+      {
+        "name": "dde-daemon",
+        "repo": "linuxdeepin/dde-daemon",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      }
+    ],
+    "L3": [
+      {
+        "name": "dde-shell",
+        "repo": "linuxdeepin/dde-shell",
+        "ref": "master",
+        "source": "git",
+        "enabled": false,
+        "_note": "上游自带 debian/ 目录；需注意 USE_DEEPIN_QT 探测"
+      },
+      {
+        "name": "dde-control-center",
+        "repo": "linuxdeepin/dde-control-center",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      },
+      {
+        "name": "dde-file-manager",
+        "repo": "linuxdeepin/dde-file-manager",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      },
+      {
+        "name": "dde-launchpad",
+        "repo": "linuxdeepin/dde-launchpad",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      },
+      {
+        "name": "dde-session-shell",
+        "repo": "linuxdeepin/dde-session-shell",
+        "ref": "master",
+        "source": "git",
+        "enabled": false
+      }
+    ]
+  }
+}

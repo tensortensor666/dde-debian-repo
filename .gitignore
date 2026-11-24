@@ -1,0 +1,21 @@
+# build artifacts
+artifacts/
+all-debs/
+upstream-debs/
+*.deb
+*.dsc
+*.tar.*
+Packages
+Packages.gz
+Release
+Release.gpg
+InRelease
+
+# generated repo output (only apt-repo/conf/ is tracked)
+repo-out/
+
+# local scratch
+src/
+.tmp/
+__pycache__/
+*.pyc

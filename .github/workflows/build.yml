@@ -1,0 +1,106 @@
+name: Build DDE for Debian
+
+# Four layers build in order. Each layer's .deb files are passed to the next
+# layer as a local apt source via workflow artifacts.
+# Only packages with "enabled": true in config/packages.json are built.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 18 * * *"   # daily rebuild, catches upstream drift
+  push:
+    branches: [main]
+    paths:
+      - config/packages.json
+      - scripts/**
+      - .github/workflows/**
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      L0: ${{ steps.matrix.outputs.L0 }}
+      L1: ${{ steps.matrix.outputs.L1 }}
+      L2: ${{ steps.matrix.outputs.L2 }}
+      L3: ${{ steps.matrix.outputs.L3 }}
+      count_L0: ${{ steps.matrix.outputs.count_L0 }}
+      count_L1: ${{ steps.matrix.outputs.count_L1 }}
+      count_L2: ${{ steps.matrix.outputs.count_L2 }}
+      count_L3: ${{ steps.matrix.outputs.count_L3 }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate matrix and counts
+        id: matrix
+        run: python3 scripts/gen_matrix.py >> "$GITHUB_OUTPUT"
+
+  L0:
+    needs: prepare
+    if: ${{ needs.prepare.outputs.count_L0 != '0' }}
+    uses: ./.github/workflows/build-layer.yml
+    with:
+      layer: L0
+      matrix: ${{ needs.prepare.outputs.L0 }}
+
+  L1:
+    needs: [prepare, L0]
+    if: ${{ always() && needs.prepare.outputs.count_L1 != '0' }}
+    uses: ./.github/workflows/build-layer.yml
+    with:
+      layer: L1
+      matrix: ${{ needs.prepare.outputs.L1 }}
+
+  L2:
+    needs: [prepare, L0, L1]
+    if: ${{ always() && needs.prepare.outputs.count_L2 != '0' }}
+    uses: ./.github/workflows/build-layer.yml
+    with:
+      layer: L2
+      matrix: ${{ needs.prepare.outputs.L2 }}
+
+  L3:
+    needs: [prepare, L0, L1, L2]
+    if: ${{ always() && needs.prepare.outputs.count_L3 != '0' }}
+    uses: ./.github/workflows/build-layer.yml
+    with:
+      layer: L3
+      matrix: ${{ needs.prepare.outputs.L3 }}
+
+  publish:
+    needs: [prepare, L0, L1, L2, L3]
+    if: ${{ always() && needs.prepare.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download all layer debs
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          pattern: debs-*
+          path: all-debs
+          merge-multiple: true
+      - name: Install repo tooling
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends reprepro gnupg
+      - name: Import signing key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        run: |
+          set -eux
+          test -n "$GPG_PRIVATE_KEY" || { echo "secret GPG_PRIVATE_KEY is missing"; exit 1; }
+          printf '%s\n' "$GPG_PRIVATE_KEY" | gpg --batch --import
+      - name: Build apt repository
+        run: bash scripts/publish-repo.sh all-debs repo-out
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: repo-out
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,90 @@
+name: Build one layer
+
+# Reusable workflow: builds every enabled package in one layer.
+# Upstream layers' .deb files are downloaded as artifacts and exposed as a
+# local apt source, so build-deps can resolve against packages we just built.
+
+on:
+  workflow_call:
+    inputs:
+      layer:
+        description: "Layer name, e.g. L0"
+        required: true
+        type: string
+      matrix:
+        description: 'JSON string from gen_matrix.py, e.g. {"include":[...]}'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:trixie
+      options: --init
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(inputs.matrix) }}
+    steps:
+      - name: Bootstrap apt in container
+        run: |
+          set -eux
+          rm -f /etc/apt/sources.list.d/debian.sources
+          cat > /etc/apt/sources.list <<'EOF'
+          deb http://deb.debian.org/debian trixie main
+          deb http://deb.debian.org/debian trixie-updates main
+          deb http://deb.debian.org/debian-security trixie-security main
+          EOF
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            ca-certificates git curl build-essential fakeroot \
+            devscripts equivs dpkg-dev
+
+      - name: Checkout packaging repo
+        uses: actions/checkout@v4
+
+      - name: Download upstream layer debs
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          pattern: debs-*
+          path: upstream-debs
+          merge-multiple: true
+
+      - name: Set up local apt source
+        run: bash scripts/setup-local-repo.sh "$PWD/upstream-debs"
+
+      - name: Fetch upstream source
+        run: |
+          set -eux
+          bash scripts/fetch-source.sh \
+            "${{ matrix.repo }}" "${{ matrix.ref }}" "${{ matrix.source }}" src
+
+      - name: Install build dependencies
+        run: |
+          set -eux
+          cd src
+          mk-build-deps -i -r -t 'apt-get -y --no-install-recommends' debian/control
+
+      - name: Build binary package
+        run: |
+          set -eux
+          cd src
+          dpkg-buildpackage -us -uc -b
+          mkdir -p ../artifacts
+          cp ../*.deb ../artifacts/ 2>/dev/null || true
+
+      - name: Verify package metadata
+        run: bash scripts/verify-debs.sh artifacts
+
+      - name: Upload layer debs
+        uses: actions/upload-artifact@v4
+        with:
+          name: debs-${{ inputs.layer }}-${{ matrix.name }}
+          path: artifacts/*.deb
+          if-no-files-found: error
+          retention-days: 7

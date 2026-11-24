@@ -1,0 +1,12 @@
+# Shell scripts and CI configs must keep LF endings — CRLF breaks shebangs
+# and yaml parsing inside the Linux build container.
+*.sh    text eol=lf
+*.py    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+.gitattributes text eol=lf
+.gitignore     text eol=lf
+# reprepro configs have no extension
+apt-repo/conf/* text eol=lf
