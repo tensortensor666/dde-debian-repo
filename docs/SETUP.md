@@ -49,7 +49,7 @@ Settings → Pages → Build and deployment：
 ## 6. 客户端安装
 
 ```bash
-curl -fsSL https://chenchongbiao.github.io/dde-debian-repo/install.sh | sudo bash
+curl -fsSL https://tensortensor666.github.io/dde-debian-repo/install.sh | sudo bash
 sudo apt install deepin-desktop-environment-base \
                  deepin-desktop-environment-core \
                  deepin-desktop-environment-extras

@@ -8,7 +8,7 @@ if [[ "${EUID}" -ne 0 ]]; then
   exit 1
 fi
 
-BASE_URL="${REPO_URL:-https://chenchongbiao.github.io/dde-debian-repo}"
+BASE_URL="${REPO_URL:-https://tensortensor666.github.io/dde-debian-repo}"
 CODENAME="${CODENAME:-dde25}"
 
 echo "[1/4] Install keyring"
