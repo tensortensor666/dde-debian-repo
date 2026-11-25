@@ -1,12 +1,12 @@
 # DDE for Debian — GitHub Actions 构建骨架
 
 把 Deepin Desktop Environment (DDE25) 编译成 Debian 包，通过自建 APT 仓库发行。
-目标基线：Debian 13 (trixie) / x86_64。
+目标基线：Debian forky（14，testing） / x86_64。
 
 ## 状态
 
 **骨架阶段**：CI 链路已定义，默认只启用了一个 smoke test 包（`dtkcommon`），
-用来验证"拉源码 → trixie 容器打包 → 生成仓库 → 部署 Pages"整条链路。
+用来验证"拉源码 → forky 容器打包 → 生成仓库 → 部署 Pages"整条链路。
 L0/L2/L3 的包都还在清单里但 `enabled: false`，跑通后再逐个打开。
 
 ## 目录结构

@@ -11,7 +11,7 @@ set -euo pipefail
 DEBS_DIR="${1:?debs dir required}"
 OUT_DIR="${2:?out dir required}"
 PREV_DIR="${3:-}"
-CODENAME="${CODENAME:-dde25}"
+CODENAME="${CODENAME:-dde26}"
 
 mkdir -p "$OUT_DIR/conf" "$OUT_DIR/pool"
 
@@ -22,13 +22,28 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cp "$REPO_ROOT/apt-repo/conf/distributions" "$OUT_DIR/conf/distributions"
 cp "$REPO_ROOT/apt-repo/conf/options" "$OUT_DIR/conf/options"
 
-# Import the previously published state, if any, before adding new debs.
-if [[ -n "$PREV_DIR" && -d "$PREV_DIR/db" ]]; then
-  echo "publish-repo: importing previous repo state from $PREV_DIR"
+# Keep the reprepro stanza in sync with the suite/codename the pipeline uses
+# (config/packages.json is the source of truth; see gen_matrix.py).
+if [[ -n "${SUITE:-}" ]]; then
+  sed -i "s/^Suite: .*/Suite: ${SUITE}/" "$OUT_DIR/conf/distributions"
+fi
+sed -i "s/^Codename: .*/Codename: ${CODENAME}/" "$OUT_DIR/conf/distributions"
+
+# Import the previously published state, but only when it was built for the
+# same codename. After a base-distro switch the old binaries are ABI-mismatched
+# (different glibc/Qt), so they must not be carried over.
+PREV_CODENAME=""
+if [[ -n "$PREV_DIR" && -f "$PREV_DIR/conf/distributions" ]]; then
+  PREV_CODENAME="$(awk '/^Codename:/{print $2; exit}' "$PREV_DIR/conf/distributions")"
+fi
+if [[ -n "$PREV_DIR" && -d "$PREV_DIR/db" && "$PREV_CODENAME" == "$CODENAME" ]]; then
+  echo "publish-repo: importing previous repo state from $PREV_DIR (codename $CODENAME)"
   cp -a "$PREV_DIR/db/." "$OUT_DIR/db/"
   if [[ -d "$PREV_DIR/pool" ]]; then
     cp -a "$PREV_DIR/pool/." "$OUT_DIR/pool/"
   fi
+elif [[ -n "$PREV_DIR" && -d "$PREV_DIR/db" ]]; then
+  echo "publish-repo: previous repo is codename '${PREV_CODENAME:-unknown}', not '$CODENAME' — starting fresh"
 else
   echo "publish-repo: no previous state, starting a fresh repository"
 fi

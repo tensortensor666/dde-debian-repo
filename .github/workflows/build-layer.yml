@@ -15,6 +15,10 @@ on:
         description: 'JSON string from gen_matrix.py, e.g. {"include":[...]}'
         required: true
         type: string
+      suite:
+        description: "Debian suite to build against (from config/packages.json)"
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -23,7 +27,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: debian:trixie
+      image: debian:forky
       options: --init
     timeout-minutes: 360
     # This repo targets Qt6 only. deepin's debian/control gates the Qt5 halves
@@ -39,10 +43,9 @@ jobs:
         run: |
           set -eux
           rm -f /etc/apt/sources.list.d/debian.sources
-          cat > /etc/apt/sources.list <<'EOF'
-          deb http://deb.debian.org/debian trixie main
-          deb http://deb.debian.org/debian trixie-updates main
-          deb http://deb.debian.org/debian-security trixie-security main
+          cat > /etc/apt/sources.list <<EOF
+          deb http://deb.debian.org/debian ${{ inputs.suite }} main
+          deb http://deb.debian.org/debian ${{ inputs.suite }}-updates main
           EOF
           apt-get update
           apt-get install -y --no-install-recommends \

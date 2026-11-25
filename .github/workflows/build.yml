@@ -34,6 +34,8 @@ jobs:
       count_L3: ${{ steps.matrix.outputs.count_L3 }}
       count_L4: ${{ steps.matrix.outputs.count_L4 }}
       count_L5: ${{ steps.matrix.outputs.count_L5 }}
+      suite: ${{ steps.matrix.outputs.suite }}
+      codename: ${{ steps.matrix.outputs.codename }}
     steps:
       - uses: actions/checkout@v4
       - name: Generate matrix and counts
@@ -47,6 +49,7 @@ jobs:
     with:
       layer: L0
       matrix: ${{ needs.prepare.outputs.L0 }}
+      suite: ${{ needs.prepare.outputs.suite }}
 
   L1:
     needs: [prepare, L0]
@@ -55,6 +58,7 @@ jobs:
     with:
       layer: L1
       matrix: ${{ needs.prepare.outputs.L1 }}
+      suite: ${{ needs.prepare.outputs.suite }}
 
   L2:
     needs: [prepare, L0, L1]
@@ -63,6 +67,7 @@ jobs:
     with:
       layer: L2
       matrix: ${{ needs.prepare.outputs.L2 }}
+      suite: ${{ needs.prepare.outputs.suite }}
 
   L3:
     needs: [prepare, L0, L1, L2]
@@ -71,6 +76,7 @@ jobs:
     with:
       layer: L3
       matrix: ${{ needs.prepare.outputs.L3 }}
+      suite: ${{ needs.prepare.outputs.suite }}
 
   L4:
     needs: [prepare, L0, L1, L2, L3]
@@ -79,6 +85,7 @@ jobs:
     with:
       layer: L4
       matrix: ${{ needs.prepare.outputs.L4 }}
+      suite: ${{ needs.prepare.outputs.suite }}
 
   L5:
     needs: [prepare, L0, L1, L2, L3, L4]
@@ -87,6 +94,7 @@ jobs:
     with:
       layer: L5
       matrix: ${{ needs.prepare.outputs.L5 }}
+      suite: ${{ needs.prepare.outputs.suite }}
 
   publish:
     needs: [prepare, L0, L1, L2, L3, L4, L5]
@@ -125,6 +133,8 @@ jobs:
       - name: Build apt repository
         env:
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SUITE: ${{ needs.prepare.outputs.suite }}
+          CODENAME: ${{ needs.prepare.outputs.codename }}
         run: bash scripts/publish-repo.sh all-debs repo-out prev-repo
       - name: Deploy to gh-pages branch
         env:

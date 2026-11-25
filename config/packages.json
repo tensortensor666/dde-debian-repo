@@ -1,7 +1,7 @@
 {
-  "_comment": "DDE for Debian 包清单。enabled=true 才会被构建。repo 为 github.com 下的 owner/name，ref 为分支或 tag。source=git 表示从 GitHub 拉源码；source=apt 表示从 apt 源 apt source。depends 里的名字必须是本清单内的包；分层由 scripts/gen_matrix.py 按依赖自动计算，不需要手工填层号。",
-  "suite": "trixie",
-  "codename": "dde25",
+  "_comment": "DDE for Debian。目标是 Debian forky（14, testing）：trixie(13) 的 Qt 6.8.2 缺 Qt 6.9 私有 API、libwayland 只有 1.23、libdrm 2.4.124、libpixman 0.44、wayland-protocols 1.44，导致 qt6-wayland/dtkcore/dtkgui/dde-wlroots 均无法构建。enabled=true 才会被构建。repo 为 github.com 下的 owner/name，ref 为分支或 tag。source=git 表示从 GitHub 拉源码；source=apt 表示从 apt 源 apt source。depends 里的名字必须是本清单内的包；分层由 scripts/gen_matrix.py 按依赖自动计算。",
+  "suite": "forky",
+  "codename": "dde26",
   "packages": [
     {
       "name": "wlr-protocols",
@@ -37,14 +37,11 @@
       "source": "git",
       "enabled": true,
       "depends": [],
-      "patch_exclude": [
-        "qt6-wayland-add-multi-seat-event.patch"
-      ],
       "not_installed": [
         "usr/lib/*/qt6/sbom/*",
         "usr/lib/x86_64-linux-gnu/qt6/sbom/qtwayland-6.8.0.spdx"
       ],
-      "_note": "deepin 补丁版（含 QtKeyExtensionGlobal），Debian 官方 qt6-wayland 不行。trixie 的 qt6-base 6.8.2 满足 >=6.8。patch_exclude 原因：qt6-wayland-add-multi-seat-event.patch 调用了 Qt 6.9 才有的带 QInputDevice* 的 handleExtendedKeyEvent/handleMouseEvent/QKeyEvent 重载，6.8.2 的 libQt6Gui 没导出这些符号（编译过、链接挂）。摘掉该补丁后失去多 seat 支持，等换 Qt 6.9 或自建 qt6-base 再恢复。"
+      "_note": "deepin 补丁版（含 QtKeyExtensionGlobal），Debian 官方 qt6-wayland 不行。forky 的 qt6-base 6.11 已包含多 seat 补丁所需的 QInputDevice* 重载，无需摘补丁。not_installed 仍保留：Qt 安装的 sbom 文件无人认领会让 dh_missing 报错。"
     },
     {
       "name": "dtkcommon",
@@ -86,15 +83,7 @@
         "dtkcommon",
         "dtklog"
       ],
-      "_note": "含 DConfig 机制",
-      "source_fixes": [
-        {
-          "file": "src/dci/private/ddcifileengine_p.h",
-          "find": "    IteratorUniquePtr beginEntryList(const QString &path, QDir::Filters filters, const QStringList &filterNames) override;",
-          "replace": "    // Qt >= 6.8.2 removed this overload from QAbstractFileEngine: it is no\n    // longer virtual, so \"override\" is a hard error. Keep the definition\n    // (the 6.8 branch still compiles it) but do not mark it as overriding.\n    IteratorUniquePtr beginEntryList(const QString &path, QDir::Filters filters, const QStringList &filterNames);",
-          "count": 1
-        }
-      ]
+      "_note": "含 DConfig；Qt 6.11 走 >=6.9 分支（QDirListing::IteratorFlags），无需改 beginEntryList"
     },
     {
       "name": "waylib",
@@ -117,16 +106,7 @@
       "enabled": true,
       "depends": [
         "dtkcore"
-      ],
-      "source_fixes": [
-        {
-          "file": "debian/control",
-          "find": "wayland-protocols (>= 1.45)",
-          "replace": "wayland-protocols (>= 1.44)",
-          "count": 1
-        }
-      ],
-      "_note": "trixie 只有 wayland-protocols 1.44；上游要求 >=1.45 但实际用的协议 1.44 就有，放宽以免引入需 libwayland>=1.25 的新版 wayland-protocols"
+      ]
     },
     {
       "name": "dtkwidget",

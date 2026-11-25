@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Turn a directory of .deb files into an apt source available to following
-# build layers. Runs inside the debian:trixie build container as root.
+# build layers. Runs inside the debian:forky build container as root.
 set -euo pipefail
 
 DEBS_DIR="${1:-upstream-debs}"

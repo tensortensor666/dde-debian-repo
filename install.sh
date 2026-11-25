@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Client-side installer: add this repository to a Debian 13 system.
+# Client-side installer: add this repository to a Debian forky (14/testing) system.
 #   curl -fsSL https://<USER>.github.io/<REPO>/install.sh | sudo bash
 set -euo pipefail
 
@@ -9,7 +9,7 @@ if [[ "${EUID}" -ne 0 ]]; then
 fi
 
 BASE_URL="${REPO_URL:-https://tensortensor666.github.io/dde-debian-repo}"
-CODENAME="${CODENAME:-dde25}"
+CODENAME="${CODENAME:-dde26}"
 
 echo "[1/4] Install keyring"
 curl -fsSL "${BASE_URL}/dde-repo.key" \

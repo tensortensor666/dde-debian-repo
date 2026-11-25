@@ -82,6 +82,13 @@ def main():
         fail("GITHUB_OUTPUT is not set (run this inside Actions)")
 
     with open(out, "a", encoding="utf-8") as fh:
+        # Which Debian suite / repo codename the rest of the pipeline uses.
+        suite = cfg.get("suite")
+        codename = cfg.get("codename")
+        if not suite or not codename:
+            fail("'suite' and 'codename' are required at top level")
+        fh.write(f"suite={suite}\n")
+        fh.write(f"codename={codename}\n")
         for idx in range(MAX_LAYERS):
             layer = f"L{idx}"
             entries = []
