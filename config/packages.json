@@ -56,6 +56,15 @@
       "_note": "DTK 基础库，依赖少，是 DTK 链的根"
     },
     {
+      "name": "dtklog",
+      "repo": "linuxdeepin/dtklog",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [],
+      "_note": "产出 libdtk6log-dev 6.7.54。trixie 只有 0.0.2，而 dtkcore 要求 >>6.7.33"
+    },
+    {
       "name": "qwlroots",
       "repo": "vioken/qwlroots",
       "ref": "master",
@@ -74,7 +83,8 @@
       "source": "git",
       "enabled": true,
       "depends": [
-        "dtkcommon"
+        "dtkcommon",
+        "dtklog"
       ],
       "_note": "含 DConfig 机制"
     },

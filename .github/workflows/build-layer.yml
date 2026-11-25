@@ -26,6 +26,11 @@ jobs:
       image: debian:trixie
       options: --init
     timeout-minutes: 360
+    # This repo targets Qt6 only. deepin's debian/control gates the Qt5 halves
+    # behind <!nodtk5>, so activating that profile skips qtbase5 build-deps and
+    # the duplicate Qt5 binary packages.
+    env:
+      DEB_BUILD_PROFILES: nodtk5
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(inputs.matrix) }}
