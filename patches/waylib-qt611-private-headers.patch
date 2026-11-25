@@ -1,20 +1,24 @@
 --- a/src/server/CMakeLists.txt
 +++ b/src/server/CMakeLists.txt
-@@ -357,6 +357,19 @@
+@@ -357,6 +357,23 @@
          ${Qt6InputSupport_PRIVATE_INCLUDE_DIRS}
  )
  
-+# Qt 6.11 no longer exports the <Module>_PRIVATE_INCLUDE_DIRS variables the block
-+# above relies on. Pull the private include paths from the imported private
-+# targets when they exist (names differ across Qt versions), so the server can
-+# still find qpa/qplatformintegration.h and private/qpointingdevice_p.h.
-+foreach(_waylib_priv_target Qt6::GuiPrivate Qt6::QuickPrivate)
-+    if(TARGET ${_waylib_priv_target})
-+        get_target_property(_waylib_priv_incs ${_waylib_priv_target} INTERFACE_INCLUDE_DIRECTORIES)
-+        if(_waylib_priv_incs)
-+            target_include_directories(${TARGET} PRIVATE ${_waylib_priv_incs})
-+        endif()
-+    endif()
++# Qt 6.11 no longer exports the <Module>_PRIVATE_INCLUDE_DIRS variables used
++# above, and qt6-base-private-dev ships no *PrivateConfig.cmake either, so the
++# imported private targets do not exist. Derive the versioned private include
++# directories from Qt6::Gui's include root instead: adding a non-existent dir
++# is harmless, and nothing here is pinned to a Qt version.
++get_target_property(_waylib_qt_incs Qt6::Gui INTERFACE_INCLUDE_DIRECTORIES)
++foreach(_waylib_inc ${_waylib_qt_incs})
++    foreach(_waylib_mod QtGui QtQuick QtWaylandClient)
++        file(GLOB _waylib_priv "${_waylib_inc}/${_waylib_mod}/*/${_waylib_mod}")
++        foreach(_waylib_pd ${_waylib_priv})
++            if(IS_DIRECTORY "${_waylib_pd}")
++                target_include_directories(${TARGET} PRIVATE "${_waylib_pd}")
++            endif()
++        endforeach()
++    endforeach()
 +endforeach()
 +
  target_link_directories(${TARGET}
