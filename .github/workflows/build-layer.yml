@@ -74,7 +74,17 @@ jobs:
         run: |
           set -eux
           cd src
-          dpkg-buildpackage -us -uc -b
+          export DEB_BUILD_OPTIONS="nocheck parallel=$(nproc)"
+          set +e
+          dpkg-buildpackage -us -uc -b 2>&1 | tee /tmp/build.log
+          rc=${PIPESTATUS[0]}
+          set -e
+          if [[ $rc -ne 0 ]]; then
+            echo "::group::build failed — last 120 log lines"
+            tail -n 120 /tmp/build.log || true
+            echo "::endgroup::"
+            exit $rc
+          fi
           mkdir -p ../artifacts
           cp ../*.deb ../artifacts/ 2>/dev/null || true
 
