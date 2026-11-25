@@ -113,8 +113,11 @@ jobs:
           # Keep the full log; on failure dump the tail so the error is visible
           # in the Actions UI without downloading the log archive.
           if ! dpkg-buildpackage -us -uc -b > /tmp/build.log 2>&1; then
-            echo "::group::build failed — last 120 log lines"
-            tail -n 120 /tmp/build.log || true
+            echo "::group::build errors"
+            grep -niE "error|CMake Error|Could NOT find|No such file|not found|FAILED" /tmp/build.log | tail -n 80 || true
+            echo "::endgroup::"
+            echo "::group::last 30 log lines"
+            tail -n 30 /tmp/build.log || true
             echo "::endgroup::"
             exit 1
           fi
