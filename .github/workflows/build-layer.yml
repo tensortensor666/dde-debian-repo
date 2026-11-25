@@ -81,6 +81,14 @@ jobs:
           set -eux
           python3 scripts/add-not-installed.py src "${{ matrix.not_installed }}"
 
+      - name: Apply source fixes
+        if: matrix.source_fixes != '' && matrix.source_fixes != '[]'
+        env:
+          FIXES: ${{ matrix.source_fixes }}
+        run: |
+          set -eux
+          python3 scripts/apply-source-fixes.py src
+
       - name: Install build dependencies
         run: |
           set -eux

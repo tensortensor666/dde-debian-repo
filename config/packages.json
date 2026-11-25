@@ -86,7 +86,15 @@
         "dtkcommon",
         "dtklog"
       ],
-      "_note": "含 DConfig 机制"
+      "_note": "含 DConfig 机制",
+      "source_fixes": [
+        {
+          "file": "src/dci/private/ddcifileengine_p.h",
+          "find": "    IteratorUniquePtr beginEntryList(const QString &path, QDir::Filters filters, const QStringList &filterNames) override;",
+          "replace": "    // Qt >= 6.8.2 removed this overload from QAbstractFileEngine: it is no\n    // longer virtual, so \"override\" is a hard error. Keep the definition\n    // (the 6.8 branch still compiles it) but do not mark it as overriding.\n    IteratorUniquePtr beginEntryList(const QString &path, QDir::Filters filters, const QStringList &filterNames);",
+          "count": 1
+        }
+      ]
     },
     {
       "name": "waylib",

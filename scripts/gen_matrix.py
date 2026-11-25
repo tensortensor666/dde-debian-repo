@@ -101,6 +101,11 @@ def main():
                         # Paths to list in debian/not-installed so dh_missing
                         # does not abort on build artefacts no package ships.
                         "not_installed": ",".join(pkg.get("not_installed", [])),
+                        # Literal source substitutions, as a JSON string, applied
+                        # before the build (bridges distro/newer-Qt drift).
+                        "source_fixes": json.dumps(
+                            pkg.get("source_fixes", []), ensure_ascii=False
+                        ),
                     }
                 )
             fh.write(f"{layer}<<__MATRIX_DELIM__\n")
