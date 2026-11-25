@@ -1,0 +1,10 @@
+--- a/src/server/kernel/wserver.cpp
++++ b/src/server/kernel/wserver.cpp
+@@ -34,6 +34,8 @@
+ #include <qpa/qplatformintegrationfactory_p.h>
+ #include <qpa/qplatformtheme.h>
+ 
++#include <unistd.h>
++
+ QW_USE_NAMESPACE
+ WAYLIB_SERVER_BEGIN_NAMESPACE
