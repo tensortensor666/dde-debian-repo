@@ -71,20 +71,20 @@ jobs:
           mk-build-deps -i -r -t 'apt-get -y --no-install-recommends' debian/control
 
       - name: Build binary package
+        shell: bash
         run: |
           set -eux
           cd src
           export DEB_BUILD_OPTIONS="nocheck parallel=$(nproc)"
-          set +e
-          dpkg-buildpackage -us -uc -b 2>&1 | tee /tmp/build.log
-          rc=${PIPESTATUS[0]}
-          set -e
-          if [[ $rc -ne 0 ]]; then
+          # Keep the full log; on failure dump the tail so the error is visible
+          # in the Actions UI without downloading the log archive.
+          if ! dpkg-buildpackage -us -uc -b > /tmp/build.log 2>&1; then
             echo "::group::build failed — last 120 log lines"
             tail -n 120 /tmp/build.log || true
             echo "::endgroup::"
-            exit $rc
+            exit 1
           fi
+          tail -n 15 /tmp/build.log || true
           mkdir -p ../artifacts
           cp ../*.deb ../artifacts/ 2>/dev/null || true
 
