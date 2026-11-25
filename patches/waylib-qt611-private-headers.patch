@@ -1,6 +1,6 @@
 --- a/src/server/CMakeLists.txt
 +++ b/src/server/CMakeLists.txt
-@@ -357,6 +357,26 @@
+@@ -357,6 +357,27 @@
          ${Qt6InputSupport_PRIVATE_INCLUDE_DIRS}
  )
  
@@ -8,10 +8,11 @@
 +# above, and qt6-base-private-dev ships no *PrivateConfig.cmake either, so the
 +# imported private targets do not exist. Derive both the module include root
 +# and its module subdirectory from Qt6::Gui: private headers include siblings
-+# as <QtGui/private/...>, which requires the parent of the QtGui directory.
++# as <QtGui/private/...> and <QtCore/private/...>, which requires the parent
++# of each module directory.
 +get_target_property(_waylib_qt_incs Qt6::Gui INTERFACE_INCLUDE_DIRECTORIES)
 +foreach(_waylib_inc ${_waylib_qt_incs})
-+    foreach(_waylib_mod QtGui QtQuick QtWaylandClient)
++    foreach(_waylib_mod QtCore QtGui QtQuick QtWaylandClient)
 +        file(GLOB _waylib_versions "${_waylib_inc}/${_waylib_mod}/*")
 +        foreach(_waylib_version ${_waylib_versions})
 +            if(IS_DIRECTORY "${_waylib_version}")
