@@ -1,0 +1,17 @@
+--- a/src/server/CMakeLists.txt
++++ b/src/server/CMakeLists.txt
+@@ -357,6 +357,14 @@
+         ${Qt6InputSupport_PRIVATE_INCLUDE_DIRS}
+ )
+ 
++# Qt 6.11 stopped exporting the <Module>_PRIVATE_INCLUDE_DIRS variables these
++# paths relied on; take the private include dirs from the imported targets.
++target_link_libraries(${TARGET}
++    PRIVATE
++        Qt6::GuiPrivate
++        Qt6::QuickPrivate
++)
++
+ target_link_directories(${TARGET}
+     INTERFACE
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>

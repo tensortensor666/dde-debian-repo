@@ -102,9 +102,10 @@
         "wlroots",
         "wlr-protocols"
       ],
-      "_note": "treeland 依赖，基于 wlroots + QtQuick。examples/tinywl 在 forky 上链接 Waylib::WaylibServer 失败导致 CMake generate 中断 → 打包关闭 examples/tests",
+      "_note": "treeland 依赖，基于 wlroots + QtQuick。forky 适配：①关闭 examples/tests（tinywl 链接 Waylib::WaylibServer 失败）②Qt 6.11 不再导出 <Module>_PRIVATE_INCLUDE_DIRS → 改用 Qt6::GuiPrivate/QuickPrivate 目标",
       "source_patches": [
-        "patches/waylib-no-examples.patch"
+        "patches/waylib-no-examples.patch",
+        "patches/waylib-qt611-private-headers.patch"
       ]
     },
     {
