@@ -113,6 +113,9 @@ def main():
                         "source_fixes": json.dumps(
                             pkg.get("source_fixes", []), ensure_ascii=False
                         ),
+                        # In-repo patch files applied with patch -p1 (used when a
+                        # change involves tabs/newlines that JSON would mangle).
+                        "source_patches": ",".join(pkg.get("source_patches", [])),
                     }
                 )
             fh.write(f"{layer}<<__MATRIX_DELIM__\n")

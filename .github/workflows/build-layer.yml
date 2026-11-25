@@ -50,7 +50,7 @@ jobs:
           apt-get update
           apt-get install -y --no-install-recommends \
             ca-certificates git curl build-essential fakeroot \
-            devscripts equivs dpkg-dev
+            devscripts equivs dpkg-dev patch
 
       - name: Checkout packaging repo
         uses: actions/checkout@v4
@@ -91,6 +91,12 @@ jobs:
         run: |
           set -eux
           python3 scripts/apply-source-fixes.py src
+
+      - name: Apply in-repo patches
+        if: matrix.source_patches != ''
+        run: |
+          set -eux
+          python3 scripts/apply-source-patches.py src "${{ matrix.source_patches }}"
 
       - name: Install build dependencies
         run: |
