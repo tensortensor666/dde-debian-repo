@@ -64,6 +64,12 @@ jobs:
           bash scripts/fetch-source.sh \
             "${{ matrix.repo }}" "${{ matrix.ref }}" "${{ matrix.source }}" src
 
+      - name: Drop excluded patches
+        if: matrix.patches_exclude != ''
+        run: |
+          set -eux
+          python3 scripts/drop-patches.py src "${{ matrix.patches_exclude }}"
+
       - name: Install build dependencies
         run: |
           set -eux

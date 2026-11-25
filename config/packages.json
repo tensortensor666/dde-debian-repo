@@ -37,7 +37,8 @@
       "source": "git",
       "enabled": true,
       "depends": [],
-      "_note": "deepin 补丁版（含 QtKeyExtensionGlobal），Debian 官方 qt6-wayland 不行。trixie 的 qt6-base 6.8.2 满足 >=6.8 要求"
+      "patch_exclude": ["qt6-wayland-add-multi-seat-event.patch"],
+      "_note": "deepin 补丁版（含 QtKeyExtensionGlobal），Debian 官方 qt6-wayland 不行。trixie 的 qt6-base 6.8.2 满足 >=6.8。patch_exclude 原因：qt6-wayland-add-multi-seat-event.patch 调用了 Qt 6.9 才有的带 QInputDevice* 的 handleExtendedKeyEvent/handleMouseEvent/QKeyEvent 重载，6.8.2 的 libQt6Gui 没导出这些符号（编译过、链接挂）。摘掉该补丁后失去多 seat 支持，等换 Qt 6.9 或自建 qt6-base 再恢复。"
     },
     {
       "name": "dtkcommon",

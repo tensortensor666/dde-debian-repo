@@ -95,6 +95,9 @@ def main():
                         "ref": pkg["ref"],
                         "source": pkg.get("source", "git"),
                         "layer": layer,
+                        # Patches to drop from debian/patches/series at build
+                        # time (upstream patch needs a newer ABI than the distro).
+                        "patches_exclude": ",".join(pkg.get("patch_exclude", [])),
                     }
                 )
             fh.write(f"{layer}<<__MATRIX_DELIM__\n")
