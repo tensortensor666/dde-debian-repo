@@ -37,8 +37,13 @@
       "source": "git",
       "enabled": true,
       "depends": [],
-      "patch_exclude": ["qt6-wayland-add-multi-seat-event.patch"],
-      "not_installed": ["usr/lib/*/qt6/sbom/*", "usr/lib/x86_64-linux-gnu/qt6/sbom/qtwayland-6.8.0.spdx"],
+      "patch_exclude": [
+        "qt6-wayland-add-multi-seat-event.patch"
+      ],
+      "not_installed": [
+        "usr/lib/*/qt6/sbom/*",
+        "usr/lib/x86_64-linux-gnu/qt6/sbom/qtwayland-6.8.0.spdx"
+      ],
       "_note": "deepin 补丁版（含 QtKeyExtensionGlobal），Debian 官方 qt6-wayland 不行。trixie 的 qt6-base 6.8.2 满足 >=6.8。patch_exclude 原因：qt6-wayland-add-multi-seat-event.patch 调用了 Qt 6.9 才有的带 QInputDevice* 的 handleExtendedKeyEvent/handleMouseEvent/QKeyEvent 重载，6.8.2 的 libQt6Gui 没导出这些符号（编译过、链接挂）。摘掉该补丁后失去多 seat 支持，等换 Qt 6.9 或自建 qt6-base 再恢复。"
     },
     {
@@ -56,7 +61,10 @@
       "ref": "master",
       "source": "git",
       "enabled": true,
-      "depends": ["wlroots", "wlr-protocols"],
+      "depends": [
+        "wlroots",
+        "wlr-protocols"
+      ],
       "_note": "wlroots 的 Qt 绑定。注意上游已迁到 vioken/，linuxdeepin/qwlroots 不存在"
     },
     {
@@ -64,8 +72,10 @@
       "repo": "linuxdeepin/dtkcore",
       "ref": "master",
       "source": "git",
-      "enabled": false,
-      "depends": ["dtkcommon"],
+      "enabled": true,
+      "depends": [
+        "dtkcommon"
+      ],
       "_note": "含 DConfig 机制"
     },
     {
@@ -73,8 +83,12 @@
       "repo": "vioken/waylib",
       "ref": "master",
       "source": "git",
-      "enabled": false,
-      "depends": ["qwlroots", "wlroots", "wlr-protocols"],
+      "enabled": true,
+      "depends": [
+        "qwlroots",
+        "wlroots",
+        "wlr-protocols"
+      ],
       "_note": "treeland 依赖，基于 wlroots + QtQuick；上游在 vioken/"
     },
     {
@@ -83,7 +97,9 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkcore"]
+      "depends": [
+        "dtkcore"
+      ]
     },
     {
       "name": "dtkwidget",
@@ -91,7 +107,9 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkgui"]
+      "depends": [
+        "dtkgui"
+      ]
     },
     {
       "name": "dtkdeclarative",
@@ -99,7 +117,10 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkwidget", "dtkgui"]
+      "depends": [
+        "dtkwidget",
+        "dtkgui"
+      ]
     },
     {
       "name": "dde-wlroots",
@@ -116,7 +137,9 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkcore"],
+      "depends": [
+        "dtkcore"
+      ],
       "_note": "deepin Qt 重写版 ddm"
     },
     {
@@ -125,7 +148,9 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkcore"]
+      "depends": [
+        "dtkcore"
+      ]
     },
     {
       "name": "dde-daemon",
@@ -141,7 +166,14 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["waylib", "dde-wlroots", "treeland-protocols", "dtkcore", "dtkdeclarative", "ddm"],
+      "depends": [
+        "waylib",
+        "dde-wlroots",
+        "treeland-protocols",
+        "dtkcore",
+        "dtkdeclarative",
+        "ddm"
+      ],
       "_note": "会话层核心。当前卡在 dde-wlroots 的基础库版本要求"
     },
     {
@@ -150,7 +182,9 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkwidget"]
+      "depends": [
+        "dtkwidget"
+      ]
     },
     {
       "name": "dde-shell",
@@ -158,7 +192,11 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkdeclarative", "dde-application-manager", "dde-tray-loader"],
+      "depends": [
+        "dtkdeclarative",
+        "dde-application-manager",
+        "dde-tray-loader"
+      ],
       "_note": "上游自带 debian/；注意 USE_DEEPIN_QT 探测"
     },
     {
@@ -167,7 +205,10 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkdeclarative", "dde-daemon"]
+      "depends": [
+        "dtkdeclarative",
+        "dde-daemon"
+      ]
     },
     {
       "name": "dde-file-manager",
@@ -175,7 +216,10 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkwidget", "dde-daemon"]
+      "depends": [
+        "dtkwidget",
+        "dde-daemon"
+      ]
     },
     {
       "name": "dde-launchpad",
@@ -183,7 +227,9 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkdeclarative"]
+      "depends": [
+        "dtkdeclarative"
+      ]
     },
     {
       "name": "dde-session-shell",
@@ -191,7 +237,10 @@
       "ref": "master",
       "source": "git",
       "enabled": false,
-      "depends": ["dtkwidget", "dtkdeclarative"]
+      "depends": [
+        "dtkwidget",
+        "dtkdeclarative"
+      ]
     }
   ]
 }
