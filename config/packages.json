@@ -142,6 +142,17 @@
       ]
     },
     {
+      "name": "dtksystemsettings",
+      "repo": "linuxdeepin/dtksystemsettings",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkcore"
+      ],
+      "_note": "treeland 的 build-dep 要 libdtk6systemsettings-dev，forky 没有；只构建 nodtk6 半边"
+    },
+    {
       "name": "dde-wlroots",
       "repo": "linuxdeepin/dde-wlroots",
       "ref": "master",
@@ -188,14 +199,15 @@
       "repo": "linuxdeepin/treeland",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
         "waylib",
         "dde-wlroots",
         "treeland-protocols",
         "dtkcore",
         "dtkdeclarative",
-        "ddm"
+        "ddm",
+        "dtksystemsettings"
       ],
       "_note": "会话层核心。当前卡在 dde-wlroots 的基础库版本要求"
     },
