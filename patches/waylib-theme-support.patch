@@ -1,0 +1,14 @@
+--- a/src/server/platformplugin/qwlrootsintegration.cpp
++++ b/src/server/platformplugin/qwlrootsintegration.cpp
+@@ -39,7 +39,11 @@
+ #include <qpa/qwindowsysteminterface.h>
+ #include <qpa/qplatformoffscreensurface.h>
+-#include <private/qgenericunixthemes_p.h>
++#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
++#include <QtThemeSupport/private/qgenericunixthemes_p.h>
++#else
++#include <private/qgenericunixthemes_p.h>
++#endif
+ 
+ #ifndef QT_NO_OPENGL
+ #include <qpa/qplatformopenglcontext.h>

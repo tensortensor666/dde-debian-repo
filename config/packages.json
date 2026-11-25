@@ -106,7 +106,8 @@
       "source_patches": [
         "patches/waylib-no-examples.patch",
         "patches/waylib-qt611-private-headers.patch",
-        "patches/waylib-unistd.patch"
+        "patches/waylib-unistd.patch",
+        "patches/waylib-theme-support.patch"
       ]
     },
     {
