@@ -1,16 +1,21 @@
 --- a/src/server/CMakeLists.txt
 +++ b/src/server/CMakeLists.txt
-@@ -357,6 +357,14 @@
+@@ -357,6 +357,19 @@
          ${Qt6InputSupport_PRIVATE_INCLUDE_DIRS}
  )
  
-+# Qt 6.11 stopped exporting the <Module>_PRIVATE_INCLUDE_DIRS variables these
-+# paths relied on; take the private include dirs from the imported targets.
-+target_link_libraries(${TARGET}
-+    PRIVATE
-+        Qt6::GuiPrivate
-+        Qt6::QuickPrivate
-+)
++# Qt 6.11 no longer exports the <Module>_PRIVATE_INCLUDE_DIRS variables the block
++# above relies on. Pull the private include paths from the imported private
++# targets when they exist (names differ across Qt versions), so the server can
++# still find qpa/qplatformintegration.h and private/qpointingdevice_p.h.
++foreach(_waylib_priv_target Qt6::GuiPrivate Qt6::QuickPrivate)
++    if(TARGET ${_waylib_priv_target})
++        get_target_property(_waylib_priv_incs ${_waylib_priv_target} INTERFACE_INCLUDE_DIRECTORIES)
++        if(_waylib_priv_incs)
++            target_include_directories(${TARGET} PRIVATE ${_waylib_priv_incs})
++        endif()
++    endif()
++endforeach()
 +
  target_link_directories(${TARGET}
      INTERFACE
