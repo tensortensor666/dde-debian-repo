@@ -160,7 +160,10 @@
         "dtkcore",
         "treeland-protocols"
       ],
-      "_note": "deepin Qt 重写版 ddm"
+      "_note": "deepin Qt 重写版 ddm。forky 没有 systemd.pc，CMake 4 下目录变量为空导致 install(FILES) 报错",
+      "source_patches": [
+        "patches/ddm-systemd-pkgconfig.patch"
+      ]
     },
     {
       "name": "dde-application-manager",
