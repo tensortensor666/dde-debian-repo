@@ -4,6 +4,15 @@
   "codename": "dde25",
   "packages": [
     {
+      "name": "wayland-protocols",
+      "repo": "deepin-community/wayland-protocols",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [],
+      "_note": "1.49，纯 Wayland 协议 XML 数据包（无 ABI）。trixie 只有 1.44，而 dtkgui 要求 >=1.45"
+    },
+    {
       "name": "wlr-protocols",
       "repo": "deepin-community/wlr-protocols",
       "ref": "master",
@@ -124,7 +133,7 @@
       "repo": "linuxdeepin/dtkwidget",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
         "dtkgui"
       ]
