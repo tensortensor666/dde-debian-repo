@@ -1,0 +1,21 @@
+--- a/backend/libinput/switch.c
++++ b/backend/libinput/switch.c
+@@ -36,6 +36,10 @@
+ 	case LIBINPUT_SWITCH_TABLET_MODE:
+ 		wlr_event.switch_type = WLR_SWITCH_TYPE_TABLET_MODE;
+ 		break;
++	default:
++		/* libinput 1.31 added types wlroots 0.19 does not model
++		 * (LIBINPUT_SWITCH_KEYPAD_SLIDE); ignore them. */
++		break;
+ 	}
+ 	switch (libinput_event_switch_get_switch_state(sevent)) {
+ 	case LIBINPUT_SWITCH_STATE_OFF:
+--- a/debian/rules
++++ b/debian/rules
+@@ -7,4 +7,4 @@
+ 	dh $@
+ 
+ override_dh_auto_configure:
+-	dh_auto_configure -- -Dbackends=drm,libinput,x11
++	dh_auto_configure -- -Dbackends=drm,libinput,x11 -Dwerror=false

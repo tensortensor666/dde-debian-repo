@@ -28,9 +28,9 @@
       "source": "git",
       "enabled": true,
       "depends": [],
-      "_note": "产出 libwlroots-0.19 / -dev。forky 的 libinput 1.31 新增 LIBINPUT_SWITCH_KEYPAD_SLIDE，wlroots 0.19 的 switch 未处理且被 -Werror=switch 拦下 → 补 default 分支（见 patches/）",
+      "_note": "产出 libwlroots-0.19 / -dev。forky 适配见 patches/wlroots-forky-compat.patch：①libinput 1.31 新枚举未被 switch 处理、②新头文件触发大量新警告 → 关闭 -Dwerror",
       "source_patches": [
-        "patches/wlroots-ignore-new-libinput-switch.patch"
+        "patches/wlroots-forky-compat.patch"
       ]
     },
     {
