@@ -28,20 +28,28 @@
       "source": "git",
       "enabled": true,
       "depends": [],
-      "_note": "产出 libwlroots-0.19 / libwlroots-0.19-dev。trixie 只有 0.18；qwlroots/waylib 明确要 0.19。deps 全部能在 trixie 满足"
+      "_note": "产出 libwlroots-0.19 / -dev。forky 的 libinput 1.31 新增 LIBINPUT_SWITCH_KEYPAD_SLIDE，wlroots 0.19 的 switch 未处理且开了 -Werror → 补 default 分支",
+      "source_fixes": [
+        {
+          "file": "backend/libinput/switch.c",
+          "find": "\tcase LIBINPUT_SWITCH_TABLET_MODE:/n\t\twlr_event.switch_type = WLR_SWITCH_TYPE_TABLET_MODE;\n\t\tbreak;\n\t}",
+          "replace": "\tcase LIBINPUT_SWITCH_TABLET_MODE:/n\t\twlr_event.switch_type = WLR_SWITCH_TYPE_TABLET_MODE;\n\t\tbreak;\n\tdefault:/n\t\t/* Newer libinput adds switch types wlroots 0.19 does not model\n\t\t * (e.g. LIBINPUT_SWITCH_KEYPAD_SLIDE); ignore them rather than\n\t\t * tripping -Werror=switch. */\n\t\tbreak;\n\t}",
+          "count": 1
+        }
+      ]
     },
     {
       "name": "qt6-wayland",
       "repo": "deepin-community/qt6-wayland",
       "ref": "master",
       "source": "git",
-      "enabled": true,
+      "enabled": false,
       "depends": [],
       "not_installed": [
         "usr/lib/*/qt6/sbom/*",
         "usr/lib/x86_64-linux-gnu/qt6/sbom/qtwayland-6.8.0.spdx"
       ],
-      "_note": "deepin 补丁版（含 QtKeyExtensionGlobal），Debian 官方 qt6-wayland 不行。forky 的 qt6-base 6.11 已包含多 seat 补丁所需的 QInputDevice* 重载，无需摘补丁。not_installed 仍保留：Qt 安装的 sbom 文件无人认领会让 dh_missing 报错。"
+      "_note": "deepin 补丁版（含 QtKeyExtensionGlobal）。**当前不构建**：它是 Qt 6.8 源码，forky 的 qtbase 6.11 私有头不兼容（qwaylandcompositor.h 直接语法错），Qt Wayland 模块必须与 qtbase 同版本。DTK 链只需要 distro 的 qt6-wayland-dev，够用。treeland 要 QtKeyExtensionGlobal 时再想办法（移植补丁到 6.11 或自建 Qt 6.8 栈）。"
     },
     {
       "name": "dtkcommon",
