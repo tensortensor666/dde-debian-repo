@@ -98,6 +98,9 @@ def main():
                         # Patches to drop from debian/patches/series at build
                         # time (upstream patch needs a newer ABI than the distro).
                         "patches_exclude": ",".join(pkg.get("patch_exclude", [])),
+                        # Paths to list in debian/not-installed so dh_missing
+                        # does not abort on build artefacts no package ships.
+                        "not_installed": ",".join(pkg.get("not_installed", [])),
                     }
                 )
             fh.write(f"{layer}<<__MATRIX_DELIM__\n")

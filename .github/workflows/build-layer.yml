@@ -70,6 +70,12 @@ jobs:
           set -eux
           python3 scripts/drop-patches.py src "${{ matrix.patches_exclude }}"
 
+      - name: Declare intentionally uninstalled files
+        if: matrix.not_installed != ''
+        run: |
+          set -eux
+          python3 scripts/add-not-installed.py src "${{ matrix.not_installed }}"
+
       - name: Install build dependencies
         run: |
           set -eux
