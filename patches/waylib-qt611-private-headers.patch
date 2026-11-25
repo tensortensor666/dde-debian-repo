@@ -1,28 +1,31 @@
 --- a/src/server/CMakeLists.txt
 +++ b/src/server/CMakeLists.txt
-@@ -357,6 +357,27 @@
+@@ -357,6 +357,30 @@
          ${Qt6InputSupport_PRIVATE_INCLUDE_DIRS}
  )
  
 +# Qt 6.11 no longer exports the <Module>_PRIVATE_INCLUDE_DIRS variables used
 +# above, and qt6-base-private-dev ships no *PrivateConfig.cmake either, so the
-+# imported private targets do not exist. Derive both the module include root
-+# and its module subdirectory from Qt6::Gui: private headers include siblings
-+# as <QtGui/private/...> and <QtCore/private/...>, which requires the parent
-+# of each module directory.
++# imported private targets do not exist. Add every versioned module directory
++# under the Qt include root: Qt private headers include siblings as
++# <QtGui/private/...>, <QtQml/private/...>, etc., so both a module's version
++# directory and its module subdirectory must be on the include path.
 +get_target_property(_waylib_qt_incs Qt6::Gui INTERFACE_INCLUDE_DIRECTORIES)
 +foreach(_waylib_inc ${_waylib_qt_incs})
-+    foreach(_waylib_mod QtCore QtGui QtQuick QtWaylandClient)
-+        file(GLOB _waylib_versions "${_waylib_inc}/${_waylib_mod}/*")
++    if(IS_DIRECTORY "${_waylib_inc}")
++        file(GLOB _waylib_versions "${_waylib_inc}/*/*")
 +        foreach(_waylib_version ${_waylib_versions})
 +            if(IS_DIRECTORY "${_waylib_version}")
 +                target_include_directories(${TARGET} PRIVATE "${_waylib_version}")
-+            endif()
-+            if(IS_DIRECTORY "${_waylib_version}/${_waylib_mod}")
-+                target_include_directories(${TARGET} PRIVATE "${_waylib_version}/${_waylib_mod}")
++                file(GLOB _waylib_modules "${_waylib_version}/*")
++                foreach(_waylib_mod_dir ${_waylib_modules})
++                    if(IS_DIRECTORY "${_waylib_mod_dir}")
++                        target_include_directories(${TARGET} PRIVATE "${_waylib_mod_dir}")
++                    endif()
++                endforeach()
 +            endif()
 +        endforeach()
-+    endforeach()
++    endif()
 +endforeach()
 +
  target_link_directories(${TARGET}
