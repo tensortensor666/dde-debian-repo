@@ -1,8 +1,8 @@
 name: Build DDE for Debian
 
-# Four layers build in order. Each layer's .deb files are passed to the next
-# layer as a local apt source via workflow artifacts.
-# Only packages with "enabled": true in config/packages.json are built.
+# Layers are computed from config/packages.json "depends" (see gen_matrix.py).
+# Each layer's .deb files are passed to the next layer as a local apt source
+# via workflow artifacts. Only packages with "enabled": true are built.
 
 on:
   workflow_dispatch:
@@ -26,10 +26,14 @@ jobs:
       L1: ${{ steps.matrix.outputs.L1 }}
       L2: ${{ steps.matrix.outputs.L2 }}
       L3: ${{ steps.matrix.outputs.L3 }}
+      L4: ${{ steps.matrix.outputs.L4 }}
+      L5: ${{ steps.matrix.outputs.L5 }}
       count_L0: ${{ steps.matrix.outputs.count_L0 }}
       count_L1: ${{ steps.matrix.outputs.count_L1 }}
       count_L2: ${{ steps.matrix.outputs.count_L2 }}
       count_L3: ${{ steps.matrix.outputs.count_L3 }}
+      count_L4: ${{ steps.matrix.outputs.count_L4 }}
+      count_L5: ${{ steps.matrix.outputs.count_L5 }}
     steps:
       - uses: actions/checkout@v4
       - name: Generate matrix and counts
@@ -68,8 +72,24 @@ jobs:
       layer: L3
       matrix: ${{ needs.prepare.outputs.L3 }}
 
-  publish:
+  L4:
     needs: [prepare, L0, L1, L2, L3]
+    if: ${{ always() && needs.prepare.outputs.count_L4 != '0' }}
+    uses: ./.github/workflows/build-layer.yml
+    with:
+      layer: L4
+      matrix: ${{ needs.prepare.outputs.L4 }}
+
+  L5:
+    needs: [prepare, L0, L1, L2, L3, L4]
+    if: ${{ always() && needs.prepare.outputs.count_L5 != '0' }}
+    uses: ./.github/workflows/build-layer.yml
+    with:
+      layer: L5
+      matrix: ${{ needs.prepare.outputs.L5 }}
+
+  publish:
+    needs: [prepare, L0, L1, L2, L3, L4, L5]
     if: ${{ always() && needs.prepare.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
