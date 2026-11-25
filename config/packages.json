@@ -135,7 +135,7 @@
       "repo": "linuxdeepin/dtkdeclarative",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
         "dtkwidget",
         "dtkgui"
@@ -146,18 +146,19 @@
       "repo": "linuxdeepin/dde-wlroots",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [],
-      "_note": "静态编译 wlroots 0.20.2 给 treeland 用。BLOCKED：要求 libwayland>=1.26 / libdrm>=2.4.134 / libpixman>=0.46.4，trixie 只有 1.23.1 / 2.4.124 / 0.44.0"
+      "_note": "静态编译 wlroots 0.20.2 给 treeland 用。trixie 的版本要求（libwayland>=1.26 / libdrm>=2.4.134 / libpixman>=0.46.4）在 forky 全部满足"
     },
     {
       "name": "ddm",
       "repo": "linuxdeepin/ddm",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
-        "dtkcore"
+        "dtkcore",
+        "treeland-protocols"
       ],
       "_note": "deepin Qt 重写版 ddm"
     },
