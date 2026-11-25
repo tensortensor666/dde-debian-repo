@@ -1,21 +1,24 @@
 --- a/src/server/CMakeLists.txt
 +++ b/src/server/CMakeLists.txt
-@@ -357,6 +357,23 @@
+@@ -357,6 +357,26 @@
          ${Qt6InputSupport_PRIVATE_INCLUDE_DIRS}
  )
  
 +# Qt 6.11 no longer exports the <Module>_PRIVATE_INCLUDE_DIRS variables used
 +# above, and qt6-base-private-dev ships no *PrivateConfig.cmake either, so the
-+# imported private targets do not exist. Derive the versioned private include
-+# directories from Qt6::Gui's include root instead: adding a non-existent dir
-+# is harmless, and nothing here is pinned to a Qt version.
++# imported private targets do not exist. Derive both the module include root
++# and its module subdirectory from Qt6::Gui: private headers include siblings
++# as <QtGui/private/...>, which requires the parent of the QtGui directory.
 +get_target_property(_waylib_qt_incs Qt6::Gui INTERFACE_INCLUDE_DIRECTORIES)
 +foreach(_waylib_inc ${_waylib_qt_incs})
 +    foreach(_waylib_mod QtGui QtQuick QtWaylandClient)
-+        file(GLOB _waylib_priv "${_waylib_inc}/${_waylib_mod}/*/${_waylib_mod}")
-+        foreach(_waylib_pd ${_waylib_priv})
-+            if(IS_DIRECTORY "${_waylib_pd}")
-+                target_include_directories(${TARGET} PRIVATE "${_waylib_pd}")
++        file(GLOB _waylib_versions "${_waylib_inc}/${_waylib_mod}/*")
++        foreach(_waylib_version ${_waylib_versions})
++            if(IS_DIRECTORY "${_waylib_version}")
++                target_include_directories(${TARGET} PRIVATE "${_waylib_version}")
++            endif()
++            if(IS_DIRECTORY "${_waylib_version}/${_waylib_mod}")
++                target_include_directories(${TARGET} PRIVATE "${_waylib_version}/${_waylib_mod}")
 +            endif()
 +        endforeach()
 +    endforeach()

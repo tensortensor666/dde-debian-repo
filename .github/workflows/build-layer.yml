@@ -55,7 +55,52 @@ jobs:
       - name: Checkout packaging repo
         uses: actions/checkout@v4
 
+      - name: Fetch upstream source
+        id: source
+        shell: bash
+        run: |
+          set -eux
+          bash scripts/fetch-source.sh \
+            "${{ matrix.repo }}" "${{ matrix.ref }}" "${{ matrix.source }}" src
+          if [[ "${{ matrix.source }}" == "git" ]]; then
+            commit="$(git -C src rev-parse HEAD)"
+          else
+            dsc="$(find src -maxdepth 1 -name '*.dsc' -print -quit)"
+            commit="$(sha256sum "$dsc" | cut -d' ' -f1)"
+          fi
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+
+      - name: Restore deb cache
+        id: deb-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: deb-cache
+          key: deb-v2-${{ matrix.name }}-${{ matrix.cache_key }}-${{ steps.source.outputs.commit }}
+
+      - name: Check cached build
+        id: cached
+        shell: bash
+        run: |
+          set -euo pipefail
+          hit=false
+          if [[ "${{ steps.deb-cache.outputs.cache-hit }}" == "true" && -f deb-cache/meta.json ]]; then
+            cached_commit="$(python3 -c 'import json; print(json.load(open("deb-cache/meta.json"))["commit"])')"
+            if [[ "$cached_commit" == "${{ steps.source.outputs.commit }}" ]] && compgen -G 'deb-cache/*.deb' > /dev/null; then
+              hit=true
+            fi
+          fi
+          echo "hit=$hit" >> "$GITHUB_OUTPUT"
+          if [[ "$hit" == "true" ]]; then
+            echo "::notice::cache hit for ${{ matrix.name }} at ${{ steps.source.outputs.commit }}; skipping build"
+            mkdir -p artifacts
+            cp deb-cache/*.deb artifacts/
+          else
+            rm -f deb-cache/*.deb deb-cache/meta.json 2>/dev/null || true
+            mkdir -p artifacts deb-cache
+          fi
+
       - name: Download upstream layer debs
+        if: steps.cached.outputs.hit != 'true'
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
@@ -64,28 +109,23 @@ jobs:
           merge-multiple: true
 
       - name: Set up local apt source
+        if: steps.cached.outputs.hit != 'true'
         run: bash scripts/setup-local-repo.sh "$PWD/upstream-debs"
 
-      - name: Fetch upstream source
-        run: |
-          set -eux
-          bash scripts/fetch-source.sh \
-            "${{ matrix.repo }}" "${{ matrix.ref }}" "${{ matrix.source }}" src
-
       - name: Drop excluded patches
-        if: matrix.patches_exclude != ''
+        if: steps.cached.outputs.hit != 'true' && matrix.patches_exclude != ''
         run: |
           set -eux
           python3 scripts/drop-patches.py src "${{ matrix.patches_exclude }}"
 
       - name: Declare intentionally uninstalled files
-        if: matrix.not_installed != ''
+        if: steps.cached.outputs.hit != 'true' && matrix.not_installed != ''
         run: |
           set -eux
           python3 scripts/add-not-installed.py src "${{ matrix.not_installed }}"
 
       - name: Apply source fixes
-        if: matrix.source_fixes != '' && matrix.source_fixes != '[]'
+        if: steps.cached.outputs.hit != 'true' && matrix.source_fixes != '' && matrix.source_fixes != '[]'
         env:
           FIXES: ${{ matrix.source_fixes }}
         run: |
@@ -93,18 +133,20 @@ jobs:
           python3 scripts/apply-source-fixes.py src
 
       - name: Apply in-repo patches
-        if: matrix.source_patches != ''
+        if: steps.cached.outputs.hit != 'true' && matrix.source_patches != ''
         run: |
           set -eux
           python3 scripts/apply-source-patches.py src "${{ matrix.source_patches }}"
 
       - name: Install build dependencies
+        if: steps.cached.outputs.hit != 'true'
         run: |
           set -eux
           cd src
           mk-build-deps -i -r -t 'apt-get -y --no-install-recommends' debian/control
 
       - name: Build binary package
+        if: steps.cached.outputs.hit != 'true'
         shell: bash
         run: |
           set -eux
@@ -122,11 +164,28 @@ jobs:
             exit 1
           fi
           tail -n 15 /tmp/build.log || true
-          mkdir -p ../artifacts
+          mkdir -p ../artifacts ../deb-cache
           cp ../*.deb ../artifacts/ 2>/dev/null || true
+          cp ../*.deb ../deb-cache/
+          cd ..
+          python3 - <<'PY'
+          import json, subprocess
+          commit = subprocess.check_output(
+              ["git", "-C", "src", "rev-parse", "HEAD"], text=True
+          ).strip()
+          with open("deb-cache/meta.json", "w", encoding="utf-8") as fh:
+              json.dump({"commit": commit}, fh)
+          PY
 
       - name: Verify package metadata
         run: bash scripts/verify-debs.sh artifacts
+
+      - name: Save deb cache
+        if: steps.cached.outputs.hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: deb-cache
+          key: deb-v2-${{ matrix.name }}-${{ matrix.cache_key }}-${{ steps.source.outputs.commit }}
 
       - name: Upload layer debs
         uses: actions/upload-artifact@v4

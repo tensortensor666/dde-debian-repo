@@ -15,19 +15,77 @@ Only packages with "enabled": true are included. Disabled dependencies are
 ignored (assumed to come from the distro).
 """
 
+import hashlib
 import json
 import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CONFIG = os.path.join(HERE, "..", "config", "packages.json")
+ROOT = os.path.join(HERE, "..")
+CONFIG = os.path.join(ROOT, "config", "packages.json")
 
 MAX_LAYERS = 6  # L0..L5; bump together with build.yml jobs if the DAG gets deeper
+
+# Anything that changes how a package is built invalidates its deb cache.
+# Keep this list small and explicit: adding a file here effectively busts the
+# cache for every package once, which is the safe side to err on.
+BUILD_INPUTS = (
+    "scripts/gen_matrix.py",
+    "scripts/fetch-source.sh",
+    "scripts/setup-local-repo.sh",
+    "scripts/drop-patches.py",
+    "scripts/add-not-installed.py",
+    "scripts/apply-source-fixes.py",
+    "scripts/apply-source-patches.py",
+    "scripts/verify-debs.sh",
+    ".github/workflows/build-layer.yml",
+)
 
 
 def fail(msg):
     print(f"gen_matrix: {msg}", file=sys.stderr)
     sys.exit(1)
+
+
+def build_cache_key(pkg, suite, enabled, stack=()):
+    """Hash build-relevant inputs for a package and its local dependencies.
+
+    The upstream commit is deliberately NOT included: it is only known after
+    the shallow clone in the build job. Instead the cache key has a stable
+    config part (here) plus a commit part appended by build-layer.yml.
+    """
+    name = pkg["name"]
+    if name in stack:
+        fail(f"dependency cycle while hashing: {' -> '.join(stack + (name,))}")
+    payload = {
+        "suite": suite,
+        "name": name,
+        "repo": pkg.get("repo"),
+        "ref": pkg.get("ref"),
+        "source": pkg.get("source", "git"),
+        "depends": pkg.get("depends", []),
+        "patch_exclude": pkg.get("patch_exclude", []),
+        "not_installed": pkg.get("not_installed", []),
+        "source_fixes": pkg.get("source_fixes", []),
+        "source_patches": pkg.get("source_patches", []),
+    }
+    digest = hashlib.sha256()
+    digest.update(json.dumps(payload, sort_keys=True, ensure_ascii=False).encode())
+
+    paths = list(BUILD_INPUTS) + list(pkg.get("source_patches", []))
+    for rel in paths:
+        path = os.path.join(ROOT, rel)
+        if not os.path.isfile(path):
+            fail(f"cache key input is missing: {rel}")
+        with open(path, "rb") as fh:
+            digest.update(fh.read())
+
+    for dep_name in pkg.get("depends", []):
+        dep = enabled.get(dep_name)
+        if dep is not None:
+            digest.update(f"dependency:{dep_name}:".encode())
+            digest.update(build_cache_key(dep, suite, enabled, stack + (name,)).encode())
+    return digest.hexdigest()[:16]
 
 
 def main():
@@ -116,6 +174,9 @@ def main():
                         # In-repo patch files applied with patch -p1 (used when a
                         # change involves tabs/newlines that JSON would mangle).
                         "source_patches": ",".join(pkg.get("source_patches", [])),
+                        # Stable part of the deb cache key; the upstream commit
+                        # is appended in build-layer.yml after cloning.
+                        "cache_key": build_cache_key(pkg, suite, enabled),
                     }
                 )
             fh.write(f"{layer}<<__MATRIX_DELIM__\n")
