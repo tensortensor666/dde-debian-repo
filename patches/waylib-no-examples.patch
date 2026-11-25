@@ -1,0 +1,11 @@
+--- a/debian/rules
++++ b/debian/rules
+@@ -11,7 +11,7 @@
+ 	dh $@ --parallel
+ 
+ override_dh_auto_configure:
+-	dh_auto_configure -- -DCMAKE_INSTALL_PREFIX=/usr
++	dh_auto_configure -- -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF
+ 
+ #override_dh_auto_test:
+ #	echo "skip auto test"

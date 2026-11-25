@@ -102,7 +102,10 @@
         "wlroots",
         "wlr-protocols"
       ],
-      "_note": "treeland 依赖，基于 wlroots + QtQuick；上游在 vioken/"
+      "_note": "treeland 依赖，基于 wlroots + QtQuick。examples/tinywl 在 forky 上链接 Waylib::WaylibServer 失败导致 CMake generate 中断 → 打包关闭 examples/tests",
+      "source_patches": [
+        "patches/waylib-no-examples.patch"
+      ]
     },
     {
       "name": "dtkgui",
