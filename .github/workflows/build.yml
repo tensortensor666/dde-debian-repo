@@ -13,6 +13,8 @@ on:
     paths:
       - config/packages.json
       - scripts/**
+      - patches/**
+      - apt-repo/**
       - .github/workflows/**
 
 permissions:
