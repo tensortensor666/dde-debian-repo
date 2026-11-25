@@ -1,14 +1,18 @@
 --- a/src/server/platformplugin/qwlrootsintegration.cpp
 +++ b/src/server/platformplugin/qwlrootsintegration.cpp
-@@ -39,7 +39,11 @@
+@@ -40,6 +40,7 @@
  #include <qpa/qwindowsysteminterface.h>
  #include <qpa/qplatformoffscreensurface.h>
 -#include <private/qgenericunixthemes_p.h>
-+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
-+#include <QtThemeSupport/private/qgenericunixthemes_p.h>
-+#else
-+#include <private/qgenericunixthemes_p.h>
-+#endif
++// Debian forky's qt6-base-private-dev no longer ships
++// qgenericunixthemes_p.h; the base theme is enough for a compositor.
  
  #ifndef QT_NO_OPENGL
  #include <qpa/qplatformopenglcontext.h>
+@@ -500,5 +501,5 @@
+     // TODO: use custom platform theme to allow compositor set some hints, like as font
+-    return CALL_PROXY2(createPlatformTheme, new QGenericUnixTheme(), name);
++    return CALL_PROXY2(createPlatformTheme, new QPlatformTheme(), name);
+ }
+ 
+ QPlatformOffscreenSurface *QWlrootsIntegration::createPlatformOffscreenSurface(QOffscreenSurface *surface) const
