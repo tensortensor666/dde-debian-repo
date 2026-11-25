@@ -1,6 +1,6 @@
 --- a/src/server/kernel/wserver.cpp
 +++ b/src/server/kernel/wserver.cpp
-@@ -34,6 +34,8 @@
+@@ -35,5 +35,7 @@
  #include <qpa/qplatformintegrationfactory_p.h>
  #include <qpa/qplatformtheme.h>
  
@@ -8,3 +8,16 @@
 +
  QW_USE_NAMESPACE
  WAYLIB_SERVER_BEGIN_NAMESPACE
+--- a/src/server/kernel/wsocket.cpp
++++ b/src/server/kernel/wsocket.cpp
+@@ -17,6 +17,10 @@
+ #include <sys/socket.h>
+ #include <sys/types.h>
+ #include <sys/un.h>
++
++#include <sys/syscall.h>
++#include <unistd.h>
++
+ #include <signal.h>
+ 
+ struct wl_event_source;
