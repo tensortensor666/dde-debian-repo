@@ -9,7 +9,7 @@
  
  #ifndef QT_NO_OPENGL
  #include <qpa/qplatformopenglcontext.h>
-@@ -500,5 +501,7 @@
+@@ -500,4 +501,6 @@
      // TODO: use custom platform theme to allow compositor set some hints, like as font
 -    return CALL_PROXY2(createPlatformTheme, new QGenericUnixTheme(), name);
 +    // Qt's default fallback is a null theme; avoid depending on the private
@@ -17,4 +17,14 @@
 +    return CALL_PROXY2(createPlatformTheme, nullptr, name);
  }
  
+@@ -504,7 +507,9 @@
  QPlatformOffscreenSurface *QWlrootsIntegration::createPlatformOffscreenSurface(QOffscreenSurface *surface) const
+ {
+     if (QW::OffscreenSurface::check(surface))
+-        return new OffscreenSurface(surface);
++        // Qt 6.11 added QPlatformIntegration::OffscreenSurface, which hides
++        // our own class of the same name during member name lookup.
++        return new ::WAYLIB_SERVER_NAMESPACE::OffscreenSurface(surface);
+ 
+     return CALL_PROXY(createPlatformOffscreenSurface, surface);
+ }
