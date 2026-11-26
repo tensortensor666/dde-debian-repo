@@ -626,7 +626,7 @@
         "dde-tray-loader",
         "dde-api"
       ],
-      "_note": "上游自带 debian/；注意 USE_DEEPIN_QT 探测 forky 无 systemd.pc → patch shell/CMakeLists.txt 用 /usr/lib/systemd/user 兜底。",
+      "_note": "上游自带 debian/；注意 USE_DEEPIN_QT 探测 forky 无 systemd.pc → patch shell/CMakeLists.txt 用 /usr/lib/systemd/user 兜底。 版本加 +wb1 revision：dde-control-center 要求 dde-shell (>> 2.0.61)，而上游最新就是 2.0.61；+wb1 比 2.0.61 大又不撞将来的 2.0.62。",
       "source_fixes": [
         {
           "file": "debian/control",
@@ -638,6 +638,12 @@
           "file": "debian/control",
           "find": "libdtk6declarative,",
           "replace": "libdtk6declarative-dev,",
+          "count": 1
+        },
+        {
+          "file": "debian/changelog",
+          "find": "dde-shell (2.0.61) unstable; urgency=medium",
+          "replace": "dde-shell (2.0.61+wb1) unstable; urgency=medium",
           "count": 1
         }
       ],
