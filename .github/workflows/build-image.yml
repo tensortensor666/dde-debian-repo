@@ -1,0 +1,76 @@
+name: Build DDE image
+
+on:
+  workflow_dispatch:
+    inputs:
+      imgsize:
+        description: "磁盘镜像大小（如 10G）"
+        default: "10G"
+        required: false
+  push:
+    paths:
+      - "image/**"
+      - ".github/workflows/build-image.yml"
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      # 默认 runner 只剩 ~14G，装完 rootfs 再写 10G 镜像会爆盘。
+      - name: 释放磁盘空间
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+
+      - name: 检查环境
+        run: |
+          df -h / | tail -1
+          sudo losetup -f && echo "loop 设备可用"
+          nproc
+
+      - name: 构建镜像
+        run: |
+          sudo env IMGSIZE="${{ inputs.imgsize || '10G' }}" \
+            bash image/build-disk.sh "$PWD/out"
+
+      - name: 校验产物
+        run: |
+          ls -lh out/
+          sudo apt-get install -y --no-install-recommends qemu-utils >/dev/null
+          for f in out/*.img out/*.qcow2; do
+            [ -f "$f" ] || continue
+            echo "=== $f ==="
+            qemu-img info "$f" | head -6
+          done
+          # 抽查镜像里的关键文件（挂 root 分区第 2 个分区）
+          IMG=$(ls out/*.img | head -1)
+          LOOP=$(sudo losetup --show -fP "$IMG")
+          sudo mkdir -p /mnt/img
+          sudo mount "${LOOP}p2" /mnt/img
+          echo "--- 会话入口 ---"
+          ls -l /mnt/img/usr/share/wayland-sessions/ 2>/dev/null || echo "缺 wayland-sessions"
+          ls -l /mnt/img/usr/bin/treeland-user-wrapper 2>/dev/null || echo "缺 wrapper"
+          echo "--- 桌面包 ---"
+          chroot /mnt/img dpkg -l 2>/dev/null | grep -cE "^ii  (dde-|deepin-|treeland)"
+          echo "--- 自动登录 ---"
+          cat /mnt/img/etc/systemd/system/getty@tty1.service.d/autologin.conf 2>/dev/null | head -4
+          sudo umount /mnt/img
+          sudo losetup -d "$LOOP"
+
+      - name: 上传镜像
+        uses: actions/upload-artifact@v4
+        with:
+          name: dde-forky-image
+          path: |
+            out/*.img
+            out/*.qcow2
+          compression-level: 0
+          retention-days: 14
