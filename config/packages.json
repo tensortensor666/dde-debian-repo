@@ -345,7 +345,7 @@
         "dde-tray-loader",
         "dde-api"
       ],
-      "_note": "上游自带 debian/；注意 USE_DEEPIN_QT 探测",
+      "_note": "上游自带 debian/；注意 USE_DEEPIN_QT 探测 forky 无 systemd.pc → patch shell/CMakeLists.txt 用 /usr/lib/systemd/user 兜底。",
       "source_fixes": [
         {
           "file": "debian/control",
@@ -359,6 +359,9 @@
           "replace": "libdtk6declarative-dev,",
           "count": 1
         }
+      ],
+      "source_patches": [
+        "patches/dde-shell-systemd-pkgconfig.patch"
       ]
     },
     {
