@@ -1,0 +1,10 @@
+--- a/debian/control
++++ b/debian/control
+@@ -3,6 +3,7 @@
+ Build-Depends:
+  debhelper-compat (= 12),
+  cmake,
++ libcrypt-dev,
+  doxygen,
+  qhelpgenerator-qt5 <!nodtk5>,
+  qttools5-dev <!nodtk5>,
