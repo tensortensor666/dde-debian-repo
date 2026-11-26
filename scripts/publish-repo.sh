@@ -67,7 +67,11 @@ for deb in "${DEBS[@]}"; do
   # is the ground truth: prev-repo's pool was copied in above, so a matching
   # file there means this exact package+version is already published.
   already=false
-  if compgen -G "$OUT_DIR/pool/*/*/${pkg}_${ver}_*.deb" > /dev/null; then
+  # reprepro lays files out as pool/<component>/<src-prefix>/<source>/<file>,
+  # e.g. pool/main/d/dde-wlroots/dde-wlroots-dev_0.20.2.1_amd64.deb — four
+  # levels below pool/, so use find rather than a fixed-depth glob.
+  if [[ -d "$OUT_DIR/pool" ]] && \
+     find "$OUT_DIR/pool" -type f -name "${pkg}_${ver}_*.deb" -print -quit | grep -q .; then
     already=true
   elif reprepro -b "$OUT_DIR" -T deb ls "$CODENAME" "$pkg" 2>/dev/null \
        | grep -qF "$ver"; then
