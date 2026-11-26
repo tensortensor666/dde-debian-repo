@@ -366,6 +366,46 @@
       ]
     },
     {
+      "name": "dde-polkit-agent",
+      "repo": "linuxdeepin/dde-polkit-agent",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkwidget",
+        "dde-shell"
+      ],
+      "_note": "polkit 认证代理。控制中心改系统设置要靠它弹密码框，缺了等于没有 root 提权入口。依赖 libpolkit-qt6-1-dev/libdtk6widget-dev/libdde-shell-dev，forky + 自建全能满足。"
+    },
+    {
+      "name": "dde-services",
+      "repo": "linuxdeepin/dde-services",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkcore",
+        "dtkgui",
+        "treeland-protocols",
+        "wlr-protocols"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "qt6-wayland-dev-tools,",
+          "replace": "qt6-wayland-dev,",
+          "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " libnet-dev,",
+          "replace": " libnet1-dev,",
+          "count": 1
+        }
+      ],
+      "_note": "deepin 服务框架（service group / ipwatchd / shortcut / wallpapercache 等插件）。dde-control-center 硬依赖。forky 把 libnet-dev 叫 libnet1-dev。用 libsystemd（有 .pc），不需要 systemd.pc 的 patch。"
+    },
+    {
       "name": "dde-application-manager",
       "repo": "linuxdeepin/dde-application-manager",
       "ref": "master",
@@ -414,9 +454,27 @@
           "find": " deepin-gettext-tools,\n",
           "replace": " deepin-gettext-tools,\n libcrypt-dev,\n",
           "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " deepin-installer-timezones,\n",
+          "replace": "",
+          "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " deepin-security-loader,\n",
+          "replace": "",
+          "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " lastore-daemon,\n",
+          "replace": "",
+          "count": 1
         }
       ],
-      "_note": "DDE 的系统服务总成（电源/账户/网络/音频/显示/输入法/时间等）。makefile 构建 + GO111MODULE=off + GOPATH，依赖装在 /usr/share/gocode。上游 control 列的 lofanmi-pinyin 在 forky 无 packaging 且源码根本不 import → source_fix 删行。policy 生成依赖 deepin-gettext-tools 提供的 deepin-policy-ts-convert（forky 有）。"
+      "_note": "DDE 的系统服务总成（电源/账户/网络/音频/显示/输入法/时间等）。makefile 构建 + GO111MODULE=off + GOPATH，依赖装在 /usr/share/gocode。上游 control 列的 lofanmi-pinyin 在 forky 无 packaging 且源码根本不 import → source_fix 删行。policy 生成依赖 deepin-gettext-tools 提供的 deepin-policy-ts-convert（forky 有）。 Depends 里 deepin-installer-timezones / deepin-security-loader / lastore-daemon 在 GitHub 无独立源（属 deepin 内部构建体系）→ source_fix 删掉，否则包无法安装。"
     },
     {
       "name": "treeland",
@@ -510,9 +568,15 @@
           "find": "qt6-wayland-dev-tools",
           "replace": "qt6-wayland-dev",
           "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " deepin-security-loader,\n",
+          "replace": "",
+          "count": 1
         }
       ],
-      "_note": "控制中心。forky 把我们需要的私有库都补齐了（libdareader/libdeepin-pw-check 自建）。qt6-wayland-dev-tools 已并入 qt6-wayland-dev → source_fix。 另：forky 无 systemd.pc → patch；Qt 6.11 下关掉 ENABLE_WARNINGS_AS_ERRORS 和 BUILD_TESTING（测试代码用旧 API）。",
+      "_note": "控制中心。forky 把我们需要的私有库都补齐了（libdareader/libdeepin-pw-check 自建）。qt6-wayland-dev-tools 已并入 qt6-wayland-dev → source_fix。 另：forky 无 systemd.pc → patch；Qt 6.11 下关掉 ENABLE_WARNINGS_AS_ERRORS 和 BUILD_TESTING（测试代码用旧 API）。 deepin-security-loader 无源 → 删 Depends。",
       "source_patches": [
         "patches/dde-control-center-systemd-pkgconfig.patch",
         "patches/dde-control-center-forky-build.patch"
