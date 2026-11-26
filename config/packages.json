@@ -269,9 +269,10 @@
       "repo": "linuxdeepin/dde-application-manager",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
-        "dtkcore"
+        "dtkcore",
+        "dde-api"
       ]
     },
     {
@@ -309,9 +310,18 @@
       "repo": "linuxdeepin/dde-tray-loader",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
-        "dtkwidget"
+        "dtkwidget",
+        "dde-api"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "qt6-wayland-dev-tools",
+          "replace": "qt6-wayland-dev",
+          "count": 1
+        }
       ]
     },
     {
@@ -319,13 +329,22 @@
       "repo": "linuxdeepin/dde-shell",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
         "dtkdeclarative",
         "dde-application-manager",
-        "dde-tray-loader"
+        "dde-tray-loader",
+        "dde-api"
       ],
-      "_note": "上游自带 debian/；注意 USE_DEEPIN_QT 探测"
+      "_note": "上游自带 debian/；注意 USE_DEEPIN_QT 探测",
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "qt6-wayland-dev-tools",
+          "replace": "qt6-wayland-dev",
+          "count": 1
+        }
+      ]
     },
     {
       "name": "dde-control-center",
@@ -356,7 +375,8 @@
       "source": "git",
       "enabled": false,
       "depends": [
-        "dtkdeclarative"
+        "dtkdeclarative",
+        "dde-api"
       ]
     },
     {
