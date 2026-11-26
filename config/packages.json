@@ -343,6 +343,12 @@
           "find": "qt6-wayland-dev-tools",
           "replace": "qt6-wayland-dev",
           "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": "libdtk6declarative,",
+          "replace": "libdtk6declarative-dev,",
+          "count": 1
         }
       ]
     },
