@@ -79,8 +79,11 @@ if [[ ${#DEBS[@]} -eq 0 ]]; then
   exit 1
 fi
 
-# Add each deb. A package already published at the same version is skipped:
-# reprepro would otherwise abort on the duplicate.
+# Add each deb. A package already published at the same version is normally
+# skipped (reprepro aborts on duplicates) -- but if the *content* changed we
+# must replace it: editing source_fixes (e.g. dropping Depends) rebuilds a deb
+# whose version string is unchanged, and silently keeping the stale one is how
+# dde-daemon ended up published with dependencies we had already removed.
 for deb in "${DEBS[@]}"; do
   pkg="$(dpkg-deb -f "$deb" Package)"
   ver="$(dpkg-deb -f "$deb" Version)"
@@ -88,20 +91,28 @@ for deb in "${DEBS[@]}"; do
   # has been seen to miss packages that are nonetheless in the db). The pool
   # is the ground truth: prev-repo's pool was copied in above, so a matching
   # file there means this exact package+version is already published.
-  already=false
+  existing=""
   # reprepro lays files out as pool/<component>/<src-prefix>/<source>/<file>,
   # e.g. pool/main/d/dde-wlroots/dde-wlroots-dev_0.20.2.1_amd64.deb — four
   # levels below pool/, so use find rather than a fixed-depth glob.
-  if [[ -d "$OUT_DIR/pool" ]] && \
-     find "$OUT_DIR/pool" -type f -name "${pkg}_${ver}_*.deb" -print -quit | grep -q .; then
-    already=true
-  elif reprepro -b "$OUT_DIR" -T deb ls "$CODENAME" "$pkg" 2>/dev/null \
-       | grep -qF "$ver"; then
-    already=true
+  if [[ -d "$OUT_DIR/pool" ]]; then
+    existing="$(find "$OUT_DIR/pool" -type f -name "${pkg}_${ver}_*.deb" -print -quit)"
   fi
-  if [[ "$already" == "true" ]]; then
-    echo "publish-repo: skipping $(basename "$deb") ($pkg $ver already published)"
-    continue
+  if [[ -z "$existing" ]] && \
+     reprepro -b "$OUT_DIR" -T deb ls "$CODENAME" "$pkg" 2>/dev/null \
+       | grep -qF "$ver"; then
+    existing="(in-db)"
+  fi
+
+  if [[ -n "$existing" ]]; then
+    if [[ "$existing" != "(in-db)" ]] && \
+       [[ "$(sha256sum "$deb" | cut -d' ' -f1)" == "$(sha256sum "$existing" | cut -d' ' -f1)" ]]; then
+      echo "publish-repo: skipping $(basename "$deb") ($pkg $ver unchanged)"
+      continue
+    fi
+    echo "publish-repo: replacing $(basename "$deb") ($pkg $ver: content changed)"
+    reprepro -b "$OUT_DIR" remove "$CODENAME" "$pkg" "$ver" >/dev/null 2>&1 || true
+    find "$OUT_DIR/pool" -type f -name "${pkg}_${ver}_*.deb" -delete 2>/dev/null || true
   fi
   echo "publish-repo: including $(basename "$deb")"
   reprepro -b "$OUT_DIR" includedeb "$CODENAME" "$deb"
