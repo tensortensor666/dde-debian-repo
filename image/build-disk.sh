@@ -189,6 +189,21 @@ chroot "$MNT" /bin/bash -c "
   echo '--- 装完后的模块数 ---'
   ls /boot/grub/i386-pc 2>/dev/null | wc -l
   grub-mkconfig -o /boot/grub/grub.cfg
+  # GRUB 的 boot 镜像只是"引导器"，运行时还要从 /boot/grub/<target>/ 加载
+  # linux.mod / efi_gop.mod 等模块。grub-install 在本环境里没有把模块复制
+  # 过去（只生成 core.img / BOOTX64.EFI），于是启动时一路
+  #   error: file /boot/grub/x86_64-efi/linux.mod not found
+  # 最后 "Failed to boot both default and fallback entries"。
+  # 两个 target 都显式补齐，别指望 grub-install。
+  for t in i386-pc x86_64-efi; do
+    if [ -d "/usr/lib/grub/$t" ]; then
+      mkdir -p "/boot/grub/$t"
+      cp -a "/usr/lib/grub/$t/." "/boot/grub/$t/"
+      echo "  $t modules: $(ls /boot/grub/$t 2>/dev/null | wc -l)"
+    else
+      echo "  !! /usr/lib/grub/$t 不存在"
+    fi
+  done
   # 用 virtio / AHCI 磁盘都能启动：MODULES=most 会把 virtio_blk 等打进去，
   # 否则在虚拟机上会卡在 initramfs 找不到根设备。
   mkdir -p /etc/initramfs-tools
