@@ -30,12 +30,14 @@ jobs:
       L3: ${{ steps.matrix.outputs.L3 }}
       L4: ${{ steps.matrix.outputs.L4 }}
       L5: ${{ steps.matrix.outputs.L5 }}
+      L6: ${{ steps.matrix.outputs.L6 }}
       count_L0: ${{ steps.matrix.outputs.count_L0 }}
       count_L1: ${{ steps.matrix.outputs.count_L1 }}
       count_L2: ${{ steps.matrix.outputs.count_L2 }}
       count_L3: ${{ steps.matrix.outputs.count_L3 }}
       count_L4: ${{ steps.matrix.outputs.count_L4 }}
       count_L5: ${{ steps.matrix.outputs.count_L5 }}
+      count_L6: ${{ steps.matrix.outputs.count_L6 }}
       suite: ${{ steps.matrix.outputs.suite }}
       codename: ${{ steps.matrix.outputs.codename }}
     steps:
@@ -98,8 +100,17 @@ jobs:
       matrix: ${{ needs.prepare.outputs.L5 }}
       suite: ${{ needs.prepare.outputs.suite }}
 
-  publish:
+  L6:
     needs: [prepare, L0, L1, L2, L3, L4, L5]
+    if: ${{ always() && needs.prepare.outputs.count_L6 != '0' }}
+    uses: ./.github/workflows/build-layer.yml
+    with:
+      layer: L6
+      matrix: ${{ needs.prepare.outputs.L6 }}
+      suite: ${{ needs.prepare.outputs.suite }}
+
+  publish:
+    needs: [prepare, L0, L1, L2, L3, L4, L5, L6]
     if: ${{ always() && needs.prepare.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:

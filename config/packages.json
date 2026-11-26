@@ -391,10 +391,11 @@
       "repo": "linuxdeepin/dde-launchpad",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
         "dtkdeclarative",
-        "dde-api"
+        "dde-api",
+        "dde-shell"
       ]
     },
     {

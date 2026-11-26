@@ -24,7 +24,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
 CONFIG = os.path.join(ROOT, "config", "packages.json")
 
-MAX_LAYERS = 6  # L0..L5; bump together with build.yml jobs if the DAG gets deeper
+MAX_LAYERS = 7  # L0..L6; bump together with build.yml jobs if the DAG gets deeper
 
 # Anything that changes how a package is built invalidates its deb cache.
 # Keep this list small and explicit: adding a file here effectively busts the
