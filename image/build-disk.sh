@@ -157,6 +157,8 @@ mkfs.ext4 -L dderoot -q "${LOOP}p3"
 log "9/10 灌入 rootfs 并装 bootloader"
 mount "${LOOP}p3" "$MNT"
 rsync -aHAX --numeric-ids "$ROOTFS/" "$MNT/"
+echo "--- 内核命令行（grub 前）---"
+grep -E "^(GRUB_CMDLINE|GRUB_TERMINAL|GRUB_SERIAL)" "$MNT/etc/default/grub" || echo "(无 /etc/default/grub)"
 mkdir -p "$MNT/boot/efi"
 mount "${LOOP}p2" "$MNT/boot/efi"
 for d in dev proc sys; do mount --rbind "/$d" "$MNT/$d"; done
@@ -177,6 +179,8 @@ chroot "$MNT" /bin/bash -c "
   grub-mkconfig -o /boot/grub/grub.cfg
   update-initramfs -u -k all
 "
+echo "--- grub.cfg 里的内核命令行 ---"
+grep -m2 -E "^[[:space:]]*linux" "$MNT/boot/grub/grub.cfg" || echo "(没找到 linux 行)"
 
 log "10/10 收尾"
 # 同样别用 mountpoint 判断（--rbind 出来的子挂载识别不了），直接卸。
