@@ -65,9 +65,11 @@ jobs:
           if [ -e /dev/kvm ]; then ACCEL="-enable-kvm -cpu host"; else ACCEL="-cpu max"; fi
           echo "=== 加速: $ACCEL ==="
           echo "=== 启动（串口, 最长 8 分钟）==="
+          # 用默认 IDE/AHCI 接口而不是 virtio：内核日志停在 0.7s 处不动，
+          # 典型原因是 initramfs 里没有 virtio-blk，找不到根设备。
           sudo timeout 480 qemu-system-x86_64 \
             $ACCEL -m 3072 -smp 2 $FW \
-            -drive file="$IMG",format=raw,if=virtio \
+            -drive file="$IMG",format=raw \
             -nographic -no-reboot > boot.log 2>&1 || true
           echo "=== 日志长度: $(wc -l < boot.log) 行 ==="
           echo "=== 非空行（去掉 GRUB 倒计时刷屏）==="
@@ -86,7 +88,6 @@ jobs:
         with:
           name: dde-forky-image
           path: |
-            out/*.img
             out/*.qcow2
             boot.log
           compression-level: 0

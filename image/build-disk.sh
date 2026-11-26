@@ -189,7 +189,16 @@ chroot "$MNT" /bin/bash -c "
   echo '--- 装完后的模块数 ---'
   ls /boot/grub/i386-pc 2>/dev/null | wc -l
   grub-mkconfig -o /boot/grub/grub.cfg
+  # 用 virtio / AHCI 磁盘都能启动：MODULES=most 会把 virtio_blk 等打进去，
+  # 否则在虚拟机上会卡在 initramfs 找不到根设备。
+  mkdir -p /etc/initramfs-tools
+  grep -q '^MODULES=' /etc/initramfs-tools/initramfs.conf 2>/dev/null \
+      && sed -i 's/^MODULES=.*/MODULES=most/' /etc/initramfs-tools/initramfs.conf \
+      || echo 'MODULES=most' >> /etc/initramfs-tools/initramfs.conf
   update-initramfs -u -k all
+  echo '--- initramfs 里的 virtio/ahci ---'
+  lsinitramfs /boot/initrd.img-\$(ls /lib/modules | head -1) 2>/dev/null \
+      | grep -cE 'virtio_blk|ahci|sd_mod' || true
 "
 echo "--- grub.cfg 里的内核命令行 ---"
 grep -m2 -E "^[[:space:]]*linux" "$MNT/boot/grub/grub.cfg" || echo "(没找到 linux 行)"
