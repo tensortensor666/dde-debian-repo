@@ -254,7 +254,15 @@
         "golang-github-linuxdeepin-go-dbus-factory",
         "golang-github-rickb777-date"
       ],
-      "_note": "应用层关键基础包，产出 dde-api-dev，几乎所有 DDE 应用都依赖它。Go 依赖链自建，其余 build-dep 在 forky 存在。"
+      "_note": "应用层关键基础包，产出 dde-api-dev，几乎所有 DDE 应用都依赖它。Go 依赖链自建，其余 build-dep 在 forky 存在。 forky 只有 libgdk-pixbuf-2.0-dev（新拼写），无老拼写 libgdk-pixbuf2.0-dev → source_fix 改两处。",
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "libgdk-pixbuf2.0-dev,",
+          "replace": "libgdk-pixbuf-2.0-dev,",
+          "count": 2
+        }
+      ]
     },
     {
       "name": "dde-application-manager",
