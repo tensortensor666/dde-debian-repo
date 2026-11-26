@@ -66,7 +66,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-log "1/9 debootstrap $SUITE ($ARCH)"
+log "1/10 debootstrap $SUITE ($ARCH)"
 apt-get update -qq
 apt-get install -y --no-install-recommends \
   debootstrap dosfstools e2fsprogs parted util-linux rsync >/dev/null
@@ -74,21 +74,30 @@ debootstrap --variant=minbase --arch="$ARCH" \
   --include=ca-certificates,apt-utils,systemd-sysv \
   "$SUITE" "$ROOTFS" "$MIRROR"
 
-log "2/9 挂载 /proc /sys /dev 并注入我们的仓库"
+log "2/10 挂载 /proc /sys /dev"
 mount -t proc proc "$ROOTFS/proc"
 mount -t sysfs sys "$ROOTFS/sys"
 mount --rbind /dev "$ROOTFS/dev"
 cp /etc/resolv.conf "$ROOTFS/etc/resolv.conf" 2>/dev/null || true
 
-curl -fsSL "$OUR_REPO/dde-repo.key" -o "$ROOTFS/usr/share/keyrings/dde-repo.gpg"
 cat > "$ROOTFS/etc/apt/sources.list" <<EOF
 deb $MIRROR $SUITE main contrib non-free-firmware
 EOF
+
+log "3/10 装 gpgv（验证我们仓库签名必需）"
+# minbase 没有 gpgv，apt 会因无法验证 InRelease 而报
+# "does not have a Release file"，很容易误判成仓库有问题。
+chroot "$ROOTFS" /bin/bash -c "
+  set -e
+  apt-get update -qq
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gpgv gnupg
+"
+
+log "4/10 注入我们的仓库并装内核/固件"
+curl -fsSL "$OUR_REPO/dde-repo.key" -o "$ROOTFS/usr/share/keyrings/dde-repo.gpg"
 cat > "$ROOTFS/etc/apt/sources.list.d/dde.list" <<EOF
 deb [signed-by=/usr/share/keyrings/dde-repo.gpg] $OUR_REPO dde26 main
 EOF
-
-log "3/9 安装内核/固件（base）"
 # 注意：$BASE_PKGS 是多行字符串，直接塞进 bash -c "..." 会让每一行变成
 # 独立命令（"systemd-sysv: command not found"）。先压成一行。
 BASE_ONE="$(echo $BASE_PKGS)"
@@ -98,21 +107,21 @@ chroot "$ROOTFS" /bin/bash -c "
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $BASE_ONE
 "
 
-log "4/9 安装 DDE 桌面（最耗时）"
+log "5/10 安装 DDE 桌面（最耗时）"
 DESKTOP_ONE="$(echo $DESKTOP_PKGS)"
 chroot "$ROOTFS" /bin/bash -c "
   set -e
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DESKTOP_ONE
 "
 
-log "5/9 镜像内配置"
+log "6/10 镜像内配置"
 install -m 0755 "$HERE/in-target.sh" "$ROOTFS/tmp/in-target.sh"
 chroot "$ROOTFS" /usr/bin/env DEBIAN_FRONTEND=noninteractive \
   IMAGE_USER="${IMAGE_USER:-deepin}" IMAGE_PASS="${IMAGE_PASS:-deepin}" \
   IMAGE_HOSTNAME="${IMAGE_HOSTNAME:-dde}" \
   /bin/bash /tmp/in-target.sh
 
-log "6/9 清理"
+log "7/10 清理"
 chroot "$ROOTFS" /bin/bash -c "
   apt-get clean
   rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/* /root/.bash_history
@@ -123,7 +132,7 @@ umount "$ROOTFS/proc" "$ROOTFS/sys" 2>/dev/null || true
 ROOTFS_SIZE="$(du -sh "$ROOTFS" | cut -f1)"
 log "     rootfs 大小: $ROOTFS_SIZE"
 
-log "7/9 建分区镜像 ($IMGSIZE)"
+log "8/10 建分区镜像 ($IMGSIZE)"
 IMG="$OUT/dde-$SUITE.img"
 rm -f "$IMG"
 truncate -s "$IMGSIZE" "$IMG"
@@ -141,7 +150,7 @@ sleep 2
 mkfs.vfat -F32 -n DDEESP "${LOOP}p2" >/dev/null
 mkfs.ext4 -L dderoot -q "${LOOP}p3"
 
-log "8/9 灌入 rootfs 并装 bootloader"
+log "9/10 灌入 rootfs 并装 bootloader"
 mount "${LOOP}p3" "$MNT"
 rsync -aHAX --numeric-ids "$ROOTFS/" "$MNT/"
 mkdir -p "$MNT/boot/efi"
@@ -165,7 +174,7 @@ chroot "$MNT" /bin/bash -c "
   update-initramfs -u -k all
 "
 
-log "9/9 收尾"
+log "10/10 收尾"
 for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi"; do
   mountpoint -q "$d" && umount -R "$d"
 done
