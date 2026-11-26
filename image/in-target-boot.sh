@@ -36,6 +36,26 @@ done
 
 grub-mkconfig -o "$DDIR/grub.cfg"
 
+# UEFI：生成"自包含"的 BOOTX64.EFI。
+# grub-install --removable 只放一个瘦引导器，运行时仍要按 prefix 去磁盘上找
+# /boot/grub/x86_64-efi/*.mod；而它跑在 ESP 上，prefix 指向 ESP，root 分区里
+# 那 308 个模块它根本看不到，于是启动必报
+#   error: file /boot/grub/x86_64-efi/linux.mod not found
+# grub-mkstandalone 把 grub.cfg 和所需模块全部内嵌进单个 .efi，彻底摆脱
+# 外部文件依赖（live 镜像的标准做法）。
+if command -v grub-mkstandalone >/dev/null 2>&1; then
+  mkdir -p /boot/efi/EFI/BOOT /boot/efi/EFI/DDE
+  grub-mkstandalone -O x86_64-efi \
+    -o /boot/efi/EFI/BOOT/BOOTX64.EFI \
+    --modules="part_gpt part_msdos fat ext2 normal linux echo search \
+search_fs_uuid search_label configfile all_video gfxterm font" \
+    "boot/grub/grub.cfg=$DDIR/grub.cfg"
+  cp -f /boot/efi/EFI/BOOT/BOOTX64.EFI /boot/efi/EFI/DDE/BOOTX64.EFI
+  echo "  BOOTX64.EFI(standalone): $(stat -c%s /boot/efi/EFI/BOOT/BOOTX64.EFI) 字节"
+else
+  echo "  !! 没有 grub-mkstandalone"
+fi
+
 # virtio / AHCI 磁盘都要能启动：MODULES=most 会把 virtio_blk 等打进 initramfs，
 # 否则虚拟机里会卡在 initramfs 找不到根设备。
 mkdir -p /etc/initramfs-tools
