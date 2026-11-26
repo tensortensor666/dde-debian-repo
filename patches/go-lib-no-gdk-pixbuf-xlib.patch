@@ -1,0 +1,69 @@
+diff --git a/debian/control b/debian/control
+index 50cbe57..1b39f5a 100644
+--- a/debian/control
++++ b/debian/control
+@@ -11,7 +11,6 @@ Build-Depends: debhelper (>= 9), dh-golang, golang-go,
+  golang-github-mozillazg-go-pinyin-dev,
+  golang-dbus-dev,
+  libgdk-pixbuf2.0-dev | libgdk-pixbuf-2.0-dev,
+- libgdk-pixbuf-xlib-2.0-dev,
+  libpulse-dev, libgtk-3-dev, libcanberra-dev, golang-gopkg-alecthomas-kingpin.v2-dev, mobile-broadband-provider-info,
+  iso-codes, dbus-x11, libasound2-dev, libpam0g-dev, golang-golang-x-net-dev, golang-github-stretchr-testify-dev,
+  golang-golang-x-crypto-dev, libssl-dev
+diff --git a/gdkpixbuf/gdk_pixbuf_utils.c b/gdkpixbuf/gdk_pixbuf_utils.c
+index d0e9f5a..2ecf47d 100644
+--- a/gdkpixbuf/gdk_pixbuf_utils.c
++++ b/gdkpixbuf/gdk_pixbuf_utils.c
+@@ -8,7 +8,6 @@
+ #include <gdk/gdkx.h>
+ #include <X11/Xlib.h>
+ #include <gdk-pixbuf/gdk-pixbuf.h>
+-#include <gdk-pixbuf-xlib/gdk-pixbuf-xlib.h>
+ #include "gdk_pixbuf_utils.h"
+ 
+ int init_gdk_xlib() {
+@@ -16,7 +15,6 @@ int init_gdk_xlib() {
+         if (!init_gdk()) {
+                 return FALSE;
+         }
+-        gdk_pixbuf_xlib_init(GDK_DISPLAY_XDISPLAY(gdk_display_get_default()), 0);
+         return TRUE;
+ }
+ 
+@@ -101,17 +99,15 @@ GdkPixbuf *new_pixbuf_from_file(const char *img_file) {
+ }
+ 
+ Pixmap convert_pixbuf_to_xpixmap(GdkPixbuf *pixbuf) {
+-        Pixmap xpixmap = 0;
+-        gdk_pixbuf_xlib_render_pixmap_and_mask(pixbuf, &xpixmap, NULL, 0);
+-        return xpixmap;
++        /* gdk-pixbuf-xlib was removed in Debian; xlib pixmap conversion is
++           unused by dde-api/dde-daemon (they only use plain pixbuf ops). */
++        (void)pixbuf;
++        return 0;
+ }
+ 
+ GdkPixbuf *convert_xpixmap_to_pixbuf(const Pixmap xpixmap, int width, int height) {
+-        return gdk_pixbuf_xlib_get_from_drawable(NULL, (Drawable)xpixmap,
+-                                                 xlib_rgb_get_cmap(),
+-                                                 xlib_rgb_get_visual(),
+-                                                 0, 0, 0, 0,
+-                                                 width, height);
++        (void)xpixmap; (void)width; (void)height;
++        return NULL;
+ }
+ 
+ GdkPixbuf *copy_area_simple(const GdkPixbuf *src_pixbuf, int src_x, int src_y, int width, int height) {
+diff --git a/gdkpixbuf/gdkpixbuf.go b/gdkpixbuf/gdkpixbuf.go
+index ff5eda8..e925d78 100644
+--- a/gdkpixbuf/gdkpixbuf.go
++++ b/gdkpixbuf/gdkpixbuf.go
+@@ -4,7 +4,7 @@
+ 
+ package gdkpixbuf
+ 
+-// #cgo pkg-config: gdk-3.0 gdk-pixbuf-xlib-2.0 gdk-x11-3.0 x11
++// #cgo pkg-config: gdk-3.0 gdk-x11-3.0 x11
+ // #cgo LDFLAGS: -lm
+ // #include <stdlib.h>
+ // #include "gdk_pixbuf_utils.h"

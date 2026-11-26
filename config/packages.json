@@ -180,6 +180,83 @@
       ]
     },
     {
+      "name": "golang-github-erikstmartin-go-testdb",
+      "repo": "https://salsa.debian.org/go-team/packages/golang-github-erikstmartin-go-testdb.git",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [],
+      "_note": "forky 缺失；gorm 的 build-dep 要它。salsa Debian Go team packaging。"
+    },
+    {
+      "name": "golang-github-youpy-go-wav",
+      "repo": "https://salsa.debian.org/go-team/packages/golang-github-youpy-go-wav.git",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [],
+      "_note": "forky 缺失；go-lib 的 build-dep 要它。依赖 zaf-g711/go-riff 都在 forky。"
+    },
+    {
+      "name": "golang-github-rickb777-date",
+      "repo": "https://salsa.debian.org/go-team/packages/golang-github-rickb777-date.git",
+      "ref": "debian/sid",
+      "source": "git",
+      "enabled": true,
+      "depends": [],
+      "_note": "forky 缺失；dde-api 的 build-dep 要它。分支 debian/sid。"
+    },
+    {
+      "name": "golang-github-jinzhu-gorm",
+      "repo": "https://salsa.debian.org/go-team/packages/golang-github-jinzhu-gorm.git",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "golang-github-erikstmartin-go-testdb"
+      ],
+      "_note": "forky 缺失 golang-github-jinzhu-gorm-dev；dde-api/dde-daemon 要它。testdb 本地供给。"
+    },
+    {
+      "name": "golang-github-linuxdeepin-go-lib",
+      "repo": "linuxdeepin/go-lib",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "golang-github-youpy-go-wav"
+      ],
+      "source_patches": [
+        "patches/go-lib-no-gdk-pixbuf-xlib.patch"
+      ],
+      "_note": "forky 缺失 golang-github-linuxdeepin-go-lib-dev；dde-api 要 >>5.8.4（本版 6.0.15）。forky 删除了 gdk-pixbuf-xlib，用 patch 去掉该 build-dep 并 stub xlib 转换函数（dde-api 只用纯 pixbuf 操作）。go-x11-client 用 forky 自带 1.0.2-1。"
+    },
+    {
+      "name": "golang-github-linuxdeepin-go-dbus-factory",
+      "repo": "linuxdeepin/go-dbus-factory",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "golang-github-linuxdeepin-go-lib"
+      ],
+      "_note": "forky 缺失；dde-api 要 >>0.7.0、dde-daemon 要 >=2.0.30（本版 2.0.31）。"
+    },
+    {
+      "name": "dde-api",
+      "repo": "linuxdeepin/dde-api",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "golang-github-linuxdeepin-go-lib",
+        "golang-github-jinzhu-gorm",
+        "golang-github-linuxdeepin-go-dbus-factory",
+        "golang-github-rickb777-date"
+      ],
+      "_note": "应用层关键基础包，产出 dde-api-dev，几乎所有 DDE 应用都依赖它。Go 依赖链自建，其余 build-dep 在 forky 存在。"
+    },
+    {
       "name": "dde-application-manager",
       "repo": "linuxdeepin/dde-application-manager",
       "ref": "master",
