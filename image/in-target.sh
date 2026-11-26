@@ -77,7 +77,9 @@ systemctl set-default graphical.target 2>/dev/null || true
 
 echo ">> grub: 串口控制台（CI 里用 qemu -nographic 才能看到启动过程）"
 if [ -f /etc/default/grub ]; then
-  sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet console=ttyS0,115200 console=tty0"/' /etc/default/grub
+  # 不要 quiet：它把 loglevel 压到 4，内核的 "Linux version" 之类 INFO
+  # 全被丢掉，串口就只有 GRUB 菜单、看着像内核没启动。
+  sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0,115200 console=tty0 loglevel=7"/' /etc/default/grub
   grep -q '^GRUB_TERMINAL' /etc/default/grub || echo 'GRUB_TERMINAL="console serial"' >> /etc/default/grub
   grep -q '^GRUB_SERIAL_COMMAND' /etc/default/grub || echo 'GRUB_SERIAL_COMMAND="serial --speed=115200"' >> /etc/default/grub
 fi
