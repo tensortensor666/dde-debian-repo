@@ -396,7 +396,16 @@
         "dtkdeclarative",
         "dde-api",
         "dde-shell"
-      ]
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/changelog",
+          "find": ":000 +0800",
+          "replace": ":00 +0800",
+          "count": 3
+        }
+      ],
+      "_note": "forky 新 debhelper 严格解析 changelog；上游 3 处秒写成 :000，source_fix 改 :00。"
     },
     {
       "name": "dde-session-shell",
