@@ -1,0 +1,18 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ff7e880..84019d7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -56,6 +56,13 @@ pkg_check_modules(LIBSYSTEMD REQUIRED libsystemd)
+ 
+ pkg_search_module(systemd REQUIRED systemd)
+ pkg_get_variable(SYSTEMD_USER_UNIT_DIR systemd systemd_user_unit_dir)
++# Debian forky no longer ships systemd.pc, and our fallback .pc only
++# exposes the upstream spelling (systemduserunitdir), so
++# systemd_user_unit_dir comes back empty. CMake 4 rejects
++# install(FILES ... DESTINATION "") outright.
++if (NOT SYSTEMD_USER_UNIT_DIR)
++    set(SYSTEMD_USER_UNIT_DIR "/usr/lib/systemd/user")
++endif()
+ 
+ set(Test_Libraries
+     -lpthread
