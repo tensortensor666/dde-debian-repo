@@ -62,9 +62,18 @@ fi
 for deb in "${DEBS[@]}"; do
   pkg="$(dpkg-deb -f "$deb" Package)"
   ver="$(dpkg-deb -f "$deb" Version)"
-  if reprepro -b "$OUT_DIR" -T deb ls "$CODENAME" "$pkg" 2>/dev/null \
-       | awk -F'|' '{gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' \
-       | grep -qx "$ver"; then
+  # reprepro ls output format varies across versions and architectures (and
+  # has been seen to miss packages that are nonetheless in the db). The pool
+  # is the ground truth: prev-repo's pool was copied in above, so a matching
+  # file there means this exact package+version is already published.
+  already=false
+  if compgen -G "$OUT_DIR/pool/*/*/${pkg}_${ver}_*.deb" > /dev/null; then
+    already=true
+  elif reprepro -b "$OUT_DIR" -T deb ls "$CODENAME" "$pkg" 2>/dev/null \
+       | grep -qF "$ver"; then
+    already=true
+  fi
+  if [[ "$already" == "true" ]]; then
     echo "publish-repo: skipping $(basename "$deb") ($pkg $ver already published)"
     continue
   fi

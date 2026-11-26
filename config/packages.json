@@ -213,7 +213,8 @@
         "dtksystemsettings"
       ],
       "source_patches": [
-        "patches/treeland-systemd-pkgconfig.patch"
+        "patches/treeland-systemd-pkgconfig.patch",
+        "patches/treeland-no-sfinae-error.patch"
       ],
       "_note": "会话层核心。当前卡在 dde-wlroots 的基础库版本要求"
     },

@@ -1,0 +1,11 @@
+--- a/debian/rules
++++ b/debian/rules
+@@ -9,6 +9,6 @@
+ # see ENVIRONMENT in dpkg-buildflags(1)
+ # package maintainers to append CFLAGS
+-export DEB_CFLAGS_MAINT_APPEND  = -Wall -Wextra -Werror -Wno-error=stringop-overflow
+-export DEB_CXXFLAGS_MAINT_APPEND = -Wall -Wextra -Werror -Wno-error=stringop-overflow
++export DEB_CFLAGS_MAINT_APPEND  = -Wall -Wextra -Werror -Wno-error=stringop-overflow -Wno-error=sfinae-incomplete
++export DEB_CXXFLAGS_MAINT_APPEND = -Wall -Wextra -Werror -Wno-error=stringop-overflow -Wno-error=sfinae-incomplete
+ # package maintainers to append LDFLAGS
+ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
