@@ -38,6 +38,10 @@ jobs:
 
       - name: 构建镜像
         run: |
+          # qemu-img 必须在 build-disk.sh 之前装好，否则它跳过 qcow2 转换，
+          # 最后 upload-artifact 只上传 boot.log（曾踩到）。
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends qemu-utils >/dev/null
           sudo env IMGSIZE="${{ inputs.imgsize || '10G' }}" \
             bash image/build-disk.sh "$PWD/out"
 
@@ -75,13 +79,31 @@ jobs:
           echo "=== 非空行（去掉 GRUB 倒计时刷屏）==="
           grep -avE "^\s*$|highlighted entry|^\s+$" boot.log | tail -60 || true
           echo "=== 判定 ==="
-          grep -qE "Linux version" boot.log && echo "PASS 内核已加载" || echo "FAIL 内核未加载"
-          grep -qiE "Kernel panic|Failed to mount root|not syncing" boot.log \
-            && echo "FAIL 内核恐慌或根挂载失败" || echo "PASS 无致命内核错误"
-          grep -qE "Reached target (Multi-User|Graphical)" boot.log \
-            && echo "PASS 系统到达 Multi-User/Graphical" || echo "WARN 未见 target"
-          grep -qiE "treeland|dde-session|dde-shell|agetty|login:" boot.log \
-            && echo "PASS 见到 DDE/登录相关进程" || echo "WARN 未见 DDE 日志"
+          BOOT_OK=1
+          if grep -qE "Linux version" boot.log; then
+            echo "PASS 内核已加载"
+          else
+            echo "FAIL 内核未加载"
+            BOOT_OK=0
+          fi
+          if grep -qiE "Kernel panic|Failed to mount root|not syncing" boot.log; then
+            echo "FAIL 内核恐慌或根挂载失败"
+            BOOT_OK=0
+          else
+            echo "PASS 无致命内核错误"
+          fi
+          if grep -qE "Reached target (Multi-User|Graphical)" boot.log; then
+            echo "PASS 系统到达 Multi-User/Graphical"
+          else
+            echo "WARN 未见 target"
+            BOOT_OK=0
+          fi
+          if grep -qiE "treeland|dde-session|dde-shell|agetty|login:" boot.log; then
+            echo "PASS 见到 DDE/登录相关进程"
+          else
+            echo "WARN 未见 DDE 日志"
+          fi
+          [ "$BOOT_OK" -eq 1 ] || { echo "启动验证未通过"; exit 1; }
 
       - name: 上传镜像
         uses: actions/upload-artifact@v4

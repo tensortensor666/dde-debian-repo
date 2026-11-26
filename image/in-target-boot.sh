@@ -1,6 +1,6 @@
 #!/bin/bash
 # Runs inside the image (chroot) to install GRUB and rebuild the initramfs.
-#   in-target-boot.sh <loop-device>
+#   in-target-boot.sh <loop-device> <root-uuid> [esp-uuid]
 #
 # Kept as a separate file on purpose: inline `bash -c "..."` from the outer
 # script means every $var gets expanded by the *outer* shell (and `set -u`
@@ -9,9 +9,23 @@ set -e
 
 LOOP_DEV="${1:?需要 loop 设备路径}"
 ROOT_UUID="${2:-}"
+ESP_UUID="${3:-}"
 DDIR=/boot/grub
 KVER="$(ls /lib/modules | head -1)"
+KERNEL="/boot/vmlinuz-$KVER"
+INITRD="/boot/initrd.img-$KVER"
 KERNEL_CMDLINE="ro console=ttyS0,115200 console=tty0 loglevel=7"
+
+# GRUB 不需要读 ext4 根分区：把内核和 initrd 放到 ESP（FAT32）上，
+# 从 bootloader 所在分区直接加载。这样即使 search/UUID/分区探测失灵，
+# 只要固件能找到 BOOTX64.EFI 就能进内核；根分区仍由 initramfs 按 UUID 挂载。
+[[ -f "$KERNEL" ]] || { echo "!! 缺少 $KERNEL" >&2; exit 1; }
+[[ -f "$INITRD" ]] || { echo "!! 缺少 $INITRD" >&2; exit 1; }
+mkdir -p /boot/efi
+cp -f "$KERNEL" /boot/efi/vmlinuz
+cp -f "$INITRD" /boot/efi/initrd.img
+echo "--- ESP 引导文件 ---"
+ls -lh /boot/efi/vmlinuz /boot/efi/initrd.img /boot/efi/EFI/BOOT/BOOTX64.EFI 2>/dev/null || true
 
 echo "--- grub 模块源 ---"
 for t in i386-pc x86_64-efi; do
@@ -37,10 +51,10 @@ for t in i386-pc x86_64-efi; do
   fi
 done
 
-# 自己写 grub.cfg：grub-mkconfig 的菜单只靠 search --fs-uuid 设 root，
-# 一旦 search 没生效就是 "file /boot/vmlinuz-... not found" +
-# "you need to load the kernel first"，没有兜底。
-# 这里两项：先按 UUID 搜（多盘/换口都正确），失败由 fallback 切到固定分区。
+# 自己写 grub.cfg：内核/initrd 已复制到 ESP，这里只依赖 FAT32 驱动。
+# 之前从 ext4 根分区读 /boot/vmlinuz-* 时，即使 fallback 固定到
+# (hd0,gpt3) 也报 "file ... not found" + "you need to load the kernel first"。
+# 现在第一项按 ESP UUID 搜索，第二项固定 (hd0,gpt2)，两者读同一份文件。
 cat > "$DDIR/grub.cfg" <<EOF
 set timeout=3
 set default=0
@@ -48,24 +62,24 @@ set fallback="1"
 
 menuentry 'DDE on Debian forky' --class debian --class gnu-linux {
     insmod part_gpt
-    insmod ext2
+    insmod fat
     insmod gzio
-    search --no-floppy --fs-uuid --set=root $ROOT_UUID
-    echo 'Loading Linux $KVER ...'
-    linux /boot/vmlinuz-$KVER root=UUID=$ROOT_UUID $KERNEL_CMDLINE
-    echo 'Loading initial ramdisk ...'
-    initrd /boot/initrd.img-$KVER
+    search --no-floppy --fs-uuid --set=root $ESP_UUID
+    echo 'Loading Linux $KVER from ESP ...'
+    linux /vmlinuz root=UUID=$ROOT_UUID $KERNEL_CMDLINE
+    echo 'Loading initial ramdisk from ESP ...'
+    initrd /initrd.img
 }
 
 menuentry 'DDE on Debian forky (fixed partition)' --class debian {
     insmod part_gpt
-    insmod ext2
+    insmod fat
     insmod gzio
-    set root=(hd0,gpt3)
-    echo 'Loading Linux $KVER (fixed hd0,gpt3) ...'
-    linux /boot/vmlinuz-$KVER root=UUID=$ROOT_UUID $KERNEL_CMDLINE
-    echo 'Loading initial ramdisk ...'
-    initrd /boot/initrd.img-$KVER
+    set root=(hd0,gpt2)
+    echo 'Loading Linux $KVER from ESP (fixed hd0,gpt2) ...'
+    linux /vmlinuz root=UUID=$ROOT_UUID $KERNEL_CMDLINE
+    echo 'Loading initial ramdisk from ESP ...'
+    initrd /initrd.img
 }
 EOF
 echo "  grub.cfg 已写入（UUID=$(echo "$ROOT_UUID")）"

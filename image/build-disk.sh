@@ -172,7 +172,7 @@ UUID=$ESP_UUID  /boot/efi  vfat umask=0077        0 1
 EOF
 
 install -m 0755 "$HERE/in-target-boot.sh" "$MNT/tmp/in-target-boot.sh"
-chroot "$MNT" /bin/bash /tmp/in-target-boot.sh "$LOOP" "$ROOT_UUID"
+chroot "$MNT" /bin/bash /tmp/in-target-boot.sh "$LOOP" "$ROOT_UUID" "$ESP_UUID"
 rm -f "$MNT/tmp/in-target-boot.sh"
 echo "--- grub.cfg 里的内核命令行 ---"
 grep -m2 -E "^[[:space:]]*linux" "$MNT/boot/grub/grub.cfg" || echo "(没找到 linux 行)"
