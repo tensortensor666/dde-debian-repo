@@ -171,50 +171,9 @@ UUID=$ROOT_UUID /          ext4 errors=remount-ro 0 1
 UUID=$ESP_UUID  /boot/efi  vfat umask=0077        0 1
 EOF
 
-chroot "$MNT" /bin/bash -c "
-  set -e
-  echo '--- grub 模块源 ---'
-  ls /usr/lib/grub/i386-pc 2>/dev/null | wc -l
-  grub-install --target=x86_64-efi --efi-directory=/boot/efi \
-      --bootloader-id=DDE --removable --no-nvram --no-floppy --recheck
-  grub-install --target=i386-pc --no-floppy --recheck $LOOP
-  # grub-install 只保证生成 core.img，模块文件（all_video.mod/linux.mod…）
-  # 需要落在 /boot/grub/i386-pc/ 供运行时加载。某些环境下它没复制过去，
-  # 表现为启动时 'error: file /boot/grub/i386-pc/linux.mod not found'。
-  if [ ! -e /boot/grub/i386-pc/linux.mod ] && [ -d /usr/lib/grub/i386-pc ]; then
-      echo '--- 模块缺失，手动补齐 ---'
-      mkdir -p /boot/grub/i386-pc
-      cp -a /usr/lib/grub/i386-pc/. /boot/grub/i386-pc/
-  fi
-  echo '--- 装完后的模块数 ---'
-  ls /boot/grub/i386-pc 2>/dev/null | wc -l
-  grub-mkconfig -o /boot/grub/grub.cfg
-  # GRUB 的 boot 镜像只是"引导器"，运行时还要从 /boot/grub/<target>/ 加载
-  # linux.mod / efi_gop.mod 等模块。grub-install 在本环境里没有把模块复制
-  # 过去（只生成 core.img / BOOTX64.EFI），于是启动时一路
-  #   error: file /boot/grub/x86_64-efi/linux.mod not found
-  # 最后 "Failed to boot both default and fallback entries"。
-  # 两个 target 都显式补齐，别指望 grub-install。
-  for t in i386-pc x86_64-efi; do
-    if [ -d "/usr/lib/grub/$t" ]; then
-      mkdir -p "/boot/grub/$t"
-      cp -a "/usr/lib/grub/$t/." "/boot/grub/$t/"
-      echo "  $t modules: $(ls /boot/grub/$t 2>/dev/null | wc -l)"
-    else
-      echo "  !! /usr/lib/grub/$t 不存在"
-    fi
-  done
-  # 用 virtio / AHCI 磁盘都能启动：MODULES=most 会把 virtio_blk 等打进去，
-  # 否则在虚拟机上会卡在 initramfs 找不到根设备。
-  mkdir -p /etc/initramfs-tools
-  grep -q '^MODULES=' /etc/initramfs-tools/initramfs.conf 2>/dev/null \
-      && sed -i 's/^MODULES=.*/MODULES=most/' /etc/initramfs-tools/initramfs.conf \
-      || echo 'MODULES=most' >> /etc/initramfs-tools/initramfs.conf
-  update-initramfs -u -k all
-  echo '--- initramfs 里的 virtio/ahci ---'
-  lsinitramfs /boot/initrd.img-\$(ls /lib/modules | head -1) 2>/dev/null \
-      | grep -cE 'virtio_blk|ahci|sd_mod' || true
-"
+install -m 0755 "$HERE/in-target-boot.sh" "$MNT/tmp/in-target-boot.sh"
+chroot "$MNT" /bin/bash /tmp/in-target-boot.sh "$LOOP"
+rm -f "$MNT/tmp/in-target-boot.sh"
 echo "--- grub.cfg 里的内核命令行 ---"
 grep -m2 -E "^[[:space:]]*linux" "$MNT/boot/grub/grub.cfg" || echo "(没找到 linux 行)"
 
