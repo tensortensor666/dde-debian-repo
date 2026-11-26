@@ -42,6 +42,12 @@ if [[ -n "$PREV_DIR" && -d "$PREV_DIR/db" && "$PREV_CODENAME" == "$CODENAME" ]];
   if [[ -d "$PREV_DIR/pool" ]]; then
     cp -a "$PREV_DIR/pool/." "$OUT_DIR/pool/"
   fi
+  # Carry the signed indices over too. Without this, a run where nothing new
+  # is included produces a gh-pages tree with pool/ but no dists/ at all.
+  if [[ -d "$PREV_DIR/dists" ]]; then
+    mkdir -p "$OUT_DIR/dists"
+    cp -a "$PREV_DIR/dists/." "$OUT_DIR/dists/"
+  fi
 elif [[ -n "$PREV_DIR" && -d "$PREV_DIR/db" ]]; then
   echo "publish-repo: previous repo is codename '${PREV_CODENAME:-unknown}', not '$CODENAME' — starting fresh"
 else
@@ -117,6 +123,15 @@ for deb in "${DEBS[@]}"; do
   echo "publish-repo: including $(basename "$deb")"
   reprepro -b "$OUT_DIR" includedeb "$CODENAME" "$deb"
 done
+
+# Always regenerate the signed indices.
+# reprepro only exports as a side effect of includedeb; on a run where every
+# package was already published (all "skipping" above) it never runs, dists/
+# stays empty, and the new gh-pages tree ends up with pool/ but no
+# Release/InRelease -- apt then fails with
+#   E: The repository '... dde26 Release' does not have a Release file.
+echo "publish-repo: exporting indices"
+reprepro -b "$OUT_DIR" export "$CODENAME"
 
 # Export public key for end users.
 KEY_ID="${SIGNING_KEY_ID:-}"
