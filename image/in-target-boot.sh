@@ -90,21 +90,35 @@ else
   echo "  !! 没有 grub-mkstandalone"
 fi
 
-# virtio / AHCI 磁盘都要能启动：MODULES=most 会把 virtio_blk 等打进 initramfs，
-# 否则虚拟机里会卡在 initramfs 找不到根设备。
+# virtio / AHCI / IDE 磁盘都要能启动。MODULES=most 理论上够，但 forky 默认
+# 可能是 MODULES=dep（只收当前机器探测到的控制器），那样打出来的 initramfs
+# 换个接口就起不来：内核会报
+#   VFS: Cannot open root device "UUID=..." or unknown-block(0,0): error -19
+# 所以这里既设 most，又在 /etc/initramfs-tools/modules 里点名关键驱动。
 mkdir -p /etc/initramfs-tools
 if grep -q '^MODULES=' /etc/initramfs-tools/initramfs.conf 2>/dev/null; then
   sed -i 's/^MODULES=.*/MODULES=most/' /etc/initramfs-tools/initramfs.conf
 else
   echo 'MODULES=most' >> /etc/initramfs-tools/initramfs.conf
 fi
+cat > /etc/initramfs-tools/modules <<'MODS'
+ata_piix
+ahci
+sd_mod
+virtio_blk
+virtio_pci
+virtio_net
+scsi_mod
+ext4
+MODS
 update-initramfs -u -k all
 
 echo "--- initramfs 中的存储驱动 ---"
-KVER="$(ls /lib/modules | head -1)"
 if command -v lsinitramfs >/dev/null 2>&1; then
   lsinitramfs "/boot/initrd.img-$KVER" 2>/dev/null \
-    | grep -cE 'virtio_blk|ahci|sd_mod' || echo "0"
+    | grep -oE '(ata_piix|ahci|sd_mod|virtio_blk|virtio_pci|scsi_mod|ext4)\.ko[.a-z]*' \
+    | sed 's/\.ko.*//' | sort -u | tr '\n' ' '
+  echo
 else
   echo "(没有 lsinitramfs)"
 fi
