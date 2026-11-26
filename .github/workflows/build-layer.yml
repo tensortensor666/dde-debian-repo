@@ -48,9 +48,13 @@ jobs:
           deb http://deb.debian.org/debian ${{ inputs.suite }}-updates main
           EOF
           apt-get update
+          # libcrypt-dev: glibc 2.34+ split libcrypt out, and a number of
+          # deepin packages include <crypt.h> without listing it (dtksystemsettings,
+          # treeland, deepin-pw-check, dde-daemon, dde-control-center...).
+          # Installing it here once beats patching debian/control per package.
           apt-get install -y --no-install-recommends \
             ca-certificates git curl build-essential fakeroot \
-            devscripts equivs dpkg-dev patch
+            devscripts equivs dpkg-dev patch libcrypt-dev
 
       - name: Checkout packaging repo
         uses: actions/checkout@v4
