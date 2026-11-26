@@ -43,6 +43,7 @@ jobs:
 
       - name: 校验产物
         run: |
+          set -eux
           ls -lh out/
           sudo apt-get install -y --no-install-recommends qemu-utils >/dev/null
           for f in out/*.img out/*.qcow2; do
@@ -50,18 +51,24 @@ jobs:
             echo "=== $f ==="
             qemu-img info "$f" | head -6
           done
-          # 抽查镜像里的关键文件（挂 root 分区第 2 个分区）
           IMG=$(ls out/*.img | head -1)
           LOOP=$(sudo losetup --show -fP "$IMG")
+          sudo partprobe "$LOOP" 2>/dev/null || true
+          sleep 2
+          sudo lsblk "$LOOP"
           sudo mkdir -p /mnt/img
           sudo mount "${LOOP}p3" /mnt/img
+          echo "--- 挂载后的根目录 ---"
+          sudo ls /mnt/img | head -10
           echo "--- 会话入口 ---"
-          ls -l /mnt/img/usr/share/wayland-sessions/ 2>/dev/null || echo "缺 wayland-sessions"
-          ls -l /mnt/img/usr/bin/treeland-user-wrapper 2>/dev/null || echo "缺 wrapper"
+          sudo ls -l /mnt/img/usr/share/wayland-sessions/ 2>/dev/null || echo "缺 wayland-sessions"
+          sudo ls -l /mnt/img/usr/bin/treeland-user-wrapper 2>/dev/null || echo "缺 wrapper"
           echo "--- 桌面包 ---"
-          chroot /mnt/img dpkg -l 2>/dev/null | grep -cE "^ii  (dde-|deepin-|treeland)"
+          sudo chroot /mnt/img dpkg -l 2>/dev/null | grep -cE "^ii  (dde-|deepin-|treeland)" || true
           echo "--- 自动登录 ---"
-          cat /mnt/img/etc/systemd/system/getty@tty1.service.d/autologin.conf 2>/dev/null | head -4
+          sudo cat /mnt/img/etc/systemd/system/getty@tty1.service.d/autologin.conf 2>/dev/null | head -4 || true
+          echo "--- GRUB ---"
+          sudo ls /mnt/img/boot/grub/grub.cfg /mnt/img/boot/efi/EFI/BOOT/BOOTX64.EFI 2>/dev/null || true
           sudo umount /mnt/img
           sudo losetup -d "$LOOP"
 
