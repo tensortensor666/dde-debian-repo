@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Fetch upstream source into a target directory.
 #   fetch-source.sh <repo> <ref> <source> <target>
-#     repo   - owner/name on GitHub, e.g. linuxdeepin/dde-shell
+#     repo   - owner/name on GitHub (e.g. linuxdeepin/dde-shell), or a full
+#              https:// URL for non-GitHub hosts (e.g. salsa.debian.org)
 #     ref    - branch or tag
-#     source - "git" (GitHub) or "apt" (apt source, reserved for L0)
+#     source - "git" (git clone) or "apt" (apt source, reserved for L0)
 set -euo pipefail
 
 REPO="${1:?repo required}"
@@ -14,7 +15,10 @@ TARGET="${4:-src}"
 mkdir -p "$TARGET"
 
 if [[ "$SOURCE" == "git" ]]; then
-  if [[ -n "${GITHUB_TOKEN:-}" ]]; then
+  if [[ "$REPO" == http://* || "$REPO" == https://* ]]; then
+    # Full URL (e.g. a salsa.debian.org packaging repo). Use as-is.
+    URL="$REPO"
+  elif [[ -n "${GITHUB_TOKEN:-}" ]]; then
     URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}.git"
   else
     URL="https://github.com/${REPO}.git"
