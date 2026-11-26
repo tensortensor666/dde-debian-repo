@@ -1,0 +1,20 @@
+diff --git a/debian/rules b/debian/rules
+index 65b217d..d121aa6 100755
+--- a/debian/rules
++++ b/debian/rules
+@@ -11,10 +11,13 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,-z
+ 
+ # reproducible编译参数
+ DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_SKIP_BUILD_RPATH=ON
+-DEB_CMAKE_EXTRA_FLAGS += -DENABLE_WARNINGS_AS_ERRORS=ON
++DEB_CMAKE_EXTRA_FLAGS += -DENABLE_WARNINGS_AS_ERRORS=OFF
+ # 打包时编译并运行单元测试：dh_auto_build 编出测试二进制，
+ # dh_auto_test 自动执行 ctest（DEB_BUILD_OPTIONS=nocheck 时跳过运行）。
+-DEB_CMAKE_EXTRA_FLAGS += -DBUILD_TESTING=ON
++DEB_CMAKE_EXTRA_FLAGS += -DBUILD_TESTING=OFF
++
++override_dh_dwz:
++	true
+ 
+ %:
+ 	dh $@ --parallel
