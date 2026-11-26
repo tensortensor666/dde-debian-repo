@@ -173,9 +173,21 @@ EOF
 
 chroot "$MNT" /bin/bash -c "
   set -e
+  echo '--- grub 模块源 ---'
+  ls /usr/lib/grub/i386-pc 2>/dev/null | wc -l
   grub-install --target=x86_64-efi --efi-directory=/boot/efi \
       --bootloader-id=DDE --removable --no-nvram --no-floppy --recheck
   grub-install --target=i386-pc --no-floppy --recheck $LOOP
+  # grub-install 只保证生成 core.img，模块文件（all_video.mod/linux.mod…）
+  # 需要落在 /boot/grub/i386-pc/ 供运行时加载。某些环境下它没复制过去，
+  # 表现为启动时 'error: file /boot/grub/i386-pc/linux.mod not found'。
+  if [ ! -e /boot/grub/i386-pc/linux.mod ] && [ -d /usr/lib/grub/i386-pc ]; then
+      echo '--- 模块缺失，手动补齐 ---'
+      mkdir -p /boot/grub/i386-pc
+      cp -a /usr/lib/grub/i386-pc/. /boot/grub/i386-pc/
+  fi
+  echo '--- 装完后的模块数 ---'
+  ls /boot/grub/i386-pc 2>/dev/null | wc -l
   grub-mkconfig -o /boot/grub/grub.cfg
   update-initramfs -u -k all
 "

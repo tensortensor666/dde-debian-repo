@@ -46,17 +46,27 @@ jobs:
           set -eux
           IMG=$(ls out/*.img | head -1)
           sudo apt-get install -y --no-install-recommends \
-            qemu-system-x86 qemu-utils >/dev/null
+            qemu-system-x86 qemu-utils ovmf >/dev/null
           echo "=== 镜像信息 ==="
           qemu-img info "$IMG" | head -6
-          # 用默认 SeaBIOS 启动（镜像 p1 是 bios_grub，grub-pc 已装）。
-          # 之前用 pflash 指向 /usr/share/OVMF/OVMF_CODE.fd，Ubuntu 上那个
-          # 路径不存在（叫 OVMF_CODE_4M.fd），QEMU 直接退出、boot.log 为空。
+          # 优先 UEFI：--removable 生成的 BOOTX64.EFI 内嵌了所需模块，
+          # 不依赖 /boot/grub/x86_64-efi 的外部 .mod 文件；而 BIOS 走
+          # core.img + /boot/grub/i386-pc/*.mod，一旦模块没复制过去就会
+          # 'error: file .../linux.mod not found'。
+          OVMF=$(ls /usr/share/OVMF/OVMF_CODE_4M.fd /usr/share/OVMF/OVMF_CODE.fd \
+                    /usr/share/ovmf/OVMF_CODE.fd 2>/dev/null | head -1)
+          if [ -n "$OVMF" ]; then
+            echo "=== firmware: UEFI ($OVMF) ==="
+            FW="-drive if=pflash,format=raw,readonly=on,file=$OVMF"
+          else
+            echo "=== firmware: SeaBIOS ==="
+            FW=""
+          fi
           if [ -e /dev/kvm ]; then ACCEL="-enable-kvm -cpu host"; else ACCEL="-cpu max"; fi
           echo "=== 加速: $ACCEL ==="
           echo "=== 启动（串口, 最长 8 分钟）==="
           sudo timeout 480 qemu-system-x86_64 \
-            $ACCEL -m 3072 -smp 2 \
+            $ACCEL -m 3072 -smp 2 $FW \
             -drive file="$IMG",format=raw,if=virtio \
             -nographic -no-reboot > boot.log 2>&1 || true
           echo "=== 日志长度: $(wc -l < boot.log) 行 ==="
