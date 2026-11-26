@@ -482,6 +482,14 @@
       "_note": "会话 UI（关机/重启/注销对话框、锁屏界面）。依赖 libdeepin-pw-check-dev（自建）。 上游读 pkg_get_variable(... systemd_user_unit_dir)，forky 无该 .pc → patch 兜底 /usr/lib/systemd/user（CMake 4 禁止空 DESTINATION）。",
       "source_patches": [
         "patches/dde-session-ui-systemd-unit-dir.patch"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": " dbus-user-session,\n dde-session-shell\n",
+          "replace": " dbus-user-session\n",
+          "count": 1
+        }
       ]
     },
     {
