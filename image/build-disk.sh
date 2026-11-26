@@ -30,7 +30,7 @@ ca-certificates curl gnupg apt-transport-https
 systemd-sysv dbus udev kmod
 linux-image-amd64
 grub-efi-amd64 grub-pc-bin grub2-common
-initramfs-tools
+initramfs-tools e2fsprogs e2fsprogs-l10n
 locales console-setup keyboard-configuration tzdata
 network-manager sudo passwd
 accountsservice polkitd upower rtkit
