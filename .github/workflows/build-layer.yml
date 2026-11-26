@@ -56,6 +56,28 @@ jobs:
             ca-certificates git curl build-essential fakeroot \
             devscripts equivs dpkg-dev patch libcrypt-dev
 
+          # Debian forky no longer ships systemd.pc, but several deepin
+          # projects do pkg_check_modules(systemd) to read systemduserunitdir
+          # (dde-shell, dde-control-center, dde-application-wizard, ...).
+          # Providing the standard .pc here beats patching every upstream.
+          mkdir -p /usr/lib/x86_64-linux-gnu/pkgconfig
+          printf '%s\n' \
+            'prefix=/usr' \
+            'exec_prefix=${prefix}' \
+            'systemdsystemunitdir=${prefix}/lib/systemd/system' \
+            'systemduserunitdir=${prefix}/lib/systemd/user' \
+            'systemdsystempresetdir=${prefix}/lib/systemd/system-preset' \
+            'systemdutildir=${prefix}/lib/systemd' \
+            'systemdconfdir=/etc/systemd' \
+            'systemdtmpfilesdir=${prefix}/lib/tmpfiles.d' \
+            '' \
+            'Name: systemd' \
+            'Description: systemd System and Service Manager' \
+            'Version: 256' \
+            'Libs:' \
+            'Cflags:' \
+            > /usr/lib/x86_64-linux-gnu/pkgconfig/systemd.pc
+
       - name: Checkout packaging repo
         uses: actions/checkout@v4
 

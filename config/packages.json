@@ -406,6 +406,71 @@
       "_note": "deepin 服务框架（service group / ipwatchd / shortcut / wallpapercache 等插件）。dde-control-center 硬依赖。forky 把 libnet-dev 叫 libnet1-dev。用 libsystemd（有 .pc），不需要 systemd.pc 的 patch。"
     },
     {
+      "name": "dde-seatd",
+      "repo": "linuxdeepin/dde-seatd",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [],
+      "_note": "seatd 兼容的座位管理守护，供 ddm/treeland 用。meson+ninja 构建，无 deepin 内部依赖。产出 dde-seatd/libdde-seat1/-dev。"
+    },
+    {
+      "name": "deepin-power-control",
+      "repo": "linuxdeepin/deepin-power-control",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [],
+      "_note": "电源模式控制（性能/均衡/节能）。纯 Go + cobra/ini/yaml，forky 齐备。dde-daemon 与 dde-session-ui 硬依赖。"
+    },
+    {
+      "name": "deepin-service-manager",
+      "repo": "linuxdeepin/deepin-service-manager",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkcore"
+      ],
+      "_note": "服务管理器（dde-services 的运行时，管 service group 生命周期）。产出 deepin-service-manager + libdeepin-service-framework(-dev)。"
+    },
+    {
+      "name": "dde-app-services",
+      "repo": "linuxdeepin/dde-app-services",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkcore",
+        "dtkgui",
+        "dtkwidget"
+      ],
+      "_note": "提供 dde-dconfig-daemon（DTK 全局配置服务，几乎所有 DDE 组件运行时都要）+ dde-dconfig-editor。"
+    },
+    {
+      "name": "dde-session-ui",
+      "repo": "linuxdeepin/dde-session-ui",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkwidget",
+        "deepin-pw-check"
+      ],
+      "_note": "会话 UI（关机/重启/注销对话框、锁屏界面）。依赖 libdeepin-pw-check-dev（自建）。"
+    },
+    {
+      "name": "dde-application-wizard",
+      "repo": "linuxdeepin/dde-application-wizard",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkwidget"
+      ],
+      "_note": "应用打开方式选择向导，dde-launchpad 运行时依赖 dde-application-wizard-daemon-compat。上游 control 注释里明确要 systemd.pc 拿 systemduserunitdir → CI bootstrap 提供。"
+    },
+    {
       "name": "dde-application-manager",
       "repo": "linuxdeepin/dde-application-manager",
       "ref": "master",
