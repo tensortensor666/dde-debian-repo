@@ -594,7 +594,15 @@
         "patches/treeland-no-sfinae-error.patch",
         "patches/treeland-libcrypt.patch"
       ],
-      "_note": "会话层核心。当前卡在 dde-wlroots 的基础库版本要求"
+      "_note": "会话层核心。当前卡在 dde-wlroots 的基础库版本要求 补 accountsservice：treeland 的 UserModel 启动时硬连 org.freedesktop.Accounts，没有就 Fatal abort（上游没声明，因为 deepin 基础镜像自带）。",
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "         xwayland,\n         treeland-wallpaper-factory,\n",
+          "replace": "         xwayland,\n         accountsservice,\n         treeland-wallpaper-factory,\n",
+          "count": 1
+        }
+      ]
     },
     {
       "name": "dde-tray-loader",
