@@ -8,7 +8,10 @@
 set -e
 
 LOOP_DEV="${1:?需要 loop 设备路径}"
+ROOT_UUID="${2:-}"
 DDIR=/boot/grub
+KVER="$(ls /lib/modules | head -1)"
+KERNEL_CMDLINE="ro console=ttyS0,115200 console=tty0 loglevel=7"
 
 echo "--- grub 模块源 ---"
 for t in i386-pc x86_64-efi; do
@@ -36,6 +39,26 @@ done
 
 grub-mkconfig -o "$DDIR/grub.cfg"
 
+# grub-mkconfig 生成的菜单依赖 search --fs-uuid 定位 root，一旦 search 没能
+# 设上 root，就会 "error: file /boot/vmlinuz-... not found" 然后
+# "you need to load the kernel first"。再补一个用固定分区号的兜底菜单项。
+if [ -n "$ROOT_UUID" ] && [ -e "/boot/vmlinuz-$KVER" ]; then
+  cat >> "$DDIR/grub.cfg" <<EOF
+
+menuentry 'DDE (fixed partition hd0,gpt3)' --class debian {
+    insmod part_gpt
+    insmod ext2
+    insmod gzio
+    set root=(hd0,gpt3)
+    echo 'Loading Linux $KVER (fixed partition) ...'
+    linux /boot/vmlinuz-$KVER root=UUID=$ROOT_UUID $KERNEL_CMDLINE
+    echo 'Loading initial ramdisk ...'
+    initrd /boot/initrd.img-$KVER
+}
+EOF
+  echo "  已追加固定分区兜底菜单项"
+fi
+
 # UEFI：生成"自包含"的 BOOTX64.EFI。
 # grub-install --removable 只放一个瘦引导器，运行时仍要按 prefix 去磁盘上找
 # /boot/grub/x86_64-efi/*.mod；而它跑在 ESP 上，prefix 指向 ESP，root 分区里
@@ -48,7 +71,7 @@ if command -v grub-mkstandalone >/dev/null 2>&1; then
   grub-mkstandalone -O x86_64-efi \
     -o /boot/efi/EFI/BOOT/BOOTX64.EFI \
     --modules="part_gpt part_msdos fat ext2 normal linux echo search \
-search_fs_uuid search_label configfile all_video gfxterm font" \
+search_fs_uuid search_label configfile all_video gzio gfxterm font" \
     "boot/grub/grub.cfg=$DDIR/grub.cfg"
   cp -f /boot/efi/EFI/BOOT/BOOTX64.EFI /boot/efi/EFI/DDE/BOOTX64.EFI
   echo "  BOOTX64.EFI(standalone): $(stat -c%s /boot/efi/EFI/BOOT/BOOTX64.EFI) 字节"
