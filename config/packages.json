@@ -390,8 +390,27 @@
       "repo": "linuxdeepin/dde-daemon",
       "ref": "master",
       "source": "git",
-      "enabled": false,
-      "depends": []
+      "enabled": true,
+      "depends": [
+        "dde-api",
+        "deepin-desktop-schemas",
+        "golang-github-linuxdeepin-go-lib",
+        "golang-github-linuxdeepin-go-dbus-factory",
+        "golang-github-jouyouyun-hardware",
+        "golang-github-kelvins-sunrisesunset",
+        "golang-github-teambition-rrule-go",
+        "golang-github-jinzhu-gorm",
+        "golang-github-rickb777-date"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": " golang-github-lofanmi-pinyin-dev,\n",
+          "replace": "",
+          "count": 1
+        }
+      ],
+      "_note": "DDE 的系统服务总成（电源/账户/网络/音频/显示/输入法/时间等）。makefile 构建 + GO111MODULE=off + GOPATH，依赖装在 /usr/share/gocode。上游 control 列的 lofanmi-pinyin 在 forky 无 packaging 且源码根本不 import → source_fix 删行。policy 生成依赖 deepin-gettext-tools 提供的 deepin-policy-ts-convert（forky 有）。"
     },
     {
       "name": "treeland",
