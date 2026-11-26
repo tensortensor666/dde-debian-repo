@@ -233,7 +233,15 @@
       "depends": [
         "golang-github-linuxdeepin-go-lib"
       ],
-      "_note": "GSettings schemas，DDE 全局配置的根。makefile 构建：go build tools/override（依赖 go-lib 在 GOPATH）+ 按 ARCH 选 x86 覆盖。dde-daemon 强依赖。"
+      "_note": "GSettings schemas，DDE 全局配置的根。makefile 构建：go build tools/override（依赖 go-lib 在 GOPATH）+ 按 ARCH 选 x86 覆盖。dde-daemon 强依赖。 dh_auto_build 会把 GOPATH 指到 obj 目录导致找不到 go-lib → Makefile 里硬编码 GOPATH。",
+      "source_fixes": [
+        {
+          "file": "Makefile",
+          "find": "go build -o bin/override_tool tools/override/*.go",
+          "replace": "GOPATH=/usr/share/gocode GO111MODULE=off go build -o bin/override_tool tools/override/*.go",
+          "count": 1
+        }
+      ]
     },
     {
       "name": "dde-session",
@@ -262,9 +270,15 @@
           "find": "libpam-dev,",
           "replace": "libpam0g-dev,",
           "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": "libcrack2-dev,",
+          "replace": "libcrack2-dev,\n libcrypt-dev,",
+          "count": 1
         }
       ],
-      "_note": "密码强度校验库 + PAM 模块，产出 libdeepin-pw-check / -dev。forky 无 libpam-dev 虚拟包（只有 libpam0g-dev）→ source_fix。"
+      "_note": "密码强度校验库 + PAM 模块，产出 libdeepin-pw-check / -dev。forky 无 libpam-dev 虚拟包（只有 libpam0g-dev）→ source_fix。 另外源码用 crypt.h 但 control 漏列 libcrypt-dev（同 dtksystemsettings）→ source_fix 补上。"
     },
     {
       "name": "golang-github-erikstmartin-go-testdb",
