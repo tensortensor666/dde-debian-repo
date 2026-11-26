@@ -1,0 +1,46 @@
+name: Probe Debian suite packages
+
+# Check which build-dependencies exist in the target Debian suite.
+# Useful before enabling a new package: avoids guessing whether a dep comes
+# from the distro or has to be built locally.
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: "Space-separated package names to query with apt-cache policy"
+        required: true
+        type: string
+      suite:
+        description: "Debian suite"
+        required: false
+        default: "forky"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:${{ inputs.suite }}
+    steps:
+      - name: Query apt
+        shell: bash
+        run: |
+          set -eux
+          rm -f /etc/apt/sources.list.d/debian.sources
+          cat > /etc/apt/sources.list <<EOF
+          deb http://deb.debian.org/debian ${{ inputs.suite }} main
+          deb http://deb.debian.org/debian ${{ inputs.suite }}-updates main
+          EOF
+          apt-get update -qq
+          for p in ${{ inputs.packages }}; do
+            printf '%-45s ' "$p"
+            cand="$(apt-cache policy "$p" 2>/dev/null | awk '/Candidate:/{print $2; exit}')"
+            if [[ -z "$cand" || "$cand" == "(none)" ]]; then
+              echo "MISSING"
+            else
+              echo "$cand"
+            fi
+          done
