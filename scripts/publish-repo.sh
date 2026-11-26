@@ -49,8 +49,30 @@ else
 fi
 
 shopt -s nullglob
-DEBS=("$DEBS_DIR"/*.deb)
+ALL_DEBS=("$DEBS_DIR"/*.deb)
 shopt -u nullglob
+
+# Filter before publishing:
+#  * *-dbgsym_*  — debug symbols, useless to people installing the desktop.
+#    dde-control-center's is 126 MB because we skip dwz there (dwz 0.17
+#    fails on that binary), which alone would break the gh-pages push.
+#  * anything near GitHub's 100 MB per-file blob limit, as a safety net.
+DEBS=()
+for deb in "${ALL_DEBS[@]}"; do
+  base="$(basename "$deb")"
+  case "$base" in
+    *-dbgsym_*)
+      echo "publish-repo: skipping $base (debug symbols)"
+      continue
+      ;;
+  esac
+  size="$(stat -c%s "$deb")"
+  if (( size > 95 * 1024 * 1024 )); then
+    echo "publish-repo: skipping $base (too large for gh-pages: $((size / 1024 / 1024)) MB)"
+    continue
+  fi
+  DEBS+=("$deb")
+done
 
 if [[ ${#DEBS[@]} -eq 0 ]]; then
   echo "publish-repo: no .deb to publish" >&2
