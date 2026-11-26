@@ -252,7 +252,15 @@
       "depends": [
         "dtkcore"
       ],
-      "_note": "会话启动器。treeland.desktop / treeland-user.desktop 的 Exec 就是 /usr/bin/dde-session —— 没有它会话起不来。依赖 libcap-ng/libsecret/libsystemd/libx11 等，forky 全有。"
+      "_note": "会话启动器。treeland.desktop / treeland-user.desktop 的 Exec 就是 /usr/bin/dde-session —— 没有它会话起不来。依赖 libcap-ng/libsecret/libsystemd/libx11 等，forky 全有。 摘掉 forky 无法提供的运行时依赖（dde-session-shell 是 Qt5/lightdm 老锁屏；deepin-security-loader/lastore-daemon 在 GitHub 无源或依赖已删的老包名）。",
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": " deepin-security-loader,\n",
+          "replace": "",
+          "count": 1
+        }
+      ]
     },
     {
       "name": "deepin-pw-check",
@@ -375,7 +383,15 @@
         "dtkwidget",
         "dde-shell"
       ],
-      "_note": "polkit 认证代理。控制中心改系统设置要靠它弹密码框，缺了等于没有 root 提权入口。依赖 libpolkit-qt6-1-dev/libdtk6widget-dev/libdde-shell-dev，forky + 自建全能满足。"
+      "_note": "polkit 认证代理。控制中心改系统设置要靠它弹密码框，缺了等于没有 root 提权入口。依赖 libpolkit-qt6-1-dev/libdtk6widget-dev/libdde-shell-dev，forky + 自建全能满足。 摘掉 forky 无法提供的运行时依赖（dde-session-shell 是 Qt5/lightdm 老锁屏；deepin-security-loader/lastore-daemon 在 GitHub 无源或依赖已删的老包名）。",
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": ", dde-session-shell (>> 6.0.64),",
+          "replace": ",",
+          "count": 1
+        }
+      ]
     },
     {
       "name": "dde-services",
@@ -401,9 +417,15 @@
           "find": " libnet-dev,",
           "replace": " libnet1-dev,",
           "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " deepin-security-loader,\n",
+          "replace": "",
+          "count": 1
         }
       ],
-      "_note": "deepin 服务框架（service group / ipwatchd / shortcut / wallpapercache 等插件）。dde-control-center 硬依赖。forky 把 libnet-dev 叫 libnet1-dev。用 libsystemd（有 .pc），不需要 systemd.pc 的 patch。"
+      "_note": "deepin 服务框架（service group / ipwatchd / shortcut / wallpapercache 等插件）。dde-control-center 硬依赖。forky 把 libnet-dev 叫 libnet1-dev。用 libsystemd（有 .pc），不需要 systemd.pc 的 patch。 摘掉 forky 无法提供的运行时依赖（dde-session-shell 是 Qt5/lightdm 老锁屏；deepin-security-loader/lastore-daemon 在 GitHub 无源或依赖已删的老包名）。"
     },
     {
       "name": "dde-seatd",
@@ -582,8 +604,15 @@
           "find": "qt6-wayland-dev-tools",
           "replace": "qt6-wayland-dev",
           "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " lastore-daemon (>=5.2.9),\n",
+          "replace": "",
+          "count": 1
         }
-      ]
+      ],
+      "_note": " 摘掉 forky 无法提供的运行时依赖（dde-session-shell 是 Qt5/lightdm 老锁屏；deepin-security-loader/lastore-daemon 在 GitHub 无源或依赖已删的老包名）。"
     },
     {
       "name": "dde-shell",
