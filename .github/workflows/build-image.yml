@@ -54,7 +54,7 @@ jobs:
           IMG=$(ls out/*.img | head -1)
           LOOP=$(sudo losetup --show -fP "$IMG")
           sudo mkdir -p /mnt/img
-          sudo mount "${LOOP}p2" /mnt/img
+          sudo mount "${LOOP}p3" /mnt/img
           echo "--- 会话入口 ---"
           ls -l /mnt/img/usr/share/wayland-sessions/ 2>/dev/null || echo "缺 wayland-sessions"
           ls -l /mnt/img/usr/bin/treeland-user-wrapper 2>/dev/null || echo "缺 wrapper"

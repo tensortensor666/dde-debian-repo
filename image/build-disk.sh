@@ -127,26 +127,30 @@ log "7/9 建分区镜像 ($IMGSIZE)"
 IMG="$OUT/dde-$SUITE.img"
 rm -f "$IMG"
 truncate -s "$IMGSIZE" "$IMG"
+# GPT + BIOS 启动需要一个 1MiB 的 bios_grub 分区来放 core.img，
+# 否则 grub-install --target=i386-pc 会报 "will not proceed with blocklists"。
 parted -s "$IMG" mklabel gpt \
-  mkpart ESP fat32 1MiB 513MiB \
-  set 1 esp on \
-  mkpart root ext4 513MiB 100%
+  mkpart bios_grub 1MiB 2MiB \
+  set 1 bios_grub on \
+  mkpart ESP fat32 2MiB 514MiB \
+  set 2 esp on \
+  mkpart root ext4 514MiB 100%
 LOOP="$(losetup --show -fP "$IMG")"
 sleep 2
-[[ -b "${LOOP}p1" ]] || die "loop 分区节点没出现：${LOOP}p1"
-mkfs.vfat -F32 -n DDEESP "${LOOP}p1" >/dev/null
-mkfs.ext4 -L dderoot -q "${LOOP}p2"
+[[ -b "${LOOP}p3" ]] || die "loop 分区节点没出现：${LOOP}p3"
+mkfs.vfat -F32 -n DDEESP "${LOOP}p2" >/dev/null
+mkfs.ext4 -L dderoot -q "${LOOP}p3"
 
 log "8/9 灌入 rootfs 并装 bootloader"
-mount "${LOOP}p2" "$MNT"
+mount "${LOOP}p3" "$MNT"
 rsync -aHAX --numeric-ids "$ROOTFS/" "$MNT/"
 mkdir -p "$MNT/boot/efi"
-mount "${LOOP}p1" "$MNT/boot/efi"
+mount "${LOOP}p2" "$MNT/boot/efi"
 for d in dev proc sys; do mount --rbind "/$d" "$MNT/$d"; done
 cp /etc/resolv.conf "$MNT/etc/resolv.conf" 2>/dev/null || true
 
-ROOT_UUID="$(blkid -s UUID -o value "${LOOP}p2")"
-ESP_UUID="$(blkid -s UUID -o value "${LOOP}p1")"
+ROOT_UUID="$(blkid -s UUID -o value "${LOOP}p3")"
+ESP_UUID="$(blkid -s UUID -o value "${LOOP}p2")"
 cat > "$MNT/etc/fstab" <<EOF
 UUID=$ROOT_UUID /          ext4 errors=remount-ro 0 1
 UUID=$ESP_UUID  /boot/efi  vfat umask=0077        0 1
@@ -155,8 +159,8 @@ EOF
 chroot "$MNT" /bin/bash -c "
   set -e
   grub-install --target=x86_64-efi --efi-directory=/boot/efi \
-      --bootloader-id=DDE --removable --no-nvram --recheck
-  grub-install --target=i386-pc --recheck $LOOP
+      --bootloader-id=DDE --removable --no-nvram --no-floppy --recheck
+  grub-install --target=i386-pc --no-floppy --recheck $LOOP
   grub-mkconfig -o /boot/grub/grub.cfg
   update-initramfs -u -k all
 "
