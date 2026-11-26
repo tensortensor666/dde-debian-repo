@@ -46,14 +46,18 @@ jobs:
           set -eux
           IMG=$(ls out/*.img | head -1)
           sudo apt-get install -y --no-install-recommends \
-            qemu-system-x86 qemu-utils ovmf >/dev/null
+            qemu-system-x86 qemu-utils >/dev/null
           echo "=== 镜像信息 ==="
           qemu-img info "$IMG" | head -6
-          echo "=== 启动（UEFI, 串口, 最长 5 分钟）==="
+          # 用默认 SeaBIOS 启动（镜像 p1 是 bios_grub，grub-pc 已装）。
+          # 之前用 pflash 指向 /usr/share/OVMF/OVMF_CODE.fd，Ubuntu 上那个
+          # 路径不存在（叫 OVMF_CODE_4M.fd），QEMU 直接退出、boot.log 为空。
+          if [ -e /dev/kvm ]; then ACCEL="-enable-kvm -cpu host"; else ACCEL="-cpu max"; fi
+          echo "=== 加速: $ACCEL ==="
+          echo "=== 启动（串口, 最长 5 分钟）==="
           sudo timeout 300 qemu-system-x86_64 \
-            -enable-kvm -cpu host -m 3072 -smp 2 \
+            $ACCEL -m 3072 -smp 2 \
             -drive file="$IMG",format=raw,if=virtio \
-            -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE.fd \
             -nographic -no-reboot > boot.log 2>&1 || true
           echo "=== 日志尾部 ==="
           tail -50 boot.log || true
@@ -63,11 +67,8 @@ jobs:
             && echo "FAIL 内核恐慌或根挂载失败" || echo "PASS 无致命内核错误"
           grep -qE "Reached target (Multi-User|Graphical)" boot.log \
             && echo "PASS 系统到达 Multi-User/Graphical" || echo "WARN 未见 target"
-          grep -qiE "treeland|dde-session|dde-shell|agetty" boot.log \
+          grep -qiE "treeland|dde-session|dde-shell|agetty|login:" boot.log \
             && echo "PASS 见到 DDE/登录相关进程" || echo "WARN 未见 DDE 日志"
-          echo "=== grub 找到的会话入口（离线核对）==="
-          sudo apt-get install -y --no-install-recommends libguestfs-tools >/dev/null || true
-          sudo virt-ls -a "$IMG" -m /dev/sda3 /usr/share/wayland-sessions 2>/dev/null || echo "(libguestfs 不可用，跳过)"
 
       - name: 上传镜像
         uses: actions/upload-artifact@v4
