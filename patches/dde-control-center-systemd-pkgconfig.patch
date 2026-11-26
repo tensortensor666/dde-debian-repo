@@ -1,0 +1,16 @@
+diff --git a/src/dde-control-center/CMakeLists.txt b/src/dde-control-center/CMakeLists.txt
+index 21e0615..3fbc531 100644
+--- a/src/dde-control-center/CMakeLists.txt
++++ b/src/dde-control-center/CMakeLists.txt
+@@ -117,9 +117,8 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.deepin.dde.ControlCenter1.service
+ 
+ # systemd service
+ if (NOT DEFINED SYSTEMD_USER_UNIT_DIR)
+-    find_package(PkgConfig REQUIRED)
+-    pkg_check_modules(Systemd REQUIRED systemd)
+-    pkg_get_variable(SYSTEMD_USER_UNIT_DIR systemd systemduserunitdir)
++    # Debian forky no longer ships systemd.pc; use the standard path.
++    set(SYSTEMD_USER_UNIT_DIR "/usr/lib/systemd/user")
+ endif()
+ 
+ configure_file(

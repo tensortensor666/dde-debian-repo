@@ -510,9 +510,30 @@
           "find": "qt6-wayland-dev-tools",
           "replace": "qt6-wayland-dev",
           "count": 1
+        },
+        {
+          "file": "debian/rules",
+          "find": "DEB_CMAKE_EXTRA_FLAGS += -DENABLE_WARNINGS_AS_ERRORS=ON",
+          "replace": "DEB_CMAKE_EXTRA_FLAGS += -DENABLE_WARNINGS_AS_ERRORS=OFF",
+          "count": 1
+        },
+        {
+          "file": "debian/rules",
+          "find": "DEB_CMAKE_EXTRA_FLAGS += -DBUILD_TESTING=ON",
+          "replace": "DEB_CMAKE_EXTRA_FLAGS += -DBUILD_TESTING=OFF",
+          "count": 1
+        },
+        {
+          "file": "debian/rules",
+          "find": "%:\n\tdh $@ --parallel",
+          "replace": "override_dh_dwz:/n/ttrue/n/n%:/n/tdh $@ --parallel",
+          "count": 1
         }
       ],
-      "_note": "控制中心。forky 把我们需要的私有库都补齐了（libdareader/libdeepin-pw-check 自建）。qt6-wayland-dev-tools 已并入 qt6-wayland-dev → source_fix。"
+      "_note": "控制中心。forky 把我们需要的私有库都补齐了（libdareader/libdeepin-pw-check 自建）。qt6-wayland-dev-tools 已并入 qt6-wayland-dev → source_fix。 另：forky 无 systemd.pc → patch；Qt 6.11 下关掉 ENABLE_WARNINGS_AS_ERRORS 和 BUILD_TESTING（测试代码用旧 API）。",
+      "source_patches": [
+        "patches/dde-control-center-systemd-pkgconfig.patch"
+      ]
     },
     {
       "name": "dde-file-manager",
