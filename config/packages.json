@@ -273,7 +273,16 @@
       "depends": [
         "dtkcore",
         "dde-api"
-      ]
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/changelog",
+          "find": "+080\n",
+          "replace": "+0800\n",
+          "count": 3
+        }
+      ],
+      "_note": "forky 的新 debhelper 严格解析 changelog 时间戳；上游 3 处 +080 缺一位，source_fix 改 +0800。"
     },
     {
       "name": "dde-daemon",
