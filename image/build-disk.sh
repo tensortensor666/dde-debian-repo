@@ -89,16 +89,20 @@ deb [signed-by=/usr/share/keyrings/dde-repo.gpg] $OUR_REPO dde26 main
 EOF
 
 log "3/9 安装内核/固件（base）"
+# 注意：$BASE_PKGS 是多行字符串，直接塞进 bash -c "..." 会让每一行变成
+# 独立命令（"systemd-sysv: command not found"）。先压成一行。
+BASE_ONE="$(echo $BASE_PKGS)"
 chroot "$ROOTFS" /bin/bash -c "
   set -e
   apt-get update -qq
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $BASE_PKGS
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $BASE_ONE
 "
 
 log "4/9 安装 DDE 桌面（最耗时）"
+DESKTOP_ONE="$(echo $DESKTOP_PKGS)"
 chroot "$ROOTFS" /bin/bash -c "
   set -e
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DESKTOP_PKGS
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $DESKTOP_ONE
 "
 
 log "5/9 镜像内配置"
