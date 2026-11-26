@@ -37,27 +37,38 @@ for t in i386-pc x86_64-efi; do
   fi
 done
 
-grub-mkconfig -o "$DDIR/grub.cfg"
+# 自己写 grub.cfg：grub-mkconfig 的菜单只靠 search --fs-uuid 设 root，
+# 一旦 search 没生效就是 "file /boot/vmlinuz-... not found" +
+# "you need to load the kernel first"，没有兜底。
+# 这里两项：先按 UUID 搜（多盘/换口都正确），失败由 fallback 切到固定分区。
+cat > "$DDIR/grub.cfg" <<EOF
+set timeout=3
+set default=0
+set fallback="1"
 
-# grub-mkconfig 生成的菜单依赖 search --fs-uuid 定位 root，一旦 search 没能
-# 设上 root，就会 "error: file /boot/vmlinuz-... not found" 然后
-# "you need to load the kernel first"。再补一个用固定分区号的兜底菜单项。
-if [ -n "$ROOT_UUID" ] && [ -e "/boot/vmlinuz-$KVER" ]; then
-  cat >> "$DDIR/grub.cfg" <<EOF
+menuentry 'DDE on Debian forky' --class debian --class gnu-linux {
+    insmod part_gpt
+    insmod ext2
+    insmod gzio
+    search --no-floppy --fs-uuid --set=root $ROOT_UUID
+    echo 'Loading Linux $KVER ...'
+    linux /boot/vmlinuz-$KVER root=UUID=$ROOT_UUID $KERNEL_CMDLINE
+    echo 'Loading initial ramdisk ...'
+    initrd /boot/initrd.img-$KVER
+}
 
-menuentry 'DDE (fixed partition hd0,gpt3)' --class debian {
+menuentry 'DDE on Debian forky (fixed partition)' --class debian {
     insmod part_gpt
     insmod ext2
     insmod gzio
     set root=(hd0,gpt3)
-    echo 'Loading Linux $KVER (fixed partition) ...'
+    echo 'Loading Linux $KVER (fixed hd0,gpt3) ...'
     linux /boot/vmlinuz-$KVER root=UUID=$ROOT_UUID $KERNEL_CMDLINE
     echo 'Loading initial ramdisk ...'
     initrd /boot/initrd.img-$KVER
 }
 EOF
-  echo "  已追加固定分区兜底菜单项"
-fi
+echo "  grub.cfg 已写入（UUID=$(echo "$ROOT_UUID")）"
 
 # UEFI：生成"自包含"的 BOOTX64.EFI。
 # grub-install --removable 只放一个瘦引导器，运行时仍要按 prefix 去磁盘上找
