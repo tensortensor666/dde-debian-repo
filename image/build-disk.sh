@@ -54,15 +54,19 @@ mkdir -p "$ROOTFS" "$MNT" "$OUT"
 
 cleanup() {
   set +e
-  for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi"; do
-    mountpoint -q "$d" && umount -R "$d"
+  # mountpoint -q 对 --rbind 出来的子挂载不可靠，直接 umount -R 并忽略失败；
+  # 否则残留的 $MNT/sys 会让后面的 rm -rf 报
+  # "Operation not permitted" 并把整个脚本的退出码变成 32。
+  for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi" "$MNT"; do
+    umount -R "$d" 2>/dev/null
   done
-  mountpoint -q "$MNT" && umount -R "$MNT"
   for d in "$ROOTFS/dev" "$ROOTFS/proc" "$ROOTFS/sys"; do
-    mountpoint -q "$d" && umount -R "$d"
+    umount -R "$d" 2>/dev/null
   done
-  [[ -n "$LOOP" ]] && losetup -d "$LOOP" 2>/dev/null
-  rm -rf "$WORK"
+  [[ -n "$LOOP" ]] && { losetup -d "$LOOP" 2>/dev/null; sleep 1; }
+  # 先尝试干净删除，失败就留给系统 tmp 清理，绝不因为清理失败而让构建算失败
+  rm -rf "$WORK" 2>/dev/null
+  return 0
 }
 trap cleanup EXIT
 
@@ -175,13 +179,15 @@ chroot "$MNT" /bin/bash -c "
 "
 
 log "10/10 收尾"
-for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi"; do
-  mountpoint -q "$d" && umount -R "$d"
+# 同样别用 mountpoint 判断（--rbind 出来的子挂载识别不了），直接卸。
+for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi" "$MNT"; do
+  umount -R "$d" 2>/dev/null || true
 done
-umount "$MNT"
-losetup -d "$LOOP"; LOOP=""
+losetup -d "$LOOP" 2>/dev/null || true
+sleep 1
+LOOP=""
 if command -v qemu-img >/dev/null; then
-  qemu-img convert -f raw -O qcow2 "$IMG" "$OUT/dde-$SUITE.qcow2"
+  qemu-img convert -f raw -O qcow2 "$IMG" "$OUT/dde-$SUITE.qcow2" || warn "qcow2 转换失败（raw 仍可用）"
 fi
 
 ls -lh "$OUT"
