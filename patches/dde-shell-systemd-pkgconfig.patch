@@ -1,8 +1,23 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 57760c6..49add49 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -18,7 +18,9 @@ endif ()
+ 
+ set(CMAKE_CXX_STANDARD 17)
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+-add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:-Werror>)
++# Qt 6.11 deprecates QSortFilterProxyModel::invalidateFilter(); keep the
++# project's -Werror but don't fail on deprecated APIs from the newer Qt.
++add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:-Werror> $<$<COMPILE_LANGUAGE:CXX>:-Wno-error=deprecated-declarations>)
+ set(CMAKE_AUTORCC ON)
+ set(CMAKE_AUTOMOC ON)
+ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 diff --git a/shell/CMakeLists.txt b/shell/CMakeLists.txt
-index 8f6adb1..6759099 100644
+index 8f6adb1..d05e9ea 100644
 --- a/shell/CMakeLists.txt
 +++ b/shell/CMakeLists.txt
-@@ -8,9 +8,9 @@ find_package(TreelandProtocols REQUIRED)
+@@ -8,9 +8,8 @@ find_package(TreelandProtocols REQUIRED)
  pkg_check_modules(WaylandClient REQUIRED IMPORTED_TARGET wayland-client)
  
  if (NOT DEFINED SYSTEMD_USER_UNIT_DIR)
@@ -10,7 +25,6 @@ index 8f6adb1..6759099 100644
 -    pkg_check_modules(Systemd REQUIRED systemd)
 -    pkg_get_variable(SYSTEMD_USER_UNIT_DIR systemd systemduserunitdir)
 +    # Debian forky no longer ships systemd.pc; use the standard path.
-+    # (pkg_check_modules would fail with "Package 'systemd' not found".)
 +    set(SYSTEMD_USER_UNIT_DIR "/usr/lib/systemd/user")
  endif()
  
