@@ -29,8 +29,13 @@ MAX_LAYERS = 7  # L0..L6; bump together with build.yml jobs if the DAG gets deep
 # Anything that changes how a package is built invalidates its deb cache.
 # Keep this list small and explicit: adding a file here effectively busts the
 # cache for every package once, which is the safe side to err on.
+#
+# gen_matrix.py itself is intentionally NOT listed: it only computes layers and
+# emits matrix fields, it never changes a build product. Listing it meant that
+# bumping MAX_LAYERS (a pure scheduling change) rebuilt every package from
+# scratch. If a future edit here changes the *meaning* of a field that ends up
+# in payload below, add it back for exactly one run to bust the cache.
 BUILD_INPUTS = (
-    "scripts/gen_matrix.py",
     "scripts/fetch-source.sh",
     "scripts/setup-local-repo.sh",
     "scripts/drop-patches.py",
