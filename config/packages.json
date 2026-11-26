@@ -408,6 +408,12 @@
           "find": " golang-github-lofanmi-pinyin-dev,\n",
           "replace": "",
           "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " deepin-gettext-tools,\n",
+          "replace": " deepin-gettext-tools,\n libcrypt-dev,\n",
+          "count": 1
         }
       ],
       "_note": "DDE 的系统服务总成（电源/账户/网络/音频/显示/输入法/时间等）。makefile 构建 + GO111MODULE=off + GOPATH，依赖装在 /usr/share/gocode。上游 control 列的 lofanmi-pinyin 在 forky 无 packaging 且源码根本不 import → source_fix 删行。policy 生成依赖 deepin-gettext-tools 提供的 deepin-policy-ts-convert（forky 有）。"
@@ -489,11 +495,24 @@
       "repo": "linuxdeepin/dde-control-center",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
         "dtkdeclarative",
-        "dde-daemon"
-      ]
+        "dde-api",
+        "dde-shell",
+        "dde-tray-loader",
+        "dareader",
+        "deepin-pw-check"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "qt6-wayland-dev-tools",
+          "replace": "qt6-wayland-dev",
+          "count": 1
+        }
+      ],
+      "_note": "控制中心。forky 把我们需要的私有库都补齐了（libdareader/libdeepin-pw-check 自建）。qt6-wayland-dev-tools 已并入 qt6-wayland-dev → source_fix。"
     },
     {
       "name": "dde-file-manager",
