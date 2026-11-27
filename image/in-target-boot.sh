@@ -71,14 +71,25 @@ esac
 udevadm settle --timeout=60 2>/dev/null || true
 udevadm control --exit 2>/dev/null || true
 
-[ -d "${rootmnt:?}/dev" ] || mkdir -m 0755 "${rootmnt}/dev"
-[ -d "${rootmnt}/dev/pts" ] || mkdir -m 0755 "${rootmnt}/dev/pts"
-[ -d "${rootmnt}/run" ] || mkdir -m 0755 "${rootmnt}/run"
+echo "--- DDE initramfs: rootmnt=${rootmnt:?} ---"
+ls -ld "${rootmnt}" "${rootmnt}/dev" "${rootmnt}/run" 2>&1 || true
+
+# 内核命令行带 ro，initramfs 以只读方式挂载根文件系统。构建期虽然已经
+# 放好了静态节点，但如果这里发现目录缺失，mkdir/mknod 会直接被
+# "Read-only file system" 挡住（run 45929206402 就是这样）。先临时改成
+# rw，补齐节点后再改回 ro。
+mount -n -o remount,rw "${rootmnt}" 2>/dev/null || true
+mkdir -p "${rootmnt}/dev" "${rootmnt}/dev/pts" "${rootmnt}/run"
 
 mknod -m 622 "${rootmnt}/dev/console" c 5 1 2>/dev/null || true
 mknod -m 666 "${rootmnt}/dev/null"   c 1 3 2>/dev/null || true
 mknod -m 666 "${rootmnt}/dev/zero"   c 1 5 2>/dev/null || true
 mknod -m 666 "${rootmnt}/dev/tty"    c 5 0 2>/dev/null || true
+
+echo "--- DDE initramfs: fixed nodes ---"
+ls -l "${rootmnt}/dev/console" "${rootmnt}/dev/null" \
+      "${rootmnt}/dev/zero" "${rootmnt}/dev/tty" 2>&1 || true
+mount -n -o remount,ro "${rootmnt}" 2>/dev/null || true
 UDEV_EOF
 chmod +x /etc/initramfs-tools/scripts/init-bottom/udev
 echo "  initramfs init-bottom/udev 已覆盖（保留 rootfs 的静态 /dev）"
