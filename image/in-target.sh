@@ -79,7 +79,9 @@ echo ">> grub: 串口控制台（CI 里用 qemu -nographic 才能看到启动过
 if [ -f /etc/default/grub ]; then
   # 不要 quiet：它把 loglevel 压到 4，内核的 "Linux version" 之类 INFO
   # 全被丢掉，串口就只有 GRUB 菜单、看着像内核没启动。
-  sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0,115200 console=tty0 loglevel=7"/' /etc/default/grub
+  # ttyS0 必须放最后：/dev/console 指向最后一个 console，systemd 日志
+  # 只写 /dev/console；放 tty0 后面会让串口看不到任何 systemd 输出。
+  sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="console=tty0 console=ttyS0,115200 loglevel=7 systemd.show_status=yes"/' /etc/default/grub
   grep -q '^GRUB_TERMINAL' /etc/default/grub || echo 'GRUB_TERMINAL="console serial"' >> /etc/default/grub
   grep -q '^GRUB_SERIAL_COMMAND' /etc/default/grub || echo 'GRUB_SERIAL_COMMAND="serial --speed=115200"' >> /etc/default/grub
 fi
