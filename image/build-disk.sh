@@ -170,7 +170,8 @@ log "9/10 灌入 rootfs 并装 bootloader"
 mount "${LOOP}p3" "$MNT"
 rsync -aHAX --numeric-ids "$ROOTFS/" "$MNT/"
 echo "--- rsync 后 MNT 快照 ---"
-du -sh "$MNT"
+# /proc 还挂着时 du 会撞到瞬时消失的 fd，返回非 0；诊断不能影响构建。
+du -sh "$MNT" 2>/dev/null || true
 ls -la "$MNT" | head -20
 
 # initramfs 的 run-init 在 udev 启动之前就要 /dev/console 和 /sbin/init。
@@ -229,7 +230,7 @@ grep -m2 -E "^[[:space:]]*linux" "$MNT/boot/grub/grub.cfg" || echo "(没找到 l
 
 log "10/10 收尾"
 echo "--- 收尾前 MNT 快照 ---"
-du -sh "$MNT"
+du -sh "$MNT" 2>/dev/null || true
 ls -la "$MNT" | head -20
 # 先常规卸载，再用 findmnt -R 扫尾；$MNT 没卸干净时绝不能继续。
 for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi" "$MNT"; do
