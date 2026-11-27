@@ -21,7 +21,7 @@ OUT="${1:-$PWD/out}"
 DESKTOP_PKGS="
 dde-session dde-shell dde-launchpad dde-application-manager
 dde-tray-loader dde-daemon dde-appearance dde-control-center dde-polkit-agent
-dde-services deepin-desktop-schemas deepin-icon-theme dde-api
+dde-services deepin-desktop-schemas deepin-icon-theme dde-api dde-desktop
 ddm treeland treeland-wayland-session
 "
 

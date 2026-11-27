@@ -5,6 +5,11 @@ USER_NAME="${IMAGE_USER:-deepin}"
 USER_UID="$(id -u "$USER_NAME")"
 HOME_DIR="$(getent passwd "$USER_NAME" | cut -d: -f6)"
 SESSION_OK=0
+PLUGIN_OK=0
+if dpkg-query -W -f='${Status}' dde-desktop 2>/dev/null | grep -q 'install ok installed' \
+    && compgen -G '/usr/lib/*/dde-shell/org.deepin.ds.desktop.so' >/dev/null; then
+  PLUGIN_OK=1
+fi
 
 exec >>/dev/console 2>&1
 
@@ -57,11 +62,16 @@ journalctl -b _UID="$USER_UID" -p warning --no-pager -o short-precise 2>/dev/nul
 echo "--- user session stderr ---"
 tail -200 "$HOME_DIR/.local/share/ddm/wayland-session.log" 2>/dev/null || true
 
-if (( SESSION_OK == 1 )); then
+if (( PLUGIN_OK == 1 )); then
+  echo "DDE_DESKTOP_PLUGIN_CHECK_RESULT=PASS"
+else
+  echo "DDE_DESKTOP_PLUGIN_CHECK_RESULT=FAIL"
+fi
+if (( SESSION_OK == 1 && PLUGIN_OK == 1 )); then
   echo "DDE_SESSION_CHECK_RESULT=PASS"
 else
   echo "DDE_SESSION_CHECK_RESULT=FAIL"
 fi
 echo "=== DDE_SESSION_CHECK_END ==="
 
-(( SESSION_OK == 1 ))
+(( SESSION_OK == 1 && PLUGIN_OK == 1 ))

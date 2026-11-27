@@ -169,7 +169,12 @@ jobs:
         run: |
           set -eux
           cd src
-          mk-build-deps -i -r -t 'apt-get -y --no-install-recommends' debian/control
+          mk-build-deps debian/control
+          build_deps_deb=$(find . -maxdepth 1 -name '*-build-deps_*.deb' -print -quit)
+          test -n "$build_deps_deb"
+          apt-get install -y --no-install-recommends "./$build_deps_deb"
+          apt-get remove -y "$(dpkg-deb -f "$build_deps_deb" Package)"
+          rm -f "$build_deps_deb"
 
       - name: Build binary package
         if: steps.cached.outputs.hit != 'true'

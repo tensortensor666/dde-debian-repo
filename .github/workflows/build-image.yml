@@ -133,6 +133,13 @@ jobs:
             echo "FAIL DDM 自动登录未启动完整用户桌面（查看 boot.log 中的 DDE_SESSION_CHECK）"
             BOOT_OK=0
           fi
+          if grep -q "DDE_DESKTOP_PLUGIN_CHECK_RESULT=PASS" boot.log \
+              && ! grep -qF 'Loading plugin failed: "org.deepin.ds.desktop"' boot.clean.log; then
+            echo "PASS DDE 桌面插件 org.deepin.ds.desktop 已安装并加载"
+          else
+            echo "FAIL DDE 桌面插件 org.deepin.ds.desktop 未安装或未加载"
+            BOOT_OK=0
+          fi
           [ "$BOOT_OK" -eq 1 ] || { echo "启动验证未通过"; exit 1; }
 
       - name: 上传启动日志（单独小文件，便于失败时快速取回）

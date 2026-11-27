@@ -722,15 +722,162 @@
       ]
     },
     {
+      "name": "deepin-pdfium",
+      "repo": "linuxdeepin/deepin-pdfium",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "libfreetype6-dev",
+          "replace": "libfreetype-dev",
+          "count": 1
+        }
+      ],
+      "_note": "dde-file-manager 桌面插件需要的 PDF 库；forky 将 libfreetype6-dev 更名为 libfreetype-dev。"
+    },
+    {
+      "name": "util-dfm",
+      "repo": "linuxdeepin/util-dfm",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkcore"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": " libboost-filesystem-dev,\n libboost-system-dev",
+          "replace": " libboost-filesystem-dev",
+          "count": 1
+        },
+        {
+          "file": "debian/control.in",
+          "find": " libboost-filesystem-dev,\n libboost-system-dev",
+          "replace": " libboost-filesystem-dev",
+          "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " libudisks2-dev,",
+          "replace": " libudisks2-dev,\n libmount-dev,",
+          "count": 1
+        },
+        {
+          "file": "debian/control.in",
+          "find": " libudisks2-dev,",
+          "replace": " libudisks2-dev,\n libmount-dev,",
+          "count": 1
+        }
+      ],
+      "_note": "提供 libdfm6-io/mount/burn/search 及开发包。Boost 1.92 不再需要独立 system 组件；显式补 libmount-dev 供 mount pkg-config 使用。"
+    },
+    {
+      "name": "image-editor",
+      "repo": "linuxdeepin/image-editor",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "util-dfm",
+        "dtkwidget"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "libqt6svg6-dev",
+          "replace": "qt6-svg-dev",
+          "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": " libqt6opengl6-dev,\n",
+          "replace": "",
+          "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": "libfreetype6-dev",
+          "replace": "libfreetype-dev",
+          "count": 1
+        }
+      ],
+      "_note": "提供 libimageeditor6/libimageeditor6-dev。forky 的 Qt SVG/FreeType 开发包改名，Qt6 base 已包含 OpenGL 开发文件。"
+    },
+    {
+      "name": "deepin-movie-reborn",
+      "repo": "linuxdeepin/deepin-movie-reborn",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkcore",
+        "dtkgui",
+        "dtkwidget"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "    libqt6opengl6-dev,\n",
+          "replace": "",
+          "count": 1
+        },
+        {
+          "file": "debian/control",
+          "find": "libavcodec58(>= 7:4.0) | libavcodec60(>= 7:6.0), libavformat58(>= 7:4.1) | libavformat60(>= 7:6.0), libavutil56(>= 7:4.0) | libavutil58(>= 7:6.0)",
+          "replace": "libavcodec63 (>= 7:6.0), libavformat63 (>= 7:6.0), libavutil61 (>= 7:6.0)",
+          "count": 2
+        }
+      ],
+      "_note": "为 dde-file-manager 桌面插件提供 libdmr/libdmr-dev。forky 的 Qt6 已包含 OpenGL 开发文件，FFmpeg 运行时包名更新为 libavcodec63/libavformat63/libavutil61。"
+    },
+    {
       "name": "dde-file-manager",
       "repo": "linuxdeepin/dde-file-manager",
       "ref": "master",
       "source": "git",
-      "enabled": false,
+      "enabled": true,
       "depends": [
         "dtkwidget",
-        "dde-daemon"
-      ]
+        "dde-daemon",
+        "dde-shell",
+        "dde-tray-loader",
+        "deepin-service-manager",
+        "util-dfm",
+        "image-editor",
+        "deepin-pdfium",
+        "deepin-movie-reborn"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "libtag1-dev",
+          "replace": "libtag-dev",
+          "count": 1
+        },
+        {
+          "file": "debian/control.in",
+          "find": "libtag1-dev",
+          "replace": "libtag-dev",
+          "count": 1
+        },
+        {
+          "file": "debian/control.in",
+          "find": "libpoppler-cpp0v5",
+          "replace": "libpoppler-cpp3",
+          "count": 1
+        },
+        {
+          "file": "debian/rules",
+          "find": "-DCMAKE_BUILD_TYPE=Release",
+          "replace": "-DCMAKE_BUILD_TYPE=Release -DOPT_ENABLE_BUILD_UT=OFF -DOPT_ENABLE_BUILD_TESTS=OFF -DOPT_ENABLE_BUILD_DOCS=OFF",
+          "count": 1
+        }
+      ],
+      "_note": "提供 dde-shell 桌面插件 org.deepin.ds.desktop（dde-desktop 包）。镜像只安装 dde-desktop，不装依赖 Deepin 专有服务的前端；forky 包名适配 libtag/libpoppler-cpp3，并关闭测试与文档构建。"
     },
     {
       "name": "dde-launchpad",
