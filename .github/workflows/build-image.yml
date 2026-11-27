@@ -122,3 +122,11 @@ jobs:
             boot.log
           compression-level: 0
           retention-days: 14
+
+      - name: 上传启动日志（单独小文件，便于失败时快速取回）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dde-forky-bootlog
+          path: boot.log
+          retention-days: 14

@@ -207,6 +207,12 @@ log "10/10 收尾"
 for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi" "$MNT"; do
   umount -R "$d" 2>/dev/null || true
 done
+# 卸载后复查一次：rbind /dev 期间看到的 /dev/console 可能是宿主机的，
+# 这里才是最终镜像里真正存在的文件。
+echo "--- 卸载后镜像内的 init/console ---"
+ls -l "$MNT/sbin/init" "$MNT/usr/lib/systemd/systemd" "$MNT/dev/console" 2>&1 || true
+ls -ld "$MNT/sbin" "$MNT/usr" "$MNT/lib" "$MNT/dev" 2>&1 || true
+sync
 losetup -d "$LOOP" 2>/dev/null || true
 sleep 1
 LOOP=""
