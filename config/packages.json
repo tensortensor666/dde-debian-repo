@@ -586,7 +586,15 @@
         "dtkcore",
         "dtkgui"
       ],
-      "_note": "外观、主题、字体与光标服务，提供 org.deepin.dde.appearance DConfig；dde-daemon 音效和 dde-shell 外观代理都要求它。"
+      "source_fixes": [
+        {
+          "file": "debian/control",
+          "find": "libgdk-pixbuf2.0-0",
+          "replace": "libgdk-pixbuf-2.0-0",
+          "count": 1
+        }
+      ],
+      "_note": "外观、主题、字体与光标服务，提供 org.deepin.dde.appearance DConfig；dde-daemon 音效和 dde-shell 外观代理都要求它。forky 将 libgdk-pixbuf2.0-0 更名为 libgdk-pixbuf-2.0-0。"
     },
     {
       "name": "treeland",
@@ -809,9 +817,15 @@
           "find": "libfreetype6-dev",
           "replace": "libfreetype-dev",
           "count": 1
+        },
+        {
+          "file": "CMakeLists.txt",
+          "find": "cmake_minimum_required(VERSION 3.0.0)",
+          "replace": "cmake_minimum_required(VERSION 3.16)",
+          "count": 1
         }
       ],
-      "_note": "提供 libimageeditor6/libimageeditor6-dev。forky 的 Qt SVG/FreeType 开发包改名，Qt6 base 已包含 OpenGL 开发文件。"
+      "_note": "提供 libimageeditor6/libimageeditor6-dev。forky 的 Qt SVG/FreeType 开发包改名，Qt6 base 已包含 OpenGL 开发文件；CMake 4 已移除 3.5 以下兼容模式。"
     },
     {
       "name": "deepin-movie-reborn",
@@ -836,9 +850,15 @@
           "find": "libavcodec58(>= 7:4.0) | libavcodec60(>= 7:6.0), libavformat58(>= 7:4.1) | libavformat60(>= 7:6.0), libavutil56(>= 7:4.0) | libavutil58(>= 7:6.0)",
           "replace": "libavcodec63 (>= 7:6.0), libavformat63 (>= 7:6.0), libavutil61 (>= 7:6.0)",
           "count": 2
+        },
+        {
+          "file": "debian/changelog",
+          "find": "Mar, 01 Fri 2024 14:25:15 +0800",
+          "replace": "Fri, 01 Mar 2024 14:25:15 +0800",
+          "count": 1
         }
       ],
-      "_note": "为 dde-file-manager 桌面插件提供 libdmr/libdmr-dev。forky 的 Qt6 已包含 OpenGL 开发文件，FFmpeg 运行时包名更新为 libavcodec63/libavformat63/libavutil61。"
+      "_note": "为 dde-file-manager 桌面插件提供 libdmr/libdmr-dev。forky 的 Qt6 已包含 OpenGL 开发文件，FFmpeg 运行时包名更新为 libavcodec63/libavformat63/libavutil61；修正上游 changelog 的非法时间戳。"
     },
     {
       "name": "dde-file-manager",
