@@ -86,8 +86,18 @@ if [ -f /etc/default/grub ]; then
   grep -q '^GRUB_SERIAL_COMMAND' /etc/default/grub || echo 'GRUB_SERIAL_COMMAND="serial --speed=115200"' >> /etc/default/grub
 fi
 
-echo ">> 清理首次开机的阻塞项"
+echo ">> machine-id：必须真实存在，否则 accounts-daemon 直接 abort，"
+echo ">> treeland 拿不到 org.freedesktop.Accounts 会 Fatal，桌面就起不来。"
+# systemd-firstboot 已 mask，指望首启自动生成会落空；这里直接落盘一个。
+if [[ ! -s /etc/machine-id ]]; then
+  systemd-machine-id-setup 2>/dev/null || true
+fi
+if [[ ! -s /etc/machine-id ]]; then
+  tr -d '-' < /proc/sys/kernel/random/uuid > /etc/machine-id
+fi
+chmod 444 /etc/machine-id
+mkdir -p /var/lib/dbus
+ln -sfn /etc/machine-id /var/lib/dbus/machine-id
 systemctl mask systemd-firstboot.service 2>/dev/null || true
-rm -f /etc/machine-id
 
 echo ">> 配置完成"
