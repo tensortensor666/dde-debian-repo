@@ -182,6 +182,16 @@ mknod -m 666 "$MNT/dev/zero" c 1 5 2>/dev/null || true
 mknod -m 666 "$MNT/dev/tty" c 5 0 2>/dev/null || true
 ls -l "$MNT/sbin/init" "$MNT/dev/console" 2>&1 || true
 
+# systemd 是动态链接的；缺 loader 时 run-init 也会报 "No such file or
+# directory"，但错误信息只会指向 /sbin/init，非常误导。构建期先断言。
+[[ -e "$MNT/lib64/ld-linux-x86-64.so.2" ]] \
+  || die "rootfs 缺少 /lib64/ld-linux-x86-64.so.2"
+echo "--- init 运行依赖 ---"
+ls -l "$MNT/lib64/ld-linux-x86-64.so.2" \
+      "$MNT/usr/lib/x86_64-linux-gnu/libc.so.6" 2>&1 || true
+find "$MNT/usr/lib/x86_64-linux-gnu/systemd" -maxdepth 1 \
+  -type f -name 'libsystemd-*.so' -printf '%f\n' 2>/dev/null | head -10 || true
+
 echo "--- 内核命令行（grub 前）---"
 grep -E "^(GRUB_CMDLINE|GRUB_TERMINAL|GRUB_SERIAL)" "$MNT/etc/default/grub" || echo "(无 /etc/default/grub)"
 mkdir -p "$MNT/boot/efi"

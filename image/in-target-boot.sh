@@ -139,6 +139,43 @@ virtio_net
 scsi_mod
 ext4
 MODS
+
+# initramfs-tools 0.151 自带的 /scripts/init-bottom/udev 在
+# `mount -n -o move /dev ${rootmnt}/dev` 失败时会执行
+#   rm -rf /dev && ln -s "${rootmnt}/dev" /dev
+# 这个绝对符号链接在 run-init chroot 到 ${rootmnt} 后指向不存在的
+# /root/dev，于是同时报：
+#   run-init: opening console: No such file or directory
+#   Target filesystem doesn't have requested /sbin/init.
+# 实测镜像 rootfs 里 /dev/console 和 /sbin/init 都存在，问题在链接。
+# 用 /etc 同名脚本覆盖出厂脚本：不移动 /dev，只确保 rootfs 里有
+# run-init 必需的最小设备节点；systemd 启动后会自行接管 /dev。
+mkdir -p /etc/initramfs-tools/scripts/init-bottom
+cat > /etc/initramfs-tools/scripts/init-bottom/udev <<'UDEV_EOF'
+#!/bin/sh
+PREREQS=""
+case "$1" in
+    prereqs)
+        echo "$PREREQS"
+        exit 0
+        ;;
+esac
+
+udevadm settle --timeout=60 2>/dev/null || true
+udevadm control --exit 2>/dev/null || true
+
+[ -d "${rootmnt:?}/dev" ] || mkdir -m 0755 "${rootmnt}/dev"
+[ -d "${rootmnt}/dev/pts" ] || mkdir -m 0755 "${rootmnt}/dev/pts"
+[ -d "${rootmnt}/run" ] || mkdir -m 0755 "${rootmnt}/run"
+
+mknod -m 622 "${rootmnt}/dev/console" c 5 1 2>/dev/null || true
+mknod -m 666 "${rootmnt}/dev/null"   c 1 3 2>/dev/null || true
+mknod -m 666 "${rootmnt}/dev/zero"   c 1 5 2>/dev/null || true
+mknod -m 666 "${rootmnt}/dev/tty"    c 5 0 2>/dev/null || true
+UDEV_EOF
+chmod +x /etc/initramfs-tools/scripts/init-bottom/udev
+echo "  initramfs init-bottom/udev 已覆盖（保留 rootfs 的静态 /dev）"
+
 update-initramfs -u -k all
 
 echo "--- initramfs 中的存储驱动 ---"
