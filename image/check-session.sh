@@ -7,6 +7,7 @@ HOME_DIR="$(getent passwd "$USER_NAME" | cut -d: -f6)"
 SESSION_OK=0
 SHELL_OK=0
 PLUGIN_OK=0
+FILE_MANAGER_OK=0
 APPEARANCE_OK=0
 AUDIO_OK=0
 
@@ -86,6 +87,17 @@ if journalctl -b _UID="$USER_UID" --no-pager 2>/dev/null \
   PLUGIN_OK=0
 fi
 
+if dpkg-query -W -f='${Status}' dde-file-manager 2>/dev/null | grep -q 'install ok installed' \
+    && [ -x /usr/bin/dde-file-manager ] \
+    && [ -f /usr/share/applications/dde-file-manager.desktop ] \
+    && xdg-mime query default inode/directory 2>/dev/null | grep -qx 'dde-file-manager.desktop'; then
+  FILE_MANAGER_OK=1
+fi
+
+echo "--- file manager ---"
+dpkg-query -W -f='${Package} ${Version} ${Status}\n' dde-file-manager 2>/dev/null || true
+xdg-mime query default inode/directory 2>/dev/null || true
+
 echo "--- systemd units ---"
 systemctl is-active ddm.service treeland.service accounts-daemon.service || true
 
@@ -132,6 +144,11 @@ if (( PLUGIN_OK == 1 )); then
 else
   echo "DDE_DESKTOP_PLUGIN_CHECK_RESULT=FAIL"
 fi
+if (( FILE_MANAGER_OK == 1 )); then
+  echo "DDE_FILE_MANAGER_CHECK_RESULT=PASS"
+else
+  echo "DDE_FILE_MANAGER_CHECK_RESULT=FAIL"
+fi
 if (( APPEARANCE_OK == 1 )); then
   echo "DDE_APPEARANCE_CHECK_RESULT=PASS"
 else
@@ -142,11 +159,11 @@ if (( AUDIO_OK == 1 )); then
 else
   echo "DDE_AUDIO_CHECK_RESULT=FAIL"
 fi
-if (( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 )); then
+if (( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && FILE_MANAGER_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 )); then
   echo "DDE_SESSION_CHECK_RESULT=PASS"
 else
   echo "DDE_SESSION_CHECK_RESULT=FAIL"
 fi
 echo "=== DDE_SESSION_CHECK_END ==="
 
-(( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 ))
+(( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && FILE_MANAGER_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 ))

@@ -22,6 +22,7 @@ DESKTOP_PKGS="
 dde-session dde-shell dde-launchpad dde-application-manager
 dde-tray-loader dde-daemon dde-appearance dde-control-center dde-polkit-agent
 dde-services deepin-desktop-schemas deepin-icon-theme dde-api dde-desktop
+dde-file-manager dde-disk-mount-plugin
 ddm treeland treeland-wayland-session
 "
 
@@ -36,7 +37,7 @@ network-manager sudo passwd
 accountsservice polkitd upower rtkit wireplumber
 seatd dbus-user-session
 fonts-noto-cjk fonts-dejavu-core
-qt6-svg-plugins gtk-update-icon-cache
+qt6-svg-plugins gtk-update-icon-cache desktop-file-utils xdg-utils
 bash-completion nano less
 "
 

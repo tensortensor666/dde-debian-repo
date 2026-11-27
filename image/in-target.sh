@@ -86,7 +86,35 @@ cp -f /usr/share/icons/bloom/apps/48/deepin-multitasking-view.svg \
   /usr/share/icons/hicolor/48x48/apps/
 cp -f /usr/share/icons/Adwaita/scalable/places/user-trash.svg \
   /usr/share/icons/hicolor/48x48/places/
+cp -f /usr/share/icons/Sea/apps/scalable/dde-file-manager.svg \
+  /usr/share/icons/hicolor/48x48/apps/
 gtk-update-icon-cache -f -t /usr/share/icons/hicolor
+
+echo ">> Deepin 文件管理器：默认关联、搜索与主题"
+cat > /etc/xdg/mimeapps.list <<'EOF'
+[Default Applications]
+inode/directory=dde-file-manager.desktop;
+
+[Added Associations]
+inode/directory=dde-file-manager.desktop;
+EOF
+update-desktop-database /usr/share/applications
+
+# Deepin Anything 索引服务不在本镜像中；禁用依赖它的全文/智能搜索，
+# 保留文件管理器自身的普通文件名搜索。
+FM_SEARCH_CFG=/etc/dsg/configs/overrides/org.deepin.dde.file-manager.search/org.deepin.dde.file-manager.search
+mkdir -p "$FM_SEARCH_CFG"
+cat > "$FM_SEARCH_CFG/debian-defaults.json" <<'EOF'
+{
+  "magic": "dsg.config.override",
+  "version": "1.0",
+  "contents": {
+    "enableFileIndexSearch": { "value": false, "serial": 1 },
+    "enableFullTextSearch": { "value": false, "serial": 1 },
+    "enableSemanticSearch": { "value": false, "serial": 1 }
+  }
+}
+EOF
 
 echo ">> 会话环境变量"
 mkdir -p /etc/environment.d

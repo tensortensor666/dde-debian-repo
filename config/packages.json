@@ -861,6 +861,17 @@
       "_note": "为 dde-file-manager 桌面插件提供 libdmr/libdmr-dev。forky 的 Qt6 已包含 OpenGL 开发文件，FFmpeg 运行时包名更新为 libavcodec63/libavformat63/libavutil61；修正上游 changelog 的非法时间戳。"
     },
     {
+      "name": "dde-device-formatter",
+      "repo": "linuxdeepin/dde-device-formatter",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dtkwidget"
+      ],
+      "_note": "dde-file-manager 前端硬依赖的图形化磁盘格式化工具；forky 的 Qt6、DTK6 和 libudisks2-qt6 开发包均可直接构建。"
+    },
+    {
       "name": "dde-file-manager",
       "repo": "linuxdeepin/dde-file-manager",
       "ref": "master",
@@ -875,7 +886,8 @@
         "util-dfm",
         "image-editor",
         "deepin-pdfium",
-        "deepin-movie-reborn"
+        "deepin-movie-reborn",
+        "dde-device-formatter"
       ],
       "source_fixes": [
         {
@@ -897,13 +909,37 @@
           "count": 1
         },
         {
+          "file": "debian/control.in",
+          "find": " deepin-desktop-base | deepin-desktop-server | deepin-desktop-device,\n",
+          "replace": "",
+          "count": 1
+        },
+        {
+          "file": "debian/control.in",
+          "find": " deepin-anything-index,\n",
+          "replace": "",
+          "count": 1
+        },
+        {
+          "file": "debian/control.in",
+          "find": " libtss2-tcti-pcap0,",
+          "replace": " libtss2-tcti-pcap0t64,",
+          "count": 1
+        },
+        {
+          "file": "debian/control.in",
+          "find": "Recommends: avfs, samba, deepin-anything-server",
+          "replace": "Recommends: avfs, samba",
+          "count": 1
+        },
+        {
           "file": "debian/rules",
           "find": "-DCMAKE_BUILD_TYPE=Release",
           "replace": "-DCMAKE_BUILD_TYPE=Release -DOPT_ENABLE_BUILD_UT=OFF -DOPT_ENABLE_BUILD_TESTS=OFF -DOPT_ENABLE_BUILD_DOCS=OFF",
           "count": 1
         }
       ],
-      "_note": "提供 dde-shell 桌面插件 org.deepin.ds.desktop（dde-desktop 包）。镜像只安装 dde-desktop，不装依赖 Deepin 专有服务的前端；forky 包名适配 libtag/libpoppler-cpp3，并关闭测试与文档构建。"
+      "_note": "同时提供 dde-shell 桌面插件 org.deepin.ds.desktop（dde-desktop）和镜像里的文件管理器前端。forky 适配 libtag/libpoppler-cpp3 与 TPM2 运行库名；移除未提供的 deepin-desktop-base 元包和 deepin-anything 索引硬依赖，镜像内改为保留普通搜索、关闭依赖专有索引的全文/智能搜索。"
     },
     {
       "name": "dde-launchpad",
