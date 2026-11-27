@@ -36,6 +36,7 @@ network-manager sudo passwd
 accountsservice polkitd upower rtkit wireplumber
 seatd dbus-user-session
 fonts-noto-cjk fonts-dejavu-core
+qt6-svg-plugins gtk-update-icon-cache
 bash-completion nano less
 "
 

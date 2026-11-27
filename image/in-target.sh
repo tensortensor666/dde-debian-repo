@@ -37,6 +37,12 @@ echo "root:$USER_PASS" | chpasswd
 echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-image
 chmod 440 /etc/sudoers.d/90-image
 
+echo ">> DDE 锁屏服务用户"
+getent group lightdm >/dev/null || groupadd --system lightdm
+id lightdm >/dev/null 2>&1 || useradd --system --gid lightdm \
+  --home-dir /var/lib/lightdm --shell /usr/sbin/nologin lightdm
+install -d -o lightdm -g lightdm -m 0750 /var/lib/lightdm
+
 echo ">> DDM 自动登录（必须走真正的图形会话，否则 graphical-session.target 起不来）"
 # tty1 + agetty --autologin 只能拿到 CLASS=user 的会话；logind 不会激活
 # graphical-session.target，dde-shell 的桌面插件永远不启动，屏幕只有光标。
@@ -57,6 +63,30 @@ EOF
 # pam_inhibit_autologin.so；requisite 缺模块会直接判认证失败，自动登录进不去。
 sed -i 's|^auth[[:space:]]*requisite[[:space:]]*pam_inhibit_autologin\.so|#auth requisite pam_inhibit_autologin.so|' /etc/pam.d/ddm-autologin 2>/dev/null || true
 rm -f /etc/systemd/system/getty@tty1.service.d/autologin.conf
+
+echo ">> 图标主题与 hicolor 回退"
+APPEARANCE_CFG=/etc/dsg/configs/overrides/org.deepin.dde.appearance/org.deepin.dde.appearance
+mkdir -p "$APPEARANCE_CFG"
+cat > "$APPEARANCE_CFG/icon_theme.json" <<'EOF'
+{
+  "magic": "dsg.config.override",
+  "version": "1.0",
+  "contents": {
+    "Icon_Theme": { "value": "Sea", "serial": 1 }
+  }
+}
+EOF
+# DTK 的 DCI provider 固定回落到 hicolor，需要预先放入 Dock 必需图标。
+install -d /usr/share/icons/hicolor/48x48/apps /usr/share/icons/hicolor/48x48/places
+cp -f /usr/share/icons/Sea/apps/scalable/preferences-system.svg \
+  /usr/share/icons/hicolor/48x48/apps/
+cp -f /usr/share/icons/Sea/places/scalable/deepin-launcher.svg \
+  /usr/share/icons/hicolor/48x48/places/
+cp -f /usr/share/icons/bloom/apps/48/deepin-multitasking-view.svg \
+  /usr/share/icons/hicolor/48x48/apps/
+cp -f /usr/share/icons/Adwaita/scalable/places/user-trash.svg \
+  /usr/share/icons/hicolor/48x48/places/
+gtk-update-icon-cache -f -t /usr/share/icons/hicolor
 
 echo ">> 会话环境变量"
 mkdir -p /etc/environment.d

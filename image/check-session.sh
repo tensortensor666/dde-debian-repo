@@ -5,6 +5,7 @@ USER_NAME="${IMAGE_USER:-deepin}"
 USER_UID="$(id -u "$USER_NAME")"
 HOME_DIR="$(getent passwd "$USER_NAME" | cut -d: -f6)"
 SESSION_OK=0
+SHELL_OK=0
 PLUGIN_OK=0
 APPEARANCE_OK=0
 AUDIO_OK=0
@@ -37,7 +38,8 @@ fi
 deadline=$((SECONDS + 180))
 while (( SECONDS < deadline )); do
   if pgrep -u "$USER_NAME" -x dde-session >/dev/null 2>&1 \
-      && pgrep -u "$USER_NAME" -x dde-shell >/dev/null 2>&1; then
+      && pgrep -u "$USER_NAME" -x dde-shell >/dev/null 2>&1 \
+      && pgrep -u "$USER_NAME" -x treeland >/dev/null 2>&1; then
     SESSION_OK=1
     break
   fi
@@ -56,7 +58,14 @@ while (( SECONDS < deadline )); do
       && as_user wpctl inspect @DEFAULT_AUDIO_SOURCE@ >/dev/null 2>&1; then
     AUDIO_OK=1
   fi
-  if (( APPEARANCE_OK == 1 && AUDIO_OK == 1 )); then
+  if (( SHELL_OK == 0 )) \
+      && as_user busctl --user list 2>/dev/null \
+        | grep -q '^org\.deepin\.dde\.Launcher1[[:space:]]' \
+      && as_user busctl --user list 2>/dev/null \
+        | grep -q '^org\.deepin\.dde\.Dock1[[:space:]]'; then
+    SHELL_OK=1
+  fi
+  if (( APPEARANCE_OK == 1 && AUDIO_OK == 1 && SHELL_OK == 1 )); then
     break
   fi
   sleep 2
@@ -66,6 +75,15 @@ if (( AUDIO_OK == 1 )); then
   if ! as_user timeout 15 pw-play /usr/share/sounds/deepin/stereo/desktop-login.wav; then
     AUDIO_OK=0
   fi
+fi
+
+if ! journalctl -b _UID="$USER_UID" --no-pager 2>/dev/null \
+    | grep -q 'Init applet org\.deepin\.ds\.desktop'; then
+  PLUGIN_OK=0
+fi
+if journalctl -b _UID="$USER_UID" --no-pager 2>/dev/null \
+    | grep -q 'Loading plugin failed: "org\.deepin\.ds\.desktop"'; then
+  PLUGIN_OK=0
 fi
 
 echo "--- systemd units ---"
@@ -104,6 +122,11 @@ journalctl -b _UID="$USER_UID" -p warning --no-pager -o short-precise 2>/dev/nul
 echo "--- user session stderr ---"
 tail -200 "$HOME_DIR/.local/share/ddm/wayland-session.log" 2>/dev/null || true
 
+if (( SHELL_OK == 1 )); then
+  echo "DDE_SHELL_CHECK_RESULT=PASS"
+else
+  echo "DDE_SHELL_CHECK_RESULT=FAIL"
+fi
 if (( PLUGIN_OK == 1 )); then
   echo "DDE_DESKTOP_PLUGIN_CHECK_RESULT=PASS"
 else
@@ -119,11 +142,11 @@ if (( AUDIO_OK == 1 )); then
 else
   echo "DDE_AUDIO_CHECK_RESULT=FAIL"
 fi
-if (( SESSION_OK == 1 && PLUGIN_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 )); then
+if (( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 )); then
   echo "DDE_SESSION_CHECK_RESULT=PASS"
 else
   echo "DDE_SESSION_CHECK_RESULT=FAIL"
 fi
 echo "=== DDE_SESSION_CHECK_END ==="
 
-(( SESSION_OK == 1 && PLUGIN_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 ))
+(( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 ))

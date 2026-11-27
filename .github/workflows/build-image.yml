@@ -130,9 +130,15 @@ jobs:
             echo "PASS accounts-daemon 正常"
           fi
           if grep -q "DDE_SESSION_CHECK_RESULT=PASS" boot.log; then
-            echo "PASS DDM 自动登录已启动 dde-session 和 dde-shell"
+            echo "PASS DDM 自动登录已启动 dde-session、dde-shell 和 Treeland"
           else
             echo "FAIL DDM 自动登录未启动完整用户桌面（查看 boot.log 中的 DDE_SESSION_CHECK）"
+            BOOT_OK=0
+          fi
+          if grep -q "DDE_SHELL_CHECK_RESULT=PASS" boot.log; then
+            echo "PASS DDE Launcher 与 Dock D-Bus 服务已就绪"
+          else
+            echo "FAIL DDE Launcher 或 Dock 未就绪"
             BOOT_OK=0
           fi
           if grep -q "DDE_DESKTOP_PLUGIN_CHECK_RESULT=PASS" boot.log \
