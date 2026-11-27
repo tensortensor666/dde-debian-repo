@@ -52,20 +52,32 @@ MNT="$WORK/mnt"
 LOOP=""
 mkdir -p "$ROOTFS" "$MNT" "$OUT"
 
+# mountpoint -q 对 --rbind 出来的子挂载不可靠；findmnt -R 能列出整棵挂载树。
+# 关键教训：$MNT 只要还挂着镜像 rootfs，cleanup 里的 rm -rf "$WORK" 就会
+# 把 rootfs 内容删空，最后镜像里只剩无法删除的 sys 挂载点（run 45929206402）。
+force_unmount_tree() {
+  local base="$1"
+  [[ -d "$base" ]] || return 0
+  findmnt -R "$base" -o TARGET -n 2>/dev/null | sort -r | while read -r mp; do
+    umount -l "$mp" 2>/dev/null || true
+  done || true
+}
+
+tree_has_mounts() {
+  findmnt -R "$1" -n 2>/dev/null | grep -q .
+}
+
 cleanup() {
   set +e
-  # mountpoint -q 对 --rbind 出来的子挂载不可靠，直接 umount -R 并忽略失败；
-  # 否则残留的 $MNT/sys 会让后面的 rm -rf 报
-  # "Operation not permitted" 并把整个脚本的退出码变成 32。
-  for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi" "$MNT"; do
-    umount -R "$d" 2>/dev/null
-  done
-  for d in "$ROOTFS/dev" "$ROOTFS/proc" "$ROOTFS/sys"; do
-    umount -R "$d" 2>/dev/null
-  done
+  force_unmount_tree "$MNT"
+  force_unmount_tree "$ROOTFS"
   [[ -n "$LOOP" ]] && { losetup -d "$LOOP" 2>/dev/null; sleep 1; }
-  # 先尝试干净删除，失败就留给系统 tmp 清理，绝不因为清理失败而让构建算失败
-  rm -rf "$WORK" 2>/dev/null
+  # 只有在整棵 WORK 已经没有任何挂载时才删除；否则宁可留给系统 tmp 清理。
+  if tree_has_mounts "$WORK"; then
+    echo "cleanup: $WORK 仍有挂载，跳过删除（防止清空镜像 rootfs）"
+  else
+    rm -rf "$WORK" 2>/dev/null || true
+  fi
   return 0
 }
 trap cleanup EXIT
@@ -157,6 +169,9 @@ mkfs.ext4 -L dderoot -q "${LOOP}p3"
 log "9/10 灌入 rootfs 并装 bootloader"
 mount "${LOOP}p3" "$MNT"
 rsync -aHAX --numeric-ids "$ROOTFS/" "$MNT/"
+echo "--- rsync 后 MNT 快照 ---"
+du -sh "$MNT"
+ls -la "$MNT" | head -20
 
 # initramfs 的 run-init 在 udev 启动之前就要 /dev/console 和 /sbin/init。
 # debootstrap 的 minbase 不保证有静态设备节点，chroot 里 rbind 的 /dev
@@ -213,15 +228,28 @@ echo "--- grub.cfg 里的内核命令行 ---"
 grep -m2 -E "^[[:space:]]*linux" "$MNT/boot/grub/grub.cfg" || echo "(没找到 linux 行)"
 
 log "10/10 收尾"
-# 同样别用 mountpoint 判断（--rbind 出来的子挂载识别不了），直接卸。
+echo "--- 收尾前 MNT 快照 ---"
+du -sh "$MNT"
+ls -la "$MNT" | head -20
+# 先常规卸载，再用 findmnt -R 扫尾；$MNT 没卸干净时绝不能继续。
 for d in "$MNT/dev" "$MNT/proc" "$MNT/sys" "$MNT/boot/efi" "$MNT"; do
   umount -R "$d" 2>/dev/null || true
 done
-# 卸载后复查一次：rbind /dev 期间看到的 /dev/console 可能是宿主机的，
-# 这里才是最终镜像里真正存在的文件。
-echo "--- 卸载后镜像内的 init/console ---"
-ls -l "$MNT/sbin/init" "$MNT/usr/lib/systemd/systemd" "$MNT/dev/console" 2>&1 || true
-ls -ld "$MNT/sbin" "$MNT/usr" "$MNT/lib" "$MNT/dev" 2>&1 || true
+force_unmount_tree "$MNT"
+if tree_has_mounts "$MNT"; then
+  die "$MNT 仍有子挂载，拒绝继续（否则 cleanup 的 rm -rf 会清空镜像 rootfs）"
+fi
+
+# 卸载后重新只读挂载一次 p3：这里看到的内容才是最终镜像里的 rootfs。
+mkdir -p "$WORK/check"
+mount -o ro "${LOOP}p3" "$WORK/check"
+echo "--- 镜像 p3 只读复查 ---"
+du -sh "$WORK/check"
+ls -la "$WORK/check" | head -20
+ls -l "$WORK/check/sbin/init" "$WORK/check/usr/lib/systemd/systemd" \
+      "$WORK/check/dev/console" 2>&1 || true
+umount "$WORK/check" 2>/dev/null || true
+force_unmount_tree "$WORK"
 sync
 losetup -d "$LOOP" 2>/dev/null || true
 sleep 1
