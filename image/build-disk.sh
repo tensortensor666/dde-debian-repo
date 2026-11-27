@@ -157,6 +157,31 @@ mkfs.ext4 -L dderoot -q "${LOOP}p3"
 log "9/10 灌入 rootfs 并装 bootloader"
 mount "${LOOP}p3" "$MNT"
 rsync -aHAX --numeric-ids "$ROOTFS/" "$MNT/"
+
+# initramfs 的 run-init 在 udev 启动之前就要 /dev/console 和 /sbin/init。
+# debootstrap 的 minbase 不保证有静态设备节点，chroot 里 rbind 的 /dev
+# 也不会落盘；缺了它们会报
+#   run-init: opening console: No such file or directory
+#   Target filesystem doesn't have requested /sbin/init.
+#   No init found. Try passing init= bootarg.
+log "     检查/修复 rootfs 的 init 与 /dev 节点"
+ls -l "$MNT/sbin/init" "$MNT/usr/lib/systemd/systemd" "$MNT/lib/systemd/systemd" 2>&1 || true
+if [[ ! -e "$MNT/sbin/init" ]]; then
+  if [[ -x "$MNT/lib/systemd/systemd" ]]; then
+    ln -sfn ../lib/systemd/systemd "$MNT/sbin/init"
+  elif [[ -x "$MNT/usr/lib/systemd/systemd" ]]; then
+    ln -sfn ../usr/lib/systemd/systemd "$MNT/sbin/init"
+  else
+    die "rootfs 里找不到 systemd 二进制，无法建 /sbin/init"
+  fi
+fi
+mkdir -p "$MNT/dev"
+mknod -m 622 "$MNT/dev/console" c 5 1 2>/dev/null || true
+mknod -m 666 "$MNT/dev/null" c 1 3 2>/dev/null || true
+mknod -m 666 "$MNT/dev/zero" c 1 5 2>/dev/null || true
+mknod -m 666 "$MNT/dev/tty" c 5 0 2>/dev/null || true
+ls -l "$MNT/sbin/init" "$MNT/dev/console" 2>&1 || true
+
 echo "--- 内核命令行（grub 前）---"
 grep -E "^(GRUB_CMDLINE|GRUB_TERMINAL|GRUB_SERIAL)" "$MNT/etc/default/grub" || echo "(无 /etc/default/grub)"
 mkdir -p "$MNT/boot/efi"
