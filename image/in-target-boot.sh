@@ -16,9 +16,9 @@ KERNEL="/boot/vmlinuz-$KVER"
 INITRD="/boot/initrd.img-$KVER"
 KERNEL_CMDLINE="ro console=ttyS0,115200 console=tty0 loglevel=7"
 
-# GRUB 不需要读 ext4 根分区：把内核和 initrd 放到 ESP（FAT32）上，
-# 从 bootloader 所在分区直接加载。这样即使 search/UUID/分区探测失灵，
-# 只要固件能找到 BOOTX64.EFI 就能进内核；根分区仍由 initramfs 按 UUID 挂载。
+# GRUB 不需要读 ext4 根分区：内核/initrd 同时放进 ESP（FAT32）和
+# standalone EFI 的 memdisk。第一启动项直接从 memdisk 加载，完全不碰磁盘；
+# 后两项退回 ESP。根分区仍由 initramfs 按 UUID 挂载。
 [[ -f "$KERNEL" ]] || { echo "!! 缺少 $KERNEL" >&2; exit 1; }
 [[ -f "$INITRD" ]] || { echo "!! 缺少 $INITRD" >&2; exit 1; }
 mkdir -p /boot/efi
@@ -51,16 +51,23 @@ for t in i386-pc x86_64-efi; do
   fi
 done
 
-# 自己写 grub.cfg：内核/initrd 已复制到 ESP，这里只依赖 FAT32 驱动。
-# 之前从 ext4 根分区读 /boot/vmlinuz-* 时，即使 fallback 固定到
-# (hd0,gpt3) 也报 "file ... not found" + "you need to load the kernel first"。
-# 现在第一项按 ESP UUID 搜索，第二项固定 (hd0,gpt2)，两者读同一份文件。
+# 自己写 grub.cfg：第一项从 standalone EFI 自带的 memdisk 加载内核/initrd，
+# 完全不需要 GRUB 访问任何磁盘分区。之前从 ext4 根读 /boot/vmlinuz-* 时
+# 两项都报 "file ... not found"；改从 ESP 读仍失败，所以直接用 memdisk。
 cat > "$DDIR/grub.cfg" <<EOF
 set timeout=3
 set default=0
-set fallback="1"
+set fallback="1 2"
 
-menuentry 'DDE on Debian forky' --class debian --class gnu-linux {
+menuentry 'DDE on Debian forky (memdisk)' --class debian --class gnu-linux {
+    insmod gzio
+    echo 'Loading Linux $KVER from memdisk ...'
+    linux (memdisk)/boot/vmlinuz root=UUID=$ROOT_UUID $KERNEL_CMDLINE
+    echo 'Loading initial ramdisk from memdisk ...'
+    initrd (memdisk)/boot/initrd.img
+}
+
+menuentry 'DDE on Debian forky (ESP)' --class debian {
     insmod part_gpt
     insmod fat
     insmod gzio
@@ -71,7 +78,7 @@ menuentry 'DDE on Debian forky' --class debian --class gnu-linux {
     initrd /initrd.img
 }
 
-menuentry 'DDE on Debian forky (fixed partition)' --class debian {
+menuentry 'DDE on Debian forky (fixed ESP hd0,gpt2)' --class debian {
     insmod part_gpt
     insmod fat
     insmod gzio
@@ -97,7 +104,9 @@ if command -v grub-mkstandalone >/dev/null 2>&1; then
     -o /boot/efi/EFI/BOOT/BOOTX64.EFI \
     --modules="part_gpt part_msdos fat ext2 normal linux echo search \
 search_fs_uuid search_label configfile all_video gzio gfxterm font" \
-    "boot/grub/grub.cfg=$DDIR/grub.cfg"
+    "boot/grub/grub.cfg=$DDIR/grub.cfg" \
+    "boot/vmlinuz=$KERNEL" \
+    "boot/initrd.img=$INITRD"
   cp -f /boot/efi/EFI/BOOT/BOOTX64.EFI /boot/efi/EFI/DDE/BOOTX64.EFI
   echo "  BOOTX64.EFI(standalone): $(stat -c%s /boot/efi/EFI/BOOT/BOOTX64.EFI) 字节"
 else

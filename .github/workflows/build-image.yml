@@ -78,6 +78,12 @@ jobs:
           echo "=== 日志长度: $(wc -l < boot.log) 行 ==="
           echo "=== 非空行（去掉 GRUB 倒计时刷屏）==="
           grep -avE "^\s*$|highlighted entry|^\s+$" boot.log | tail -60 || true
+          # 把串口日志写进 job summary：即使 API 抓不到 job 日志也能在网页上看到
+          {
+            echo '```text'
+            grep -avE "^\s*$|highlighted entry|^\s+$" boot.log | tail -160 || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
           echo "=== 判定 ==="
           BOOT_OK=1
           if grep -qE "Linux version" boot.log; then
@@ -106,6 +112,8 @@ jobs:
           [ "$BOOT_OK" -eq 1 ] || { echo "启动验证未通过"; exit 1; }
 
       - name: 上传镜像
+        # 失败时也要留下 boot.log，否则只能靠 API 抓 job 日志（常常被网络挡住）
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dde-forky-image
