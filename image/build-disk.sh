@@ -33,7 +33,7 @@ grub-efi-amd64 grub-pc-bin grub2-common
 initramfs-tools e2fsprogs e2fsprogs-l10n
 locales console-setup keyboard-configuration tzdata
 network-manager sudo passwd
-accountsservice polkitd upower rtkit
+accountsservice polkitd upower rtkit wireplumber
 seatd dbus-user-session
 fonts-noto-cjk fonts-dejavu-core
 bash-completion nano less

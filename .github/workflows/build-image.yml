@@ -73,6 +73,8 @@ jobs:
           # 典型原因是 initramfs 里没有 virtio-blk，找不到根设备。
           sudo timeout 480 qemu-system-x86_64 \
             $ACCEL -m 3072 -smp 2 $FW \
+            -audiodev none,id=snd0 \
+            -device ich9-intel-hda -device hda-duplex,audiodev=snd0 \
             -drive file="$IMG",format=raw \
             -nographic -no-reboot > boot.log 2>&1 || true
           # systemd 的串口输出带 ANSI 颜色码，例如
@@ -138,6 +140,20 @@ jobs:
             echo "PASS DDE 桌面插件 org.deepin.ds.desktop 已安装并加载"
           else
             echo "FAIL DDE 桌面插件 org.deepin.ds.desktop 未安装或未加载"
+            BOOT_OK=0
+          fi
+          if grep -q "DDE_APPEARANCE_CHECK_RESULT=PASS" boot.log \
+              && ! grep -qE "Can't load resource: /org\.deepin\.dde\.appearance|DConfig is invalid of appid=org\.deepin\.dde\.appearance" boot.clean.log; then
+            echo "PASS 外观服务已注册且 DConfig 可用"
+          else
+            echo "FAIL 外观服务未注册或 DConfig 不可用"
+            BOOT_OK=0
+          fi
+          if grep -q "DDE_AUDIO_CHECK_RESULT=PASS" boot.log \
+              && ! grep -qE "org\.deepin\.dde\.SoundEffect1\.service.*Failed|Failed to start org\.deepin\.dde\.SoundEffect1\.service|daemon/soundeffect.*(Can't load resource|DConfig is invalid)" boot.clean.log; then
+            echo "PASS PipeWire 默认音频端点可用且音效播放成功"
+          else
+            echo "FAIL PipeWire 音频端点缺失或音效播放失败"
             BOOT_OK=0
           fi
           [ "$BOOT_OK" -eq 1 ] || { echo "启动验证未通过"; exit 1; }
