@@ -17,7 +17,7 @@ INITRD="/boot/initrd.img-$KVER"
 # 注意 console 顺序：/dev/console 指向最后一个 console。
 # 若写成 "console=ttyS0 console=tty0"，systemd 的启动日志只去 VGA，
 # 串口就只剩内核日志，看起来像卡在 initramfs。把 ttyS0 放最后。
-KERNEL_CMDLINE="ro console=tty0 console=ttyS0,115200 loglevel=7 systemd.show_status=yes"
+KERNEL_CMDLINE="rw console=tty0 console=ttyS0,115200 loglevel=7 systemd.show_status=yes init=/usr/lib/systemd/systemd debug"
 
 # GRUB 不需要读 ext4 根分区：内核/initrd 同时放进 ESP（FAT32）和
 # standalone EFI 的 memdisk。第一启动项直接从 memdisk 加载，完全不碰磁盘；
