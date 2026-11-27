@@ -21,6 +21,80 @@ INITRD="/boot/initrd.img-$KVER"
 # /dev/console 指向它，initramfs 和 systemd 的日志都进串口。
 KERNEL_CMDLINE="ro console=ttyS0,115200 loglevel=7 systemd.show_status=yes"
 
+# 必须先重建 initramfs，再复制内核/initrd 到 ESP 并塞进 standalone EFI。
+# 之前的顺序反了：grub-mkstandalone 已经把旧 initrd 嵌进去之后才执行
+# update-initramfs，导致修复根本没进启动链（run 45927642163 原样复现）。
+
+# virtio / AHCI / IDE 磁盘都要能启动。MODULES=most 理论上够，但 forky 默认
+# 可能是 MODULES=dep（只收当前机器探测到的控制器），那样打出来的 initramfs
+# 换个接口就起不来：内核会报
+#   VFS: Cannot open root device "UUID=..." or unknown-block(0,0): error -19
+# 所以这里既设 most，又在 /etc/initramfs-tools/modules 里点名关键驱动。
+mkdir -p /etc/initramfs-tools
+if grep -q '^MODULES=' /etc/initramfs-tools/initramfs.conf 2>/dev/null; then
+  sed -i 's/^MODULES=.*/MODULES=most/' /etc/initramfs-tools/initramfs.conf
+else
+  echo 'MODULES=most' >> /etc/initramfs-tools/initramfs.conf
+fi
+cat > /etc/initramfs-tools/modules <<'MODS'
+ata_piix
+ahci
+sd_mod
+virtio_blk
+virtio_pci
+virtio_net
+scsi_mod
+ext4
+MODS
+
+# initramfs-tools 0.151 自带的 /scripts/init-bottom/udev 在
+# `mount -n -o move /dev ${rootmnt}/dev` 失败时会执行
+#   rm -rf /dev && ln -s "${rootmnt}/dev" /dev
+# 这个绝对符号链接在 run-init chroot 到 ${rootmnt} 后指向不存在的
+# /root/dev，于是同时报：
+#   run-init: opening console: No such file or directory
+#   Target filesystem doesn't have requested /sbin/init.
+# 实测镜像 rootfs 里 /dev/console 和 /sbin/init 都存在，问题在链接。
+# 用 /etc 同名脚本覆盖出厂脚本：不移动 /dev，只确保 rootfs 里有
+# run-init 必需的最小设备节点；systemd 启动后会自行接管 /dev。
+mkdir -p /etc/initramfs-tools/scripts/init-bottom
+cat > /etc/initramfs-tools/scripts/init-bottom/udev <<'UDEV_EOF'
+#!/bin/sh
+PREREQS=""
+case "$1" in
+    prereqs)
+        echo "$PREREQS"
+        exit 0
+        ;;
+esac
+
+udevadm settle --timeout=60 2>/dev/null || true
+udevadm control --exit 2>/dev/null || true
+
+[ -d "${rootmnt:?}/dev" ] || mkdir -m 0755 "${rootmnt}/dev"
+[ -d "${rootmnt}/dev/pts" ] || mkdir -m 0755 "${rootmnt}/dev/pts"
+[ -d "${rootmnt}/run" ] || mkdir -m 0755 "${rootmnt}/run"
+
+mknod -m 622 "${rootmnt}/dev/console" c 5 1 2>/dev/null || true
+mknod -m 666 "${rootmnt}/dev/null"   c 1 3 2>/dev/null || true
+mknod -m 666 "${rootmnt}/dev/zero"   c 1 5 2>/dev/null || true
+mknod -m 666 "${rootmnt}/dev/tty"    c 5 0 2>/dev/null || true
+UDEV_EOF
+chmod +x /etc/initramfs-tools/scripts/init-bottom/udev
+echo "  initramfs init-bottom/udev 已覆盖（保留 rootfs 的静态 /dev）"
+
+update-initramfs -u -k all
+
+echo "--- initramfs 中的存储驱动 ---"
+if command -v lsinitramfs >/dev/null 2>&1; then
+  lsinitramfs "/boot/initrd.img-$KVER" 2>/dev/null \
+    | grep -oE '(ata_piix|ahci|sd_mod|virtio_blk|virtio_pci|scsi_mod|ext4)\.ko[.a-z]*' \
+    | sed 's/\.ko.*//' | sort -u | tr '\n' ' '
+  echo
+else
+  echo "(没有 lsinitramfs)"
+fi
+
 # GRUB 不需要读 ext4 根分区：内核/initrd 同时放进 ESP（FAT32）和
 # standalone EFI 的 memdisk。第一启动项直接从 memdisk 加载，完全不碰磁盘；
 # 后两项退回 ESP。根分区仍由 initramfs 按 UUID 挂载。
@@ -118,72 +192,6 @@ else
   echo "  !! 没有 grub-mkstandalone"
 fi
 
-# virtio / AHCI / IDE 磁盘都要能启动。MODULES=most 理论上够，但 forky 默认
-# 可能是 MODULES=dep（只收当前机器探测到的控制器），那样打出来的 initramfs
-# 换个接口就起不来：内核会报
-#   VFS: Cannot open root device "UUID=..." or unknown-block(0,0): error -19
-# 所以这里既设 most，又在 /etc/initramfs-tools/modules 里点名关键驱动。
-mkdir -p /etc/initramfs-tools
-if grep -q '^MODULES=' /etc/initramfs-tools/initramfs.conf 2>/dev/null; then
-  sed -i 's/^MODULES=.*/MODULES=most/' /etc/initramfs-tools/initramfs.conf
-else
-  echo 'MODULES=most' >> /etc/initramfs-tools/initramfs.conf
-fi
-cat > /etc/initramfs-tools/modules <<'MODS'
-ata_piix
-ahci
-sd_mod
-virtio_blk
-virtio_pci
-virtio_net
-scsi_mod
-ext4
-MODS
-
-# initramfs-tools 0.151 自带的 /scripts/init-bottom/udev 在
-# `mount -n -o move /dev ${rootmnt}/dev` 失败时会执行
-#   rm -rf /dev && ln -s "${rootmnt}/dev" /dev
-# 这个绝对符号链接在 run-init chroot 到 ${rootmnt} 后指向不存在的
-# /root/dev，于是同时报：
-#   run-init: opening console: No such file or directory
-#   Target filesystem doesn't have requested /sbin/init.
-# 实测镜像 rootfs 里 /dev/console 和 /sbin/init 都存在，问题在链接。
-# 用 /etc 同名脚本覆盖出厂脚本：不移动 /dev，只确保 rootfs 里有
-# run-init 必需的最小设备节点；systemd 启动后会自行接管 /dev。
-mkdir -p /etc/initramfs-tools/scripts/init-bottom
-cat > /etc/initramfs-tools/scripts/init-bottom/udev <<'UDEV_EOF'
-#!/bin/sh
-PREREQS=""
-case "$1" in
-    prereqs)
-        echo "$PREREQS"
-        exit 0
-        ;;
-esac
-
-udevadm settle --timeout=60 2>/dev/null || true
-udevadm control --exit 2>/dev/null || true
-
-[ -d "${rootmnt:?}/dev" ] || mkdir -m 0755 "${rootmnt}/dev"
-[ -d "${rootmnt}/dev/pts" ] || mkdir -m 0755 "${rootmnt}/dev/pts"
-[ -d "${rootmnt}/run" ] || mkdir -m 0755 "${rootmnt}/run"
-
-mknod -m 622 "${rootmnt}/dev/console" c 5 1 2>/dev/null || true
-mknod -m 666 "${rootmnt}/dev/null"   c 1 3 2>/dev/null || true
-mknod -m 666 "${rootmnt}/dev/zero"   c 1 5 2>/dev/null || true
-mknod -m 666 "${rootmnt}/dev/tty"    c 5 0 2>/dev/null || true
-UDEV_EOF
-chmod +x /etc/initramfs-tools/scripts/init-bottom/udev
-echo "  initramfs init-bottom/udev 已覆盖（保留 rootfs 的静态 /dev）"
-
-update-initramfs -u -k all
-
-echo "--- initramfs 中的存储驱动 ---"
-if command -v lsinitramfs >/dev/null 2>&1; then
-  lsinitramfs "/boot/initrd.img-$KVER" 2>/dev/null \
-    | grep -oE '(ata_piix|ahci|sd_mod|virtio_blk|virtio_pci|scsi_mod|ext4)\.ko[.a-z]*' \
-    | sed 's/\.ko.*//' | sort -u | tr '\n' ' '
-  echo
-else
-  echo "(没有 lsinitramfs)"
-fi
+# initramfs 已在上面（复制内核/initrd 之前）重建完成。
+# 注意：不要在 grub-mkstandalone 之后再 update-initramfs，否则 EFI 里
+# 内嵌的还是旧 initrd，修复不会生效（run 45927642163 踩过）。
