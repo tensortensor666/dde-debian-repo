@@ -39,7 +39,7 @@ deadline=$((SECONDS + 180))
 while (( SECONDS < deadline )); do
   if pgrep -u "$USER_NAME" -x dde-session >/dev/null 2>&1 \
       && pgrep -u "$USER_NAME" -x dde-shell >/dev/null 2>&1 \
-      && pgrep -u "$USER_NAME" -x treeland >/dev/null 2>&1; then
+      && systemctl is-active --quiet treeland.service; then
     SESSION_OK=1
     break
   fi
