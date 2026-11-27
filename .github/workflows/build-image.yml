@@ -118,6 +118,15 @@ jobs:
           else
             echo "WARN 未见 DDE 日志"
           fi
+          # 桌面能不能真正出来，取决于 accounts-daemon：它一旦 abort，
+          # treeland 会 Fatal 并无限重启，串口上只剩 dde-session 日志，
+          # 看起来像“起来了”其实是黑屏。这里必须硬失败。
+          if grep -qE "Failed to start accounts-daemon\.service|Accounts service not available" boot.clean.log; then
+            echo "FAIL accounts-daemon 未启动，treeland 会因 Accounts service 缺失而黑屏"
+            BOOT_OK=0
+          else
+            echo "PASS accounts-daemon 正常"
+          fi
           [ "$BOOT_OK" -eq 1 ] || { echo "启动验证未通过"; exit 1; }
 
       - name: 上传镜像
