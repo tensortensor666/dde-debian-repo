@@ -42,24 +42,17 @@ echo ">> DDM 自动登录（必须走真正的图形会话，否则 graphical-se
 # graphical-session.target，dde-shell 的桌面插件永远不启动，屏幕只有光标。
 DDM_CFG=/etc/dsg/configs/overrides/org.deepin.dde.ddm/org.deepin.dde.ddm
 mkdir -p "$DDM_CFG"
+# 复用 DDM 的 Treeland，避免用户合成器无法访问归 dde 所有的 0600 AuthInfo 套接字。
 cat > "$DDM_CFG/autologin.json" <<EOF
 {
   "magic": "dsg.config.override",
   "version": "1.0",
   "contents": {
     "autologinUser": { "value": "$USER_NAME" },
-    "autologinSession": { "value": "treeland-user.desktop" }
+    "autologinSession": { "value": "treeland.desktop" }
   }
 }
 EOF
-# 上游策略只允许 root 和 dde 用户调用 AuthInfo，其他用户会被默认规则拒绝。
-DDM_DBUS_POLICY=/etc/dbus-1/system.d/org.deepin.DisplayManager.conf
-if [ -f "$DDM_DBUS_POLICY" ] && ! grep -Fq "<policy user=\"$USER_NAME\">" "$DDM_DBUS_POLICY"; then
-  sed -i "/<\/busconfig>/i\\
-  <policy user=\"$USER_NAME\">\\
-    <allow send_destination=\"org.deepin.DisplayManager\" send_interface=\"org.deepin.DisplayManager\" send_member=\"AuthInfo\"/>\\
-  </policy>" "$DDM_DBUS_POLICY"
-fi
 # DDM 0.5.0 的 ddm-autologin PAM 栈第一行引用了本镜像里不存在的
 # pam_inhibit_autologin.so；requisite 缺模块会直接判认证失败，自动登录进不去。
 sed -i 's|^auth[[:space:]]*requisite[[:space:]]*pam_inhibit_autologin\.so|#auth requisite pam_inhibit_autologin.so|' /etc/pam.d/ddm-autologin 2>/dev/null || true
