@@ -135,6 +135,14 @@ jobs:
           fi
           [ "$BOOT_OK" -eq 1 ] || { echo "启动验证未通过"; exit 1; }
 
+      - name: 上传启动日志（单独小文件，便于失败时快速取回）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dde-forky-bootlog
+          path: boot.log
+          retention-days: 14
+
       - name: 上传镜像
         # 失败时也要留下 boot.log，否则只能靠 API 抓 job 日志（常常被网络挡住）
         if: always()
@@ -145,12 +153,4 @@ jobs:
             out/*.qcow2
             boot.log
           compression-level: 0
-          retention-days: 14
-
-      - name: 上传启动日志（单独小文件，便于失败时快速取回）
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: dde-forky-bootlog
-          path: boot.log
           retention-days: 14

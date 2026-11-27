@@ -2,6 +2,8 @@
 set -u
 
 USER_NAME="${IMAGE_USER:-deepin}"
+USER_UID="$(id -u "$USER_NAME")"
+HOME_DIR="$(getent passwd "$USER_NAME" | cut -d: -f6)"
 SESSION_OK=0
 
 exec >>/dev/console 2>&1
@@ -41,8 +43,19 @@ journalctl -b -u ddm.service --no-pager -o short-precise || true
 echo "--- Treeland journal ---"
 journalctl -b -u treeland.service --no-pager -o short-precise || true
 
-echo "--- user session journal (tail) ---"
-journalctl -b _UID="$(id -u "$USER_NAME")" --no-pager -o short-precise 2>/dev/null | tail -200 || true
+echo "--- DDE user units ---"
+journalctl -b _UID="$USER_UID" _SYSTEMD_USER_UNIT='dde-session*' \
+  --no-pager -o short-precise 2>/dev/null | tail -300 || true
+journalctl -b _UID="$USER_UID" _SYSTEMD_USER_UNIT='dde-shell*' \
+  --no-pager -o short-precise 2>/dev/null | tail -200 || true
+journalctl -b _UID="$USER_UID" _SYSTEMD_USER_UNIT='treeland*' \
+  --no-pager -o short-precise 2>/dev/null | tail -200 || true
+
+echo "--- user warnings and errors ---"
+journalctl -b _UID="$USER_UID" -p warning --no-pager -o short-precise 2>/dev/null | tail -300 || true
+
+echo "--- user session stderr ---"
+tail -200 "$HOME_DIR/.local/share/ddm/wayland-session.log" 2>/dev/null || true
 
 if (( SESSION_OK == 1 )); then
   echo "DDE_SESSION_CHECK_RESULT=PASS"

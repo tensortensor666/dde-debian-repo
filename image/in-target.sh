@@ -52,6 +52,14 @@ cat > "$DDM_CFG/autologin.json" <<EOF
   }
 }
 EOF
+# 上游策略只允许 root 和 dde 用户调用 AuthInfo，其他用户会被默认规则拒绝。
+DDM_DBUS_POLICY=/etc/dbus-1/system.d/org.deepin.DisplayManager.conf
+if [ -f "$DDM_DBUS_POLICY" ] && ! grep -Fq "<policy user=\"$USER_NAME\">" "$DDM_DBUS_POLICY"; then
+  sed -i "/<\/busconfig>/i\\
+  <policy user=\"$USER_NAME\">\\
+    <allow send_destination=\"org.deepin.DisplayManager\" send_interface=\"org.deepin.DisplayManager\" send_member=\"AuthInfo\"/>\\
+  </policy>" "$DDM_DBUS_POLICY"
+fi
 # DDM 0.5.0 的 ddm-autologin PAM 栈第一行引用了本镜像里不存在的
 # pam_inhibit_autologin.so；requisite 缺模块会直接判认证失败，自动登录进不去。
 sed -i 's|^auth[[:space:]]*requisite[[:space:]]*pam_inhibit_autologin\.so|#auth requisite pam_inhibit_autologin.so|' /etc/pam.d/ddm-autologin 2>/dev/null || true
