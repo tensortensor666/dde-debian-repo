@@ -37,24 +37,25 @@ echo "root:$USER_PASS" | chpasswd
 echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-image
 chmod 440 /etc/sudoers.d/90-image
 
-echo ">> getty 自动登录 tty1（开机直接进桌面）"
-mkdir -p /etc/systemd/system/getty@tty1.service.d
-cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf <<EOF
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty --autologin $USER_NAME --noclear %I \$TERM
-Type=idle
+echo ">> DDM 自动登录（必须走真正的图形会话，否则 graphical-session.target 起不来）"
+# tty1 + agetty --autologin 只能拿到 CLASS=user 的会话；logind 不会激活
+# graphical-session.target，dde-shell 的桌面插件永远不启动，屏幕只有光标。
+DDM_CFG=/etc/dsg/configs/overrides/org.deepin.dde.ddm/org.deepin.dde.ddm
+mkdir -p "$DDM_CFG"
+cat > "$DDM_CFG/autologin.json" <<EOF
+{
+  "magic": "dsg.config.override",
+  "version": "1.0",
+  "contents": {
+    "autologinUser": { "value": "$USER_NAME" },
+    "autologinSession": { "value": "treeland-user.desktop" }
+  }
+}
 EOF
-
-echo ">> 登录后自动拉起 treeland 会话"
-cat > "/home/$USER_NAME/.bash_profile" <<'EOF'
-# 在 tty1 登录时直接进入 DDE（treeland）会话；已是图形会话或非 tty1 则跳过。
-if [ -z "$WAYLAND_DISPLAY" ] && [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-    exec /usr/bin/treeland-user-wrapper
-fi
-[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
-EOF
-chown "$USER_NAME:$USER_NAME" "/home/$USER_NAME/.bash_profile"
+# DDM 0.5.0 的 ddm-autologin PAM 栈第一行引用了本镜像里不存在的
+# pam_inhibit_autologin.so；requisite 缺模块会直接判认证失败，自动登录进不去。
+sed -i 's|^auth[[:space:]]*requisite[[:space:]]*pam_inhibit_autologin\.so|#auth requisite pam_inhibit_autologin.so|' /etc/pam.d/ddm-autologin 2>/dev/null || true
+rm -f /etc/systemd/system/getty@tty1.service.d/autologin.conf
 
 echo ">> 会话环境变量"
 mkdir -p /etc/environment.d
@@ -65,10 +66,14 @@ XDG_CURRENT_DESKTOP=DDE
 XDG_SESSION_DESKTOP=Treeland
 EOF
 
+echo ">> 默认壁纸（dde-wallpapers 未打包，补一个占位 jpg 避免 wallpaper-factory 报错）"
+mkdir -p /usr/share/wallpapers/deepin
+printf '%s' '/9j/4AAQSkZJRgABAgAAAQABAAD//gAQTGF2YzYyLjI4LjEwMQD/2wBDAAgGBgcGBwgICAgICAkJCQoKCgkJCQkKCgoKCgoMDAwKCgoKCgoKDAwMDA0ODQ0NDA0ODg8PDxISEREVFRUZGR//xABMAAEBAAAAAAAAAAAAAAAAAAAABwEBAQAAAAAAAAAAAAAAAAAAAAUQAQAAAAAAAAAAAAAAAAAAAAARAQAAAAAAAAAAAAAAAAAAAAD/wAARCAAkAEADASIAAhEAAxEA/9oADAMBAAIRAxEAPwCagKyaAAAAAAAAAAAAAAAAAAAAAA//2Q==' \
+  | base64 -d > /usr/share/wallpapers/deepin/deepin-default.jpg
+chmod 644 /usr/share/wallpapers/deepin/deepin-default.jpg
+
 echo ">> 服务"
-# ddm 会和 tty1 的 getty 抢终端，默认关掉；用户想用图形登录界面时
-# sudo systemctl enable --now ddm 即可。
-systemctl disable ddm 2>/dev/null || true
+systemctl enable ddm 2>/dev/null || true
 systemctl enable NetworkManager 2>/dev/null || true
 systemctl enable accounts-daemon 2>/dev/null || true
 systemctl enable polkit 2>/dev/null || true
