@@ -575,6 +575,20 @@
       "_note": "DDE 的系统服务总成（电源/账户/网络/音频/显示/输入法/时间等）。makefile 构建 + GO111MODULE=off + GOPATH，依赖装在 /usr/share/gocode。上游 control 列的 lofanmi-pinyin 在 forky 无 packaging 且源码根本不 import → source_fix 删行。policy 生成依赖 deepin-gettext-tools 提供的 deepin-policy-ts-convert（forky 有）。 Depends 里 deepin-installer-timezones / deepin-security-loader / lastore-daemon 在 GitHub 无独立源（属 deepin 内部构建体系）→ source_fix 删掉，否则包无法安装。"
     },
     {
+      "name": "dde-appearance",
+      "repo": "linuxdeepin/dde-appearance",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dde-daemon",
+        "dde-api",
+        "dtkcore",
+        "dtkgui"
+      ],
+      "_note": "外观、主题、字体与光标服务，提供 org.deepin.dde.appearance DConfig；dde-daemon 音效和 dde-shell 外观代理都要求它。"
+    },
+    {
       "name": "treeland",
       "repo": "linuxdeepin/treeland",
       "ref": "master",
