@@ -5,6 +5,7 @@ Wants=ddm.service
 
 [Service]
 Type=oneshot
+TimeoutStartSec=240
 ExecStart=/usr/lib/dde-image/check-session.sh
 
 [Install]
