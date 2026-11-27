@@ -42,7 +42,7 @@ jobs:
           # 最后 upload-artifact 只上传 boot.log（曾踩到）。
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends qemu-utils >/dev/null
-          sudo env IMGSIZE="${{ inputs.imgsize || '10G' }}" \
+          sudo env IMGSIZE="${{ inputs.imgsize || '10G' }}" IMAGE_SESSION_CHECK=1 \
             bash image/build-disk.sh "$PWD/out"
 
       - name: 启动测试（QEMU + 串口）
@@ -126,6 +126,12 @@ jobs:
             BOOT_OK=0
           else
             echo "PASS accounts-daemon 正常"
+          fi
+          if grep -q "DDE_SESSION_CHECK_RESULT=PASS" boot.log; then
+            echo "PASS DDM 自动登录已启动 dde-session 和 dde-shell"
+          else
+            echo "FAIL DDM 自动登录未启动完整用户桌面（查看 boot.log 中的 DDE_SESSION_CHECK）"
+            BOOT_OK=0
           fi
           [ "$BOOT_OK" -eq 1 ] || { echo "启动验证未通过"; exit 1; }
 

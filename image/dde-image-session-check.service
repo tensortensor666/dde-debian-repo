@@ -1,0 +1,11 @@
+[Unit]
+Description=Check DDE autologin session
+After=ddm.service
+Wants=ddm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/dde-image/check-session.sh
+
+[Install]
+WantedBy=graphical.target

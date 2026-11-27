@@ -80,6 +80,15 @@ systemctl enable polkit 2>/dev/null || true
 systemctl enable systemd-timesyncd 2>/dev/null || true
 systemctl set-default graphical.target 2>/dev/null || true
 
+if [ "${IMAGE_SESSION_CHECK:-0}" = "1" ]; then
+  echo ">> 启用 CI 会话自检（收集 DDM 日志并验证 dde-session/dde-shell）"
+  install -d -m 0755 /usr/lib/dde-image
+  install -m 0755 /tmp/check-session.sh /usr/lib/dde-image/check-session.sh
+  install -m 0644 /tmp/dde-image-session-check.service \
+    /etc/systemd/system/dde-image-session-check.service
+  systemctl enable dde-image-session-check.service
+fi
+
 echo ">> grub: 串口控制台（CI 里用 qemu -nographic 才能看到启动过程）"
 if [ -f /etc/default/grub ]; then
   # 不要 quiet：它把 loglevel 压到 4，内核的 "Linux version" 之类 INFO

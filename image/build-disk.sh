@@ -132,9 +132,13 @@ chroot "$ROOTFS" /bin/bash -c "
 
 log "6/10 镜像内配置"
 install -m 0755 "$HERE/in-target.sh" "$ROOTFS/tmp/in-target.sh"
+install -m 0755 "$HERE/check-session.sh" "$ROOTFS/tmp/check-session.sh"
+install -m 0644 "$HERE/dde-image-session-check.service" \
+  "$ROOTFS/tmp/dde-image-session-check.service"
 chroot "$ROOTFS" /usr/bin/env DEBIAN_FRONTEND=noninteractive \
   IMAGE_USER="${IMAGE_USER:-deepin}" IMAGE_PASS="${IMAGE_PASS:-deepin}" \
   IMAGE_HOSTNAME="${IMAGE_HOSTNAME:-dde}" \
+  IMAGE_SESSION_CHECK="${IMAGE_SESSION_CHECK:-0}" \
   /bin/bash /tmp/in-target.sh
 
 log "7/10 清理"
