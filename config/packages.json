@@ -771,9 +771,15 @@
           "find": " libudisks2-dev,",
           "replace": " libudisks2-dev,\n libmount-dev,",
           "count": 1
+        },
+        {
+          "file": "debian/rules",
+          "find": "-DVERSION=\"$(DEB_VERSION_UPSTREAM)\"",
+          "replace": "-DVERSION=\"$(DEB_VERSION_UPSTREAM)\" -DBUILD_UNIT_TESTS=OFF",
+          "count": 1
         }
       ],
-      "_note": "提供 libdfm6-io/mount/burn/search 及开发包。Boost 1.92 不再需要独立 system 组件；显式补 libmount-dev 供 mount pkg-config 使用。"
+      "_note": "提供 libdfm6-io/mount/burn/search 及开发包。Boost 1.92 不再需要独立 system 组件；显式补 libmount-dev 供 mount pkg-config 使用；关闭单元测试构建，避免 forky 的 Lucene 头文件路径差异阻塞库编译。"
     },
     {
       "name": "image-editor",
