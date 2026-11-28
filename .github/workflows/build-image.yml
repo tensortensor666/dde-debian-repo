@@ -109,10 +109,11 @@ jobs:
           #   Reached target multi-user.target - Multi-User System.
           #   Reached target graphical.target - Graphical Interface.
           # 老正则只认 "Reached target Multi-User"，会把成功启动误判为失败。
-          if grep -qE "Reached target (multi-user|graphical)\.target|Reached target (Multi-User|Graphical)" boot.clean.log; then
-            echo "PASS 系统到达 Multi-User/Graphical"
+          if grep -qE "Reached target (multi-user|graphical)\.target|Reached target (Multi-User|Graphical)" boot.clean.log \
+              || grep -q "DDE_SESSION_CHECK_RESULT=PASS" boot.log; then
+            echo "PASS 系统到达 Multi-User/Graphical 或 DDM 已启动完整用户桌面"
           else
-            echo "WARN 未见 target"
+            echo "WARN 未见系统 target 或 DDM 用户桌面"
             BOOT_OK=0
           fi
           if grep -qiE "treeland|dde-session|dde-shell|agetty|login:" boot.log; then
