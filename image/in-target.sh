@@ -125,10 +125,10 @@ XDG_CURRENT_DESKTOP=DDE
 XDG_SESSION_DESKTOP=Treeland
 EOF
 
-echo ">> 默认壁纸（dde-wallpapers 未打包，补一个占位 jpg 避免 wallpaper-factory 报错）"
+echo ">> Deepin 官方默认壁纸"
 mkdir -p /usr/share/wallpapers/deepin
-printf '%s' '/9j/4AAQSkZJRgABAgAAAQABAAD//gAQTGF2YzYyLjI4LjEwMQD/2wBDAAgGBgcGBwgICAgICAkJCQoKCgkJCQkKCgoKCgoMDAwKCgoKCgoKDAwMDA0ODQ0NDA0ODg8PDxISEREVFRUZGR//xABMAAEBAAAAAAAAAAAAAAAAAAAABwEBAQAAAAAAAAAAAAAAAAAAAAUQAQAAAAAAAAAAAAAAAAAAAAARAQAAAAAAAAAAAAAAAAAAAAD/wAARCAAkAEADASIAAhEAAxEA/9oADAMBAAIRAxEAPwCagKyaAAAAAAAAAAAAAAAAAAAAAA//2Q==' \
-  | base64 -d > /usr/share/wallpapers/deepin/deepin-default.jpg
+cp -f /usr/share/wallpapers/deepin/platform/deepin/deepin-default.jpg \
+  /usr/share/wallpapers/deepin/deepin-default.jpg
 chmod 644 /usr/share/wallpapers/deepin/deepin-default.jpg
 
 echo ">> 服务"

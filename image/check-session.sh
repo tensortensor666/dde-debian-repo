@@ -8,6 +8,7 @@ SESSION_OK=0
 SHELL_OK=0
 PLUGIN_OK=0
 FILE_MANAGER_OK=0
+WALLPAPER_OK=0
 APPEARANCE_OK=0
 AUDIO_OK=0
 
@@ -94,9 +95,19 @@ if dpkg-query -W -f='${Status}' dde-file-manager 2>/dev/null | grep -q 'install 
   FILE_MANAGER_OK=1
 fi
 
+if dpkg-query -W -f='${Status}' deepin-wallpapers 2>/dev/null | grep -q 'install ok installed' \
+    && [ -s /usr/share/wallpapers/deepin/deepin-default.jpg ] \
+    && [ -s /usr/share/wallpapers/deepin/deepin-theme-3.jpg ]; then
+  WALLPAPER_OK=1
+fi
+
 echo "--- file manager ---"
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' dde-file-manager 2>/dev/null || true
 xdg-mime query default inode/directory 2>/dev/null || true
+
+echo "--- wallpapers ---"
+dpkg-query -W -f='${Package} ${Version} ${Status}\n' deepin-wallpapers 2>/dev/null || true
+find /usr/share/wallpapers/deepin -maxdepth 1 -type f -name '*.jpg' -printf '%f\n' 2>/dev/null | sort | head -20 || true
 
 echo "--- systemd units ---"
 systemctl is-active ddm.service treeland.service accounts-daemon.service || true
@@ -149,6 +160,11 @@ if (( FILE_MANAGER_OK == 1 )); then
 else
   echo "DDE_FILE_MANAGER_CHECK_RESULT=FAIL"
 fi
+if (( WALLPAPER_OK == 1 )); then
+  echo "DDE_WALLPAPER_CHECK_RESULT=PASS"
+else
+  echo "DDE_WALLPAPER_CHECK_RESULT=FAIL"
+fi
 if (( APPEARANCE_OK == 1 )); then
   echo "DDE_APPEARANCE_CHECK_RESULT=PASS"
 else
@@ -159,11 +175,11 @@ if (( AUDIO_OK == 1 )); then
 else
   echo "DDE_AUDIO_CHECK_RESULT=FAIL"
 fi
-if (( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && FILE_MANAGER_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 )); then
+if (( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && FILE_MANAGER_OK == 1 && WALLPAPER_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 )); then
   echo "DDE_SESSION_CHECK_RESULT=PASS"
 else
   echo "DDE_SESSION_CHECK_RESULT=FAIL"
 fi
 echo "=== DDE_SESSION_CHECK_END ==="
 
-(( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && FILE_MANAGER_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 ))
+(( SESSION_OK == 1 && SHELL_OK == 1 && PLUGIN_OK == 1 && FILE_MANAGER_OK == 1 && WALLPAPER_OK == 1 && APPEARANCE_OK == 1 && AUDIO_OK == 1 ))

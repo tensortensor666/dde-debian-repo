@@ -154,6 +154,12 @@ jobs:
             echo "FAIL Deepin 文件管理器未安装或未设为默认目录处理器"
             BOOT_OK=0
           fi
+          if grep -q "DDE_WALLPAPER_CHECK_RESULT=PASS" boot.log; then
+            echo "PASS Deepin 官方壁纸和默认壁纸已安装"
+          else
+            echo "FAIL Deepin 官方壁纸或默认壁纸缺失"
+            BOOT_OK=0
+          fi
           if grep -q "DDE_APPEARANCE_CHECK_RESULT=PASS" boot.log \
               && ! grep -qE "Can't load resource: /org\.deepin\.dde\.appearance|DConfig is invalid of appid=org\.deepin\.dde\.appearance" boot.clean.log; then
             echo "PASS 外观服务已注册且 DConfig 可用"

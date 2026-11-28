@@ -374,6 +374,25 @@
       ]
     },
     {
+      "name": "deepin-wallpapers",
+      "repo": "linuxdeepin/deepin-wallpapers",
+      "ref": "master",
+      "source": "git",
+      "enabled": true,
+      "depends": [
+        "dde-api"
+      ],
+      "source_fixes": [
+        {
+          "file": "debian/rules",
+          "find": "--exclude=deepin/platform --exclude=deepin-livewallpapers/platform",
+          "replace": "--exclude=deepin-livewallpapers/platform",
+          "count": 1
+        }
+      ],
+      "_note": "Deepin 官方静态壁纸、纯色壁纸、动态壁纸和平台默认壁纸；保留 platform/deepin 资源以提供真正的 deepin-default.jpg。"
+    },
+    {
       "name": "dde-polkit-agent",
       "repo": "linuxdeepin/dde-polkit-agent",
       "ref": "master",

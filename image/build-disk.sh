@@ -22,7 +22,7 @@ DESKTOP_PKGS="
 dde-session dde-shell dde-launchpad dde-application-manager
 dde-tray-loader dde-daemon dde-appearance dde-control-center dde-polkit-agent
 dde-services deepin-desktop-schemas deepin-icon-theme dde-api dde-desktop
-dde-file-manager dde-disk-mount-plugin
+dde-file-manager dde-disk-mount-plugin deepin-wallpapers
 ddm treeland treeland-wayland-session
 "
 
