@@ -1,0 +1,9 @@
+diff --git a/src/plugin-accounts/qml/CustomAvatarCropper.qml b/src/plugin-accounts/qml/CustomAvatarCropper.qml
+--- a/src/plugin-accounts/qml/CustomAvatarCropper.qml
++++ b/src/plugin-accounts/qml/CustomAvatarCropper.qml
+@@ -193,4 +193,4 @@ Control {
+-        Slider {
++        D.Slider {
+             id: scaleSlider
+             Accessible.id: "CustomAvatarCropper_Slider"
+             from: 1.0

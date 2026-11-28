@@ -740,7 +740,8 @@
       "_note": "控制中心。forky 把我们需要的私有库都补齐了（libdareader/libdeepin-pw-check 自建）。qt6-wayland-dev-tools 已并入 qt6-wayland-dev → source_fix。 另：forky 无 systemd.pc → patch；Qt 6.11 下关掉 ENABLE_WARNINGS_AS_ERRORS 和 BUILD_TESTING（测试代码用旧 API）。 deepin-security-loader 无源 → 删 Depends。",
       "source_patches": [
         "patches/dde-control-center-systemd-pkgconfig.patch",
-        "patches/dde-control-center-forky-build.patch"
+        "patches/dde-control-center-forky-build.patch",
+        "patches/dde-control-center-qt6-slider.patch"
       ]
     },
     {
