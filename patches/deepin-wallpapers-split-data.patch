@@ -1,0 +1,74 @@
+diff --git a/debian/control b/debian/control
+--- a/debian/control
++++ b/debian/control
+@@ -10,7 +10,8 @@ Homepage: https://www.deepin.org/
+ 
+ Package: deepin-wallpapers
+ Architecture: all
+-Depends: ${shlibs:Depends}, ${misc:Depends}, deepin-livewallpaper-default
++Depends: ${shlibs:Depends}, ${misc:Depends}, deepin-wallpapers-platform,
++ deepin-wallpapers-extra, deepin-livewallpaper-default
+ Conflicts: deepin-wallpapers-nonfree
+ Replaces: deepin-wallpapers-nonfree
+ Breaks: deepin-desktop-base (<< 2017.11.2)
+@@ -16,5 +18,17 @@ Description: dde wallpapers
+  Default wallpapers for dde
+ 
++Package: deepin-wallpapers-platform
++Architecture: all
++Depends: ${shlibs:Depends}, ${misc:Depends}
++Description: dde platform wallpapers
++ Platform-specific wallpaper variants for dde
++
++Package: deepin-wallpapers-extra
++Architecture: all
++Depends: ${shlibs:Depends}, ${misc:Depends}
++Description: additional dde wallpapers
++ Additional Unsplash and Deepin wallpaper assets for dde
++
+ Package: deepin-livewallpaper-default
+ Architecture: all
+ Depends: ${shlibs:Depends}, ${misc:Depends}
+diff --git a/debian/deepin-wallpapers.install b/debian/deepin-wallpapers.install
+new file mode 100644
+--- /dev/null
++++ b/debian/deepin-wallpapers.install
+@@ -0,0 +1,6 @@
++deepin /usr/share/wallpapers
++deepin-solidwallpapers /usr/share/wallpapers
++deepin-livewallpapers/thumbnails /usr/share/wallpapers/deepin-livewallpapers
++deepin-livewallpapers/metadata.json /usr/share/wallpapers/deepin-livewallpapers
++image-blur /var/cache
++
+diff --git a/debian/deepin-wallpapers-extra.install b/debian/deepin-wallpapers-extra.install
+new file mode 100644
+--- /dev/null
++++ b/debian/deepin-wallpapers-extra.install
+@@ -0,0 +1,2 @@
++nonfree/deepin-private/* /usr/share/wallpapers/deepin
++nonfree/unsplash.com/* /usr/share/wallpapers/deepin
+diff --git a/debian/deepin-wallpapers-platform.install b/debian/deepin-wallpapers-platform.install
+new file mode 100644
+--- /dev/null
++++ b/debian/deepin-wallpapers-platform.install
+@@ -0,0 +1 @@
++deepin/platform /usr/share/wallpapers/deepin
+diff --git a/debian/rules b/debian/rules
+--- a/debian/rules
++++ b/debian/rules
+@@ -4,7 +4,14 @@
+ export USE_NONFREEPIC = 1
+ 
+ override_dh_install:
+-	dh_install --exclude=deepin/platform --exclude=deepin-livewallpapers/platform
++	dh_install -pdeepin-wallpapers --exclude=deepin/platform --exclude=deepin-livewallpapers/platform
++	dh_install -pdeepin-wallpapers-platform
++	dh_install -pdeepin-wallpapers-extra
++	dh_install -pdeepin-livewallpaper-default
++	dh_install -pdeepin-livewallpaper-summer-night-breeze
++	dh_install -pdeepin-livewallpaper-sailfish-in-the-deep-sea
++	dh_install -pdeepin-livewallpaper-cosmic-galaxy-nebula
++	dh_install -pdeepin-livewallpaper-campfire-camping-in-the-forest
+ 
+ %:
+ 	dh $@ 

@@ -382,15 +382,10 @@
       "depends": [
         "dde-api"
       ],
-      "source_fixes": [
-        {
-          "file": "debian/rules",
-          "find": "--exclude=deepin/platform --exclude=deepin-livewallpapers/platform",
-          "replace": "--exclude=deepin-livewallpapers/platform",
-          "count": 1
-        }
+      "source_patches": [
+        "patches/deepin-wallpapers-split-data.patch"
       ],
-      "_note": "Deepin 官方静态壁纸、纯色壁纸、动态壁纸和平台默认壁纸；保留 platform/deepin 资源以提供真正的 deepin-default.jpg。"
+      "_note": "Deepin 官方静态壁纸、纯色壁纸、动态壁纸和平台默认壁纸；静态资源拆成核心、平台和补充三个数据包，确保每个 .deb 都低于 GitHub 单文件 100 MB 限制。"
     },
     {
       "name": "dde-polkit-agent",
