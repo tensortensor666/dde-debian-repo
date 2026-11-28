@@ -1,0 +1,8 @@
+Origin: dde-debian
+Label: DDE for Debian
+Suite: forky
+Codename: dde26
+Architectures: amd64
+Components: main
+Description: Deepin Desktop Environment rebuilt for Debian forky (14, testing)
+SignWith: 63DF1C4609EA94E0

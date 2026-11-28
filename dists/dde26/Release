@@ -1,0 +1,20 @@
+Origin: dde-debian
+Label: DDE for Debian
+Suite: forky
+Codename: dde26
+Date: Sat, 28 Nov 2026 01:54:49 UTC
+Architectures: amd64
+Components: main
+Description: Deepin Desktop Environment rebuilt for Debian forky (14, testing)
+MD5Sum:
+ 89e1bf50206fb2fc7c2b851c88f2c62c 138943 main/binary-amd64/Packages
+ ad66829eaeeb12e1f146752946442029 38179 main/binary-amd64/Packages.gz
+ e75d170f8078dd4b03adc833c9fe8b9d 171 main/binary-amd64/Release
+SHA1:
+ 09cca4b99cbeb8ed5030482ee50e0db8462074a5 138943 main/binary-amd64/Packages
+ 00c70080eb885687b61e5bf7fccba376671b3cab 38179 main/binary-amd64/Packages.gz
+ 12a3dddf9fd8ae621b2f34a3f920d23a651db715 171 main/binary-amd64/Release
+SHA256:
+ 7926687c3268c5d4d9dfa1ea91df637c57a8dcffc46a2e6e7c029548db90e626 138943 main/binary-amd64/Packages
+ 2e43e8f6f61cc3051681cc438ed10aa152057dfaef8453f05a75f964b9c552b6 38179 main/binary-amd64/Packages.gz
+ fa32ced2315e8812c8f12d075106fb04c1fdd0fb49e7174933f4bf38d2b7de14 171 main/binary-amd64/Release

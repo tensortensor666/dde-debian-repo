@@ -1,0 +1,6 @@
+Archive: forky
+Component: main
+Origin: dde-debian
+Label: DDE for Debian
+Architecture: amd64
+Description: Deepin Desktop Environment rebuilt for Debian forky (14, testing)

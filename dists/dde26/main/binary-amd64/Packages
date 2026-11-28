@@ -1,0 +1,3044 @@
+Package: dde-api
+Version: 6.0.49
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 86102
+Depends: adduser, alsa-utils, bc, blur-effect, coreutils (>= 8.30), fontconfig, libcanberra-pulse, locales, rfkill, fonts-unifont, systemd | systemd-standalone-sysusers | systemd-sysusers, libasound2t64 (>= 1.0.16), libc6 (>= 2.34), libgdk-pixbuf-2.0-0 (>= 2.25.2), libglib2.0-0t64 (>= 2.70.0), libgtk-3-0t64 (>= 3.0.0), libpulse0 (>= 0.99.1), libx11-6
+Homepage: http://www.deepin.org
+Priority: optional
+Section: devel
+Filename: pool/main/d/dde-api/dde-api_6.0.49_amd64.deb
+Size: 18758508
+SHA256: d0acb8b9904454ee889ea5fe0fcf7e96f56c00900ea8c2941aa78744402496ac
+SHA1: 79e2df1e5b1b66f3ae934390c7e148aa8bc5738f
+MD5sum: dc43a5f388ff38800d984cbcc3be7205
+Description: Go-lang bingdings for dde-daemon
+ DDE API provides some dbus interfaces that is used for screen zone
+ detecting, thumbnail generating, sound playing, etc.
+
+Package: dde-api-dbgsym
+Source: dde-api
+Version: 6.0.49
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 56507
+Depends: dde-api (= 6.0.49)
+Breaks: dde-api-dbg
+Replaces: dde-api-dbg
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-api/dde-api-dbgsym_6.0.49_amd64.deb
+Size: 22508772
+SHA256: e756f4baee4161d866f4bbaca17a1c073e432f190f5f68555fafa62a021dad08
+SHA1: 77a4823a5c9fb6e8765e171ec850a23c9d781d59
+MD5sum: dd785a085c83cda24004ac157571d3ff
+Description: debug symbols for dde-api
+Build-Ids: 01182f8ec5d091a57fbd50444258fbbef3e522c0 074ce706272b103b09449f6d69bb8c3721bf25cf 163d44e14373dfa48ef8f32a768e61e085fa7440 51798f0610acae43a6843538d42f32caa378aad7 9a3a13d2ae7572234c494a9ced8c0fd7025471ed a491095fae8eeee1006f76c43920f835a4d84098 dabf2a864e9677cd9b4a297e0a0839d624ec5f8e e486c92a0637b8ab059c4a8336a6966b08cc6d69 e6f5888eb7568a98103843b490dd970c305dd45a e92a44667a3569fc242a5acceee80b7de4eeb62d
+
+Package: dde-api-dev
+Source: dde-api
+Version: 6.0.49
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 337
+Depends: golang-github-linuxdeepin-go-lib-dev (>= 1.2.13), golang-gir-gio-2.0-dev (>> 1.2.0+), golang-gir-glib-2.0-dev (>> 1.2.0+), golang-gir-gobject-2.0-dev (>> 1.2.0+), golang-gir-gudev-1.0-dev (>> 1.2.0+), golang-github-gosexy-gettext-dev, golang-github-linuxdeepin-go-dbus-factory-dev (>> 0.7.0+), golang-github-linuxdeepin-go-x11-client-dev (>= 0.0.4), golang-gopkg-alecthomas-kingpin.v2-dev, libcairo2-dev, libcanberra-dev, libfreetype6-dev, libgdk-pixbuf-2.0-dev, libgtk-3-dev, libpoppler-glib-dev, librsvg2-dev, libxi-dev
+Homepage: http://www.deepin.org
+Priority: optional
+Section: devel
+Filename: pool/main/d/dde-api/dde-api-dev_6.0.49_all.deb
+Size: 56056
+SHA256: d7d6d895fc23ef684185f7f5c37c7fdc136e39beb384679406766683399da250
+SHA1: 2b1570c3632beafd33e0533b770daa84f7f43c48
+MD5sum: 0ff320afd9ba89fb435bc42f1e2f102d
+Description: Go-lang bindings for dde-daemon -- dev file
+ DDE API provides some dbus interfaces that is used for screen zone
+ detecting, thumbnail generating, sound playing, etc.
+
+Package: dde-appearance
+Version: 1.1.87
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 1514
+Depends: dde-daemon (>> 6.1.99), libc6 (>= 2.38), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libfontconfig1 (>= 2.12.6), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.16.0), libgsettings-qt6-1 (>= 1.1.1), libgtk-3-0t64 (>= 3.0.0), libkf6configcore6 (>= 6.0.0), libkf6globalaccel6 (>= 6.0.0), libkf6windowsystem6 (>= 6.0.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.4.0), libssl3t64 (>= 3.0.0), libstdc++6 (>= 13.1), libx11-6, libxcursor1 (>> 1.1.2), libxfixes3, deepin-service-manager
+Homepage: http://www.deepin.org
+Priority: optional
+Section: devel
+Filename: pool/main/d/dde-appearance/dde-appearance_1.1.87_amd64.deb
+Size: 480640
+SHA256: c57b29f5fc2aa0ed4bd8d8285a30dd8c9a270b5c549d2ac851390da0b06075ed
+SHA1: 4f89a0d50a74f8a45ccfca944d93ffb249b76c08
+MD5sum: f2448eabc1dff697737f3553159f611f
+Description: deepin desktop-environment - dde-appearance module
+ dde appearance Provides application resource management and control services for the dde desktop environment.
+
+Package: dde-application-manager
+Version: 1.2.63
+Architecture: amd64
+Maintainer: He YuMing <heyuming@deepin.org>
+Installed-Size: 2215
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6concurrent6 (>= 6.1.2), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.2.0), libqt6waylandclient6 (>= 6.10.2), libstdc++6 (>= 14), libsystemd0 (>= 237), libwayland-client0 (>= 1.20.0), qt6-base-private-abi (= 6.11.2)
+Homepage: https://github.com/linuxdeepin/dde-application-manager
+Priority: optional
+Section: utils
+Filename: pool/main/d/dde-application-manager/dde-application-manager_1.2.63_amd64.deb
+Size: 530220
+SHA256: c7e39dc070292f9c50edf2f3e52e70510a3a5acbd8c6d08cd49733599a422bcc
+SHA1: c49e62e9f80fb01b6125a1b75cfdddb4981aed9b
+MD5sum: ae1334ada38775171434b27c21e354de
+Description: Application manager for DDE.
+  Launch applications by systemd for more caps.
+
+Package: dde-application-manager-api
+Source: dde-application-manager
+Version: 1.2.63
+Architecture: amd64
+Maintainer: He YuMing <heyuming@deepin.org>
+Installed-Size: 44
+Depends: dde-application-manager (= 1.2.63)
+Homepage: https://github.com/linuxdeepin/dde-application-manager
+Priority: optional
+Section: utils
+Filename: pool/main/d/dde-application-manager/dde-application-manager-api_1.2.63_amd64.deb
+Size: 11396
+SHA256: 564d55d93dfe6af917056c060bdac0b57cfc5e27c137408d8237bc166ae95ef9
+SHA1: 0cebf3b4e582c3524c5d4c50c6f4ea8f00137d8e
+MD5sum: e7b0739d2e62b79cffbd16cf3119edc9
+Description: DBus Interface of dde-application-manager.
+  For the convenience of developers who want to use dde-application-manager.
+
+Package: dde-application-manager-dbgsym
+Source: dde-application-manager
+Version: 1.2.63
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: He YuMing <heyuming@deepin.org>
+Installed-Size: 20711
+Depends: dde-application-manager (= 1.2.63)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-application-manager/dde-application-manager-dbgsym_1.2.63_amd64.deb
+Size: 20377548
+SHA256: b9eade2e0353e60733b58853eb8cd349b07a2e34eafb40ebe883017f5babda0f
+SHA1: fae307e1df347f20c0cbebb52403e8dfae4dad67
+MD5sum: 4752b96831d9931713079018fec5e480
+Description: debug symbols for dde-application-manager
+Build-Ids: 1f9bcc8c625057b70ed90e5372422c2b27a68092 20886a3e8914f904ff16f3359f68b1495b005ff3 41b8d792593c438546812ab37fefdfb8396e274c 915488c5517b1bcfe13a57196926cc6440bb5791 b8c2b7fa6f323ef8ec0a4ba2fabd2f91a4cb3caa d29a519f006253f7524a86c06790ee7cd593701a
+
+Package: dde-application-wizard-daemon-compat
+Source: dde-application-wizard
+Version: 0.1.21
+Architecture: amd64
+Maintainer: Gary Wang <wangzichong@deepin.org>
+Installed-Size: 197
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libgcc-s1 (>= 3.0), libpackagekitqt6-2 (>= 1.1.1), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.1.2), libqt6gui6 (>= 6.1.2), libstdc++6 (>= 14), packagekit
+Conflicts: dde-application-manager (<= 1.1.0)
+Priority: optional
+Section: unknown
+Filename: pool/main/d/dde-application-wizard/dde-application-wizard-daemon-compat_0.1.21_amd64.deb
+Size: 52672
+SHA256: e9c7b9d0f9461eb27ead30d0ba34745909aa4c541cfbe558d1b1fc1e34488abc
+SHA1: 3a2daa79820e642794422e4273d0452c1f258259
+MD5sum: 1077cea3ede5fbd8e38a14b4dfdf9cab
+Description: D-Bus compat module to provide app uninstall support
+ This package provides the app uninstallation related D-Bus APIs which
+
+Package: dde-control-center
+Version: 6.1.113
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 82952
+Depends: libc6 (>= 2.34), libdareader1, libdde-shell (>= 2.0.61+wb1), libdeepin-pw-check, libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libffmpegthumbnailer4v5 (>= 2.3.1+dfsg), libgcc-s1 (>= 3.0), libicu78 (>= 78.1-1~), libpolkit-qt6-1-1 (>= 0.200.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6multimedia6 (>= 6.6.1), libqt6network6 (>= 6.1.2), libqt6qml6 (>= 6.10.2), libqt6qmlmodels6 (>= 6.6.0), libqt6quick6 (>= 6.6.0), libqt6svg6 (>= 6.6.0), libqt6waylandclient6 (>= 6.10.2), libqt6widgets6 (>= 6.1.2), libssl3t64 (>= 3.0.0), libstdc++6 (>= 14), libwayland-client0 (>= 1.20.0), libxcursor1 (>> 1.1.2), qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2), qml6-module-qtquick-layouts, qml6-module-qtquick-window, qml6-module-qt-labs-qmlmodels, qml6-module-qtquick-dialogs, qml6-module-qtquick-effects, libdtk6declarative (>> 6.7.40), netselect, dde-daemon (>> 6.1.99), dde-services (>> 1.0.39)
+Recommends: dde-tray-loader, uos-license-content
+Conflicts: dde-control-center-dock
+Replaces: dde-control-center-dock, dde-tray-loader (<= 2.0.44)
+Homepage: https://github.com/linuxdeepin/dde-control-center
+Priority: optional
+Section: admin
+Filename: pool/main/d/dde-control-center/dde-control-center_6.1.113_amd64.deb
+Size: 55586284
+SHA256: ca6a674c9afc676e939b4d4578deca41f3c0b144d8a5ea97e84a1648dd1b24a4
+SHA1: 4cc9b7556e0c647322ea4bf68ef9ffb4ea57dfec
+MD5sum: 245a126ed6f6065499ee260d35720ff4
+Description: New control center for Deepin Desktop Environment,
+ Integrated control center with rich functions,Besides providing rich
+ system setting items, the function level is simple, the logic is clear,
+ the user can easily set the system, and the learning cost is low,
+ Provide users with automatic update system and developer mode to meet
+ the various needs of users for the operating system.
+ abrecovery -restore system, Determine whether the system is restored
+ reboot-reminder-dialog -Update restart, Confirm whether to restart the system
+ after the completion of the update.
+ DDE Control Center is the control panel of Deepin Desktop Environment.
+
+Package: dde-control-center-dev
+Source: dde-control-center
+Version: 6.1.113
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 63
+Depends: dde-control-center (= 6.1.113), qt6-declarative-dev, qt6-tools-dev
+Homepage: https://github.com/linuxdeepin/dde-control-center
+Priority: optional
+Section: admin
+Filename: pool/main/d/dde-control-center/dde-control-center-dev_6.1.113_amd64.deb
+Size: 36552
+SHA256: ae2c0d0f10dc3fb95f1833b588727daf1212ef02672fa140cf8e84768add4861
+SHA1: e17be6c864c1dbed48a543962a724a4c6f135833
+MD5sum: 537a7d240ded2b87fd06acbfe6ab1952
+Description: New control center for Deepin Desktop Environment - development files
+ DDE Control Center is the control panel of Deepin Desktop Environment.
+
+Package: dde-control-center-doc
+Source: dde-control-center
+Version: 6.1.113
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 36
+Depends: dde-control-center (= 6.1.113)
+Homepage: https://github.com/linuxdeepin/dde-control-center
+Priority: optional
+Section: admin
+Filename: pool/main/d/dde-control-center/dde-control-center-doc_6.1.113_amd64.deb
+Size: 31232
+SHA256: b7ea7d895a974b57eb389a84796c6bf9d6263e6e5101595e77658e1d77bb874f
+SHA1: 9f7e830222957460d06eab901ab3dcc55a8ed5ba
+MD5sum: a32984083455ba585db30ee0e3d002a6
+Description: dde-control-center (document)
+ This package contains the doc files of dde-control-center
+
+Package: dde-daemon
+Version: 6.1.111
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 114396
+Depends: bluez-obexd, cgroup-tools, dbus, dde-api (>> 3.17.1+), dde-polkit-agent, deepin-desktop-schemas (>> 5.1.2+), deepin-sound-theme, dmidecode, libglib2.0-bin, hwinfo, imwheel, libfprint0 | libfprint | libfprint-2-2, libnotify-bin, libpam-runtime (>= 1.1.3-2~), libpam0g, network-manager, procps, rfkill, deepin-power-control (>= 2.0.1), xdotool, x11-utils, xkb-data, dde-dconfig-daemon, dde-services (>> 1.0.41), dconf-gsettings-backend | gsettings-backend, systemd | systemd-standalone-sysusers | systemd-sysusers, libasound2t64 (>= 1.0.24.1), libc6 (>= 2.34), libcrypt1 (>= 1:4.1.0), libddcutil5 (>= 3.0.2), libgcc-s1 (>= 3.0), libgdk-pixbuf-2.0-0 (>= 2.25.2), libglib2.0-0t64 (>= 2.70.0), libgtk-3-0t64 (>= 3.0.0), libgudev-1.0-0 (>= 234), libinput10 (>= 0.21.0), libpulse0 (>= 0.99.1), libstdc++6 (>= 13.1), libudev1 (>= 183), libx11-6 (>= 2:1.7.0), libxi6 (>= 2:1.2.99.4)
+Recommends: flatpak, proxychains4, mesa-utils
+Suggests: bluez (>= 5.4), miraclecast, network-manager-l2tp, network-manager-openconnect, network-manager-openvpn, network-manager-pptp, network-manager-sstp, network-manager-vpnc, xserver-xorg-input-synaptics, xserver-xorg-input-wacom
+Conflicts: dde-workspace, lastore-daemon-migration, startdde
+Provides: lastore-daemon-migration
+Homepage: http://www.deepin.org
+Priority: optional
+Section: admin
+Filename: pool/main/d/dde-daemon/dde-daemon_6.1.111_amd64.deb
+Size: 25509524
+SHA256: 2a6651d676e07c4d12a28f5b59ef806bd679a00f735a4ae9766653c1ea9ab7cc
+SHA1: 0e7862c6149c6a7215c98c4e9c160a5a2e7eb37a
+MD5sum: 8ea5b9ada447b4292516848c6bc22527
+Description: daemon handling the DDE session settings
+ This package contains the daemon which is responsible for setting the
+ various parameters of a DDE session and the applications that run
+ under it.
+
+Package: dde-daemon-dbgsym
+Source: dde-daemon
+Version: 6.1.111
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 99626
+Depends: dde-daemon (= 6.1.111)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-daemon/dde-daemon-dbgsym_6.1.111_amd64.deb
+Size: 37611480
+SHA256: b426e758eca690f6d541d7e567743e82d0c28b79de0d60d2ad8fb5e25bc4f824
+SHA1: 4fcaf17654b20d61c3bdfa5cad2bcd03c0aa7020
+MD5sum: 87a895e02daf394dfb9c01feee9d5825
+Description: debug symbols for dde-daemon
+Build-Ids: 14fcbe032d36779947ae137f6fecfff18fce9718 1dc7e38bfc0946565179c1d963df10012e8cb002 3bf5b630c61a13015eeff81ef1ead1adf86d2f70 426088af11bbc9c9a1de055aed079a4115d22b61 43be73f2a103fa05de79ed0bdd33bfba2f798b13 48c0b57a970cc737ea15f8e81c702fa6cbb51c88 57753fb7b473469d5f343b5b1a83f63533345836 6ff277bf8b48288e4fe0f9362b8fa7cf7e7d3d69 93a87bf2097369edde4732cc29bd2fe307320587 9926b89889820044c67c07d380b3bdad36d86c90 9d63377d19ca7fc127093caead28693b0a2726a2 c193e02e10d48adbf1747bcdc5a0ae652165e75a c88b68e5f8c75e0968db40be8c98647899c1cd01 df94c4af47017d2db79ae68a248f703542940499
+
+Package: dde-dconfig-daemon
+Source: dde-app-services
+Version: 1.0.48
+Architecture: amd64
+Maintainer: Deepin Packages Builder <yeshanshan@uniontech.com>
+Installed-Size: 792
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libstdc++6 (>= 14)
+Conflicts: dconfig-daemon
+Replaces: dconfig-daemon
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-app-services/dde-dconfig-daemon_1.0.48_amd64.deb
+Size: 209752
+SHA256: 73bb32321d60c862232985ef2a9198c12f7c606b815e9f12f522da5ae8d8679c
+SHA1: c8be0d18c795b63ed19b91ada098f181d2f14d25
+MD5sum: ea7af31586c68e3c381856fd7ea29a5a
+Description: deepin desktop-environment - dde-dconfig-daemon module
+ dde-dconfig-daemon provids dbus service for reading and writing DSG configuration.
+
+Package: dde-dconfig-doc
+Source: dde-app-services
+Version: 1.0.48
+Architecture: amd64
+Maintainer: Deepin Packages Builder <yeshanshan@uniontech.com>
+Installed-Size: 132
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-app-services/dde-dconfig-doc_1.0.48_amd64.deb
+Size: 53132
+SHA256: ae9d3413328da36c3cf95a64833989b332b520dfb090696035c977f203877ef7
+SHA1: bde2fa7940c1fe554c0554f7e71424c8603486d6
+MD5sum: dc2aceeeb8f798ce4a2162f64b090682
+Description: Deepin Tool Kit DConfig (document)
+ This package contains the doc files of DConfig
+
+Package: dde-dconfig-editor
+Source: dde-app-services
+Version: 1.0.48
+Architecture: amd64
+Maintainer: Deepin Packages Builder <yeshanshan@uniontech.com>
+Installed-Size: 600
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.1.2), libqt6widgets6 (>= 6.3.0), libstdc++6 (>= 14)
+Conflicts: dconfig-editor
+Replaces: dconfig-editor
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-app-services/dde-dconfig-editor_1.0.48_amd64.deb
+Size: 179996
+SHA256: 91f5111b52e8eaeabb8903130ed02edb889d99bc3d836d47d7efcc528c2b72fd
+SHA1: 25c4c9bdfd5ee93d55abf25051c78d785e40ced9
+MD5sum: 920170bc0d74637704d0aa0e0b2f5e61
+Description: deepin desktop-environment - dde-dconfig-editor module
+ dde-dconfig-editor is a GUI or Console tool, it's used to view and edit
+ DSG configuration for current user.
+
+Package: dde-desktop
+Source: dde-file-manager
+Version: 6.6.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 7219
+Depends: libc6 (>= 2.34), libdde-file-manager (= 6.6.11), libdde-shell (>= 2.0.61+wb1), libdfm6-io, libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6svg6 (>= 6.6.0), libqt6widgets6 (>= 6.3.0), libstdc++6 (>= 14), libxcb1, qt6-base-private-abi (= 6.11.2), libqt6sql6-sqlite, qt6-translations-l10n, libimageeditor6
+Recommends: deepin-screensaver
+Conflicts: dde-desktop-plugins, dde-file-manager-oem, dde-workspace (<< 2.90.5)
+Replaces: dde-desktop-plugins, dde-file-manager (<< 6.0.1), dde-file-manager-oem
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-file-manager/dde-desktop_6.6.11_amd64.deb
+Size: 1648304
+SHA256: 5caf5f3ac8147f808c9b841d1b44898acd0a087a2574d6accc549b0397096b71
+SHA1: 647e94c1be7681bdda1cb8bd5c6e523ea2931433
+MD5sum: d05f37164b5b51aeacb913c35399ef60
+Description: deepin desktop-environment - desktop module
+ Deepin Desktop Environment (DDE) - desktop module.
+
+Package: dde-device-formatter
+Version: 1.5.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 440
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.1.2), libqt6gui6 (>= 6.1.2), libqt6network6 (>= 6.1.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 11), libudisks2-qt6-1 (>= 6.0.1), libx11-6, qt6-base-private-abi (= 6.11.2), nilfs-tools
+Homepage: http://www.deepin.org
+Priority: optional
+Section: utils
+Filename: pool/main/d/dde-device-formatter/dde-device-formatter_1.5.11_amd64.deb
+Size: 89644
+SHA256: 8a644d5909719b719d3a26f55a2547d062594965575e2cb746c29ef8212be946
+SHA1: 37282eea91bad892925eea65513a390e0745bbd9
+MD5sum: d954b81605a1abfd3c70dc43cc921b9a
+Description: Device formatter
+  A simple graphical interface for creating file system in a block device.
+
+Package: dde-disk-mount-plugin
+Source: dde-file-manager
+Version: 6.6.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 556
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libmount1 (>= 2.19.1), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.4.0), libqt6gui6 (>= 6.11.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 5)
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-file-manager/dde-disk-mount-plugin_6.6.11_amd64.deb
+Size: 169168
+SHA256: 856c5f07bb460936e336d269cc10965317de936eb89139bddebb543edcf2c0f9
+SHA1: 3bbf60d1aceaec57d158eef346b3ec8c2e37d800
+MD5sum: 3851ae1df42e05e057ef5662449abdf6
+Description: plugin of dde-dock
+ Disk mount plugin of dde-dock which is created by dde-file-manager
+
+Package: dde-file-manager
+Version: 6.6.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 77947
+Depends: libc6 (>= 2.38), libcryptsetup12 (>= 2:2.4), libdde-file-manager (= 6.6.11), libdeepin-pdfium, libdevmapper1.02.1 (>= 2:1.02.197), libdfm6-io, libdfm6-mount, libdfm6-search, libdmr, libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.12.0), libicu78 (>= 78.1-1~), libkf6syntaxhighlighting6 (>= 6.0.0), libmd4c0 (>= 0.2.7), libpolkit-qt6-1-1 (>= 0.200.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6multimedia6 (>= 6.6.1), libqt6network6 (>= 6.1.2), libqt6sql6 (>= 6.8.2), libqt6svgwidgets6 (>= 6.6.0), libqt6widgets6 (>= 6.7.2), libsecret-1-0 (>= 0.7), libssl3t64 (>= 3.0.0), libstdc++6 (>= 14), libtag2 (>= 2.0), qt6-base-private-abi (= 6.11.2), pkexec, socat, cryfs, dde-device-formatter, libblockdev-crypto2 | libblockdev-crypto3, dde-file-manager-services-plugins (= 6.6.11), qml6-module-qtquick-controls, qml6-module-qtquick-layouts, qml6-module-qtquick-window, tpm2-abrmd, libtss2-tcti-pcap0t64, libtss2-tcti-tabrmd0
+Recommends: avfs, samba
+Conflicts: dde-file-manager-common-plugins, dde-file-manager-daemon-plugins, dde-file-manager-plugins, dde-file-manager-preview, dde-file-manager-preview-plugins
+Breaks: dde-desktop (<< 6.5.102), dde-file-manager-services-plugins (<< 6.5.102)
+Replaces: dde-desktop (<< 6.5.102), dde-file-manager-common-plugins, dde-file-manager-daemon-plugins, dde-file-manager-oem, dde-file-manager-plugins, dde-file-manager-preview, dde-file-manager-preview-plugins, dde-file-manager-services-plugins (<< 6.5.102)
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-file-manager/dde-file-manager_6.6.11_amd64.deb
+Size: 39033492
+SHA256: 4ae1433edf5fc72b9d3f6663b748f0e7edc22e24996b6e447b8e5ec4ddb9b022
+SHA1: ecd42023a7d0611787a1ecef0cb8f50b71e8a1cd
+MD5sum: f72bb43d198059af46d4242ac0ad9c7d
+Description: File manager front end
+ File manager front-end of Deepin OS
+
+Package: dde-file-manager-dev
+Source: dde-file-manager
+Version: 6.6.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 285
+Depends: libdde-file-manager (= 6.6.11), libdfm6-io-dev, libdfm6-mount-dev, libdfm6-burn-dev
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-file-manager/dde-file-manager-dev_6.6.11_amd64.deb
+Size: 65200
+SHA256: 6e8ec8a86deeaf3c70550efcc56327d3ec969f620652e0ba2455b859df0d6d17
+SHA1: b03e01f548f49991490e3c2d92423a6db7fd34c5
+MD5sum: 7b1e4c5122633415526e677e2f152385
+Description: DDE File Manager Devel library
+ This package contains the header files and static libraries
+ of dde-file-manager
+
+Package: dde-file-manager-services-plugins
+Source: dde-file-manager
+Version: 6.6.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 861
+Depends: libc6 (>= 2.14), libcryptsetup12 (>= 2:2.0), libdde-file-manager (>= 6.6.11), libdfm6-mount, libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libmount1 (>= 2.20.1), libpolkit-qt6-1-1 (>= 0.200.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libstdc++6 (>= 14)
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-file-manager/dde-file-manager-services-plugins_6.6.11_amd64.deb
+Size: 233180
+SHA256: 64433462f48e815e60f1f6a032dfe701cf44a9c194ddf82a5e6dc7bf9759b4b5
+SHA1: de9a80ee702fe11a2ba0bd04a2f9dd30c35c3710
+MD5sum: 9d7f71d1435fc2d45e7e14e1b16e2c8a
+Description: deepin desktop-environment - deepin-service-manager plugins module
+ Deepin Desktop Environment (DDE) - deepin-service-manager plugins module.
+
+Package: dde-launchpad
+Version: 2.0.52
+Architecture: amd64
+Maintainer: Gary Wang <wangzichong@deepin.org>
+Installed-Size: 3499
+Depends: libappstreamqt3 (>= 1.2.3), libc6 (>= 2.27), libdde-shell (>= 2.0.61+wb1), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.40.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6qml6 (>= 6.10.2), libqt6quick6 (>= 6.6.0), libstdc++6 (>= 14), qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2), dde-application-manager (>> 1.2.51), dde-application-wizard-daemon-compat, libdtk6declarative (>= 6.0.19), dde-shell (>> 2.0.61), qml6-module-qtquick-layouts, qml6-module-qtquick-window, qml6-module-qtquick-controls, qml6-module-qtquick-controls2-styles-chameleon, qml6-module-qt-labs-platform, qml6-module-qt5compat-graphicaleffects
+Conflicts: dde-launcher
+Replaces: dde-launcher
+Priority: optional
+Section: DDE
+Filename: pool/main/d/dde-launchpad/dde-launchpad_2.0.52_amd64.deb
+Size: 715168
+SHA256: d1a2421a51c3669c41dd33a131dad0018e6edb5dc00c725fd35e91b856655696
+SHA1: 932b8b9dae74c2e63c2ba9c03e94ea948c21cbb4
+MD5sum: 04d0278098f418219249b96c85705f42
+Description: The "launcher" or "start menu" component for DDE
+ Display all installed applications and allow user to launch applications, which is convenient for users to operate quickly
+
+Package: dde-launchpad-dbgsym
+Source: dde-launchpad
+Version: 2.0.52
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Gary Wang <wangzichong@deepin.org>
+Installed-Size: 13015
+Depends: dde-launchpad (= 2.0.52)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-launchpad/dde-launchpad-dbgsym_2.0.52_amd64.deb
+Size: 12252564
+SHA256: 25f99b64c4a3e5f8b6760aa7f0eaab4a0c451f1db07e771f63ca4c507f5d337b
+SHA1: b7c2d28ce2a92519ec8b8bfe6ab5d1a54d892630
+MD5sum: d1a4ebc038d6689b7d9c7f1134df1456
+Description: debug symbols for dde-launchpad
+Build-Ids: 1db5c1a19913c453f95c068f88d6080494ed6492 62104a88fe5bdcc01a94423eaf51a6009f957fa0
+
+Package: dde-polkit-agent
+Version: 6.0.25
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 594
+Depends: libc6 (>= 2.34), libdde-shell (>= 2.0.61+wb1), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libpolkit-qt6-1-1 (>= 0.200.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.8.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 14)
+Homepage: https://github.com/linuxdeepin/dde-polkit-agent
+Priority: optional
+Section: devel
+Filename: pool/main/d/dde-polkit-agent/dde-polkit-agent_6.0.25_amd64.deb
+Size: 138032
+SHA256: 080beda1625bcebf4ac12708fda3dafb48c221cd5e53ab684b7e8bcd74e206a7
+SHA1: 8a93badfe3768df6e2ad7c0ad0ba2f07f8c4ab52
+MD5sum: adc2963165ff322d6d4fa8f9e2fe64f8
+Description: PolicyKit agent for DDE.
+ PolicyKit agent is usually a dialog used to provide a way to let users
+ grant permission to specific actions, this package serves the role in
+ Deepin Desktop Environment.
+
+Package: dde-polkit-agent-dev
+Source: dde-polkit-agent
+Version: 6.0.25
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 14
+Depends: dde-polkit-agent (= 6.0.25)
+Homepage: https://github.com/linuxdeepin/dde-polkit-agent
+Priority: optional
+Section: devel
+Filename: pool/main/d/dde-polkit-agent/dde-polkit-agent-dev_6.0.25_amd64.deb
+Size: 4188
+SHA256: 86f7bf276e9a7b6d40aac5428d89e8b8c006c5ef76b670cb952f1affa4258ac3
+SHA1: 3dc2aa4d0bcafe53cc376585c6772bf24f2923ff
+MD5sum: 02a04e24ccab61fa5b281eb82fc5b008
+Description: development files of dde-polkit-agent extensions.
+ Development files of dde-polkit-agent extensions.
+
+Package: dde-seatd
+Version: 0.9.3-3
+Architecture: amd64
+Maintainer: zhangjide <zhangjide@uniontech.com>
+Installed-Size: 115
+Depends: libc6 (>= 2.34)
+Multi-Arch: foreign
+Homepage: https://github.com/linuxdeepin/dde-seatd
+Priority: optional
+Section: admin
+Filename: pool/main/d/dde-seatd/dde-seatd_0.9.3-3_amd64.deb
+Size: 32956
+SHA256: 66be1351ea53f7f4460c1177858a34edc38a29209045fcfaa4192d208aafad75
+SHA1: bb0026ad8c0b9f709ea2fb56c95003e429502f95
+MD5sum: 23caa57c20d9730cf131bf015879100e
+Description: DDE seat management daemon variant
+ dde-seatd is a seatd-compatible daemon for DDM and Treeland. It uses a
+ separate binary name and socket path so it can coexist with the stock seatd
+ daemon while preserving libseat seatd backend compatibility.
+
+Package: dde-services
+Version: 1.0.50
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 5334
+Depends: libc6 (>= 2.38), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libgcc-s1 (>= 3.0), libpolkit-qt6-1-1 (>= 0.200.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.2.0), libqt6waylandclient6 (>= 6.10.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 11), libudev1 (>= 183), libwayland-client0 (>= 1.20.0), libx11-6, libx11-xcb1, libxcb-keysyms1 (>= 0.4.1), libxcb-randr0 (>= 1.1), libxcb-xinput0 (>= 1.17.0), libxcb-xtest0, libxcb1 (>= 1.8), libxext6, libxkbcommon0 (>= 0.5.0), libxss1, libxtst6 (>= 2:1.2.6), qt6-base-private-abi (= 6.11.2), deepin-service-manager (>> 1.0.21), dbus, deepin-power-control (>= 2.0.6), dde-daemon (>> 6.1.104)
+Recommends: iio-sensor-proxy
+Breaks: dde-daemon (<< 6.1.104.1)
+Replaces: dde-daemon (<< 6.1.104.1)
+Homepage: https://github.com/linuxdeepin
+Priority: optional
+Section: admin
+Filename: pool/main/d/dde-services/dde-services_1.0.50_amd64.deb
+Size: 1163820
+SHA256: 4f06cbb4293276eaeeec3da69ced66e51e98b0dbc51f41fab854fb1a71edb966
+SHA1: c5e71569b657035b4450b398607852d062196929
+MD5sum: 31d63f4baa2a856f29e9bc3a3f2ef09c
+Description: deepin desktop-environment plugins service
+ This package provides various system service plugins for Deepin Desktop
+ Environment, including:
+  - dde-shortcut: Global keyboard shortcut and gesture management for X11 and Wayland
+  - thememanager: Theme management service
+  - wallpaperslideshow: Wallpaper slideshow service
+  - xsettings: X11 settings management
+ .
+ The dde-shortcut plugin provides:
+  - Global keyboard shortcut management for X11 and Wayland
+  - Gesture shortcut support (Wayland only)
+  - Dynamic configuration via DConfig
+  - DBus interface for shortcut registration and management
+  - Integration with Deepin Desktop Environment
+
+Package: dde-session
+Version: 2.0.35
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 2821
+Depends: jq, sed (>= 4), dde-daemon (>= 6.1.102), dde-session-ui (>> 6.0.48), libdtkdata (>= 5.7.18), libdtk6core (>= 6.7.54), systemd, libc6 (>= 2.34), libcap-ng0 (>= 0.7.9), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.26.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libsecret-1-0 (>= 0.18), libstdc++6 (>= 14), libsystemd0, libx11-6, libxcb1, libxcursor1 (>> 1.1.2), libxfixes3
+Breaks: dde-shell (<< 2.0.55)
+Homepage: https://www.deepin.org
+Priority: optional
+Section: devel
+Filename: pool/main/d/dde-session/dde-session_2.0.35_amd64.deb
+Size: 335364
+SHA256: 3f85837f9a13a2e29abc49d7a4b05917fe6ef085cd761dc60583b1c019330c30
+SHA1: e52f362c537422258d319e2b36451cac8ca5de6b
+MD5sum: 79cc011235845743c39892fa7bbb8775
+Description: dde session module
+  dde-session is used for launching DDE components systemd service project.
+
+Package: dde-session-dbgsym
+Source: dde-session
+Version: 2.0.35
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 13453
+Depends: dde-session (= 2.0.35)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-session/dde-session-dbgsym_2.0.35_amd64.deb
+Size: 13115816
+SHA256: 4e8da8fd75a94cdf5a69d12500cce235726fcbedd3f2948f2a9118f726121849
+SHA1: 46cd44f410743df2f3d42c2a60bed8875d8f6524
+MD5sum: f30329f042d0e464d61f4b4e1901c40c
+Description: debug symbols for dde-session
+Build-Ids: 105ade9bc2e93271a5e485167eb3870b1b440ec2 23e8246aa068a2b83a9606bbee01779ce7edbb68 497e6894cc914bde901c4bc6e703e6519b16b893 6691a7b740459b101839b321363a3ee10ccf9d5e 9a5356f25edb25177ad5b83c7b2c7d51811e2a64 f3ad7ae859bd1a49cc2a64878f19c166b4987a9f f59c1346de4c4020894b9f52000601fe717d76ba
+
+Package: dde-session-ui
+Version: 6.0.51
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 9938
+Depends: libc6 (>= 2.34), libcrypt1 (>= 1:4.1.0), libdeepin-pw-check, libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.30.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6network6 (>= 6.1.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 14), libsystemd0 (>= 213), libx11-6, libxrandr2 (>= 2:1.2.0), deepin-desktop-schemas (>= 5.9.14), dde-daemon (>= 6.1.26), x11-xserver-utils, dbus-user-session
+Recommends: onboard
+Conflicts: dde-control-center (<< 6.0.0.1), dde-workspace, deepin-notifications, startdde (<< 2.91.1)
+Breaks: dde-control-center (<< 6.0.0.1), dde-workspace, startdde (<< 2.91.1)
+Replaces: deepin-notifications
+Provides: lightdm-greeter
+Homepage: http://www.deepin.org/
+Priority: optional
+Section: devel
+Filename: pool/main/d/dde-session-ui/dde-session-ui_6.0.51_amd64.deb
+Size: 1185092
+SHA256: 69fbbc872a36ed4f0fe9308ba5f820576d6232cbe84ad4f64c0b61c8e2fa42f4
+SHA1: 5b8ed324b072981cd86d57d25b92ca78f94977b8
+MD5sum: a0e1f139420ce5f71a04010137698b8f
+Description: deepin desktop-environment - dde-session-ui module
+ Deepin desktop environment 2015 - dde-session-ui module.
+
+Package: dde-shell
+Version: 2.0.61+wb1
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 9144
+Depends: dde-session (>= 2.0.33), dde-tray-loader (>= 2.0.41), libdde-shell (= 2.0.61+wb1), libdde-shell-dock (= 2.0.61+wb1), libdtk6declarative, libqt6sql6-sqlite, libqt6svg6, qml6-module-qt-labs-platform, qml6-module-qt-labs-qmlmodels, qml6-module-qtquick-controls2-styles-chameleon, qml6-module-qtquick-layouts, qml6-module-qtquick-window, qt6-wayland (>= 6.8), dde-application-manager (>> 1.2.55), libc6 (>= 2.34), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libicu78 (>= 78.1-1~), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6qml6 (>= 6.10.2), libqt6quick6 (>= 6.6.0), libqt6sql6 (>= 6.8.2), libqt6waylandclient6 (>= 6.10.2), libqt6waylandcompositor6 (>= 6.8.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 14), libwayland-client0 (>= 1.20.0), libwayland-server0 (>= 1.2.0), libxcb-ewmh2 (>= 0.4.2), libxcb-icccm4 (>= 0.4.2), libxcb-res0 (>= 1.10), libxcb1, libyaml-cpp0.9 (>= 0.7.0), qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2), qt6-waylandcompositor-private-abi (= 6.11.2)
+Breaks: dde-clipboard (<< 1:6.0.14), libdde-shell-dev (<< 2.0.38)
+Replaces: libdde-shell-dev (<< 2.0.38)
+Homepage: https://github.com/linuxdeepin/dde-shell
+Priority: optional
+Section: DDE
+Filename: pool/main/d/dde-shell/dde-shell_2.0.61+wb1_amd64.deb
+Size: 1793312
+SHA256: 4ef7efcb48df40a4cade22653e7d9936ae4027710e9978496832cf2c6ca7d35c
+SHA1: 5a6f041a20dc6bd4dbd0ffa10b30ca2151a13969
+MD5sum: 1e384dac9534e6f5017c8454ef311a87
+Description: Wrapper for dde-shell plugin system
+ DDE Shell is a plugin-based desktop shell framework. This package
+ provides the runtime components including dock, notification, OSD,
+ and other shell applets.
+
+Package: dde-shell-dbgsym
+Source: dde-shell
+Version: 2.0.61
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 41316
+Depends: dde-shell (= 2.0.61)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-shell/dde-shell-dbgsym_2.0.61_amd64.deb
+Size: 39568148
+SHA256: a4174a6be1eba3d403bbc2d5f310f873be6c9aabf8157d1a888c00d0f92b95b7
+SHA1: a611cce7b3488211df9b1bcd406c0575e1c80c02
+MD5sum: 283e3398febd94a48cc1304d75134cf4
+Description: debug symbols for dde-shell
+Build-Ids: 21023baf18d26a268b07338f8ca1950224d9187c 3bf15c9bde4eca55e3956c109d8c4ffcd8af1bea 4017488065b92a60eb4959ac173e8ec9c3050333 5be9e592e7e1a06b7d8292ee90dfdf1c3f31be0d 5c10d118e5dbddcf6a0679c5af01921e2651a214 63584c6e9db8aed9c1df8645d80affd033a7dd17 67766a47cbc39bb223ce919a03b3bb05d80f012e 6a7ac2250fb772788cf0725b01ead72a3815091f 74067315893deb0a50c87ae45667b9a92ef2a2d1 759b73dd2a9ce73a0708be6f4bec518c191d53ec 75e1f89d0276d19800d4621a67e800abbb3419be 782d429794e72fd544002f7941873b9cc50b11eb 8e0905a173540943a2c4508f1075e543c91297e5 910255edff7c611647badfb174f19e58e4469e68 9ad2b63f11a25fc1fc249670da4dad2f86f2a173 9e8b82077106c98508ed3ab3a4db50271eb634aa a18d4f74eff48b76b728651467711b010e5eb621 ad6d46baeef1d7bf5d9297a25d5caf08c0472cbb adf89441ed521dc79d7e584ff643baaa0ec613d9 adfcc859e02a185a73b7413973aa84da5e303e7e b408dadb91dbb04e5a113a0d90f9b99503a5d7d3 b88297430dbed1f79ef11ec34fa624a92ce84abb bf2b778be9f100d5152b15ee0a13274e7337672b c3735571b1d326f30fbe41093430a2ced13af124 cb277075bb827150b7241bf7f3b1f3e8d018d125 d9cec4b64e9abeb3c35e850232ab35c4ba792c4a dcedb8b6328c1e1c3d07332ca31c88b53d6d5273
+
+Package: dde-shell-example
+Source: dde-shell
+Version: 2.0.61+wb1
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 240
+Depends: libdde-shell (= 2.0.61+wb1), qml6-module-qt-labs-platform, libc6 (>= 2.32), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.1.2), libqt6gui6 (>= 6.1.2), libqt6quick6 (>= 6.6.0), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 5)
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/dde-shell
+Priority: optional
+Section: DDE
+Filename: pool/main/d/dde-shell/dde-shell-example_2.0.61+wb1_amd64.deb
+Size: 60472
+SHA256: 5c24d9c3f9c4c61e870e52639c39794d3ee4a86772ec5cab3de7cc306f364803
+SHA1: 8a65f24a466572474738fe2ffa93929bcf8d9b8e
+MD5sum: 9ed10c9a47c7e8c2fc0aab3187a8c5bf
+Description: Example plugins for dde-shell
+ This package contains example plugins demonstrating the
+ dde-shell plugin system.
+
+Package: dde-shell-example-dbgsym
+Source: dde-shell
+Version: 2.0.61
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 1407
+Depends: dde-shell-example (= 2.0.61)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-shell/dde-shell-example-dbgsym_2.0.61_amd64.deb
+Size: 1357728
+SHA256: 68f2180ffc13410e66d97b6e8b11c2bfd4ea2053780a851ea9745956f7de939e
+SHA1: 9da6abe4d657fc25f2710153a6c95e3fb5f8d397
+MD5sum: 7e406f8650be5041194dc2f09569f9e6
+Description: debug symbols for dde-shell-example
+Build-Ids: 0219846beb40eefc5324c9c30dffa0ea2d561676 9c999ad8cdb7e97c8b8176aaff4a13b5c6071fb0 cbde0b9c7010a719f28ac2eb6906a3178862552d d4cb22fe790be710860c34d43f86560c1389c42f da6b95983e14400703e73031f22e1aed414622a7
+
+Package: dde-tray-loader
+Version: 2.0.44
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 5635
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libkf6windowsystem6 (>= 6.0.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6qml6 (>= 6.6.0), libqt6quick6 (>= 6.6.0), libqt6svg6 (>= 6.6.0), libqt6waylandclient6 (>= 6.10.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 14), libwayland-client0 (>= 1.20.0), libx11-6, libxcb-composite0, libxcb-damage0, libxcb-ewmh2 (>= 0.4.2), libxcb-image0 (>= 0.2), libxcb-res0 (>= 1.10), libxcb-shape0, libxcb-util1 (>= 0.4.0), libxcb-xtest0, libxcb1 (>= 1.8), libxcursor1 (>> 1.1.2), libxtst6 (>= 2:1.2.6), qt6-base-private-abi (= 6.11.2), deepin-desktop-schemas (>= 5.9.14), dde-qt6xcb-plugin, dde-daemon (>= 6.1.26)
+Conflicts: dde-dock, dde-dock-onboard-plugin
+Breaks: dde-shell (<< 2.0.55)
+Replaces: dde-dock, dde-dock-onboard-plugin
+Homepage: http://www.deepin.org/
+Priority: optional
+Section: unknown
+Filename: pool/main/d/dde-tray-loader/dde-tray-loader_2.0.44_amd64.deb
+Size: 1034844
+SHA256: 3435e663c59ec823d7e4fec39ac6710433e0b93bb2de78e24974a34cbb91c3a3
+SHA1: 5bd8abb9a15dee51bfda6ca1e939ee299fc8beaf
+MD5sum: d9951cdab9f40c2f193534e91cd0db90
+Description: deepin desktop-environment - the plugins of tray for dde-dock
+ Tray plugins module
+
+Package: dde-tray-loader-dbgsym
+Source: dde-tray-loader
+Version: 2.0.44
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 38284
+Depends: dde-tray-loader (= 2.0.44)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-tray-loader/dde-tray-loader-dbgsym_2.0.44_amd64.deb
+Size: 37729892
+SHA256: 38582b3409d7a2d1e3371cd1928a549035930f232f2bc186e5430b68a65e1009
+SHA1: 8a6e6251a3cf0f8573f2bddd4a81d6087dbcb666
+MD5sum: f9dc7421c8fcea538dcf18b37ed1e2e5
+Description: debug symbols for dde-tray-loader
+Build-Ids: 294433df8c08879c2eb5aa861d90a372a1256094 3bdb10778947c545c8f9ee654256000c4068d788 516e4d60309c7d80f0a2dbfe2993bd70a8292108 695ef3d156bd17445e69feefea169f86da3028b5 899a620295972f541c2cdb54460467c999f0db88 a8017ba7bd991d00a49a5655555a54f7775a47d7 a9537d0662ca7e3ea156b526b7682e11004a0239 be827b58d4cf152ed5b35b20e1210f3d91fefb9d ca9e02ad3e8835e19ddcf7c9855de076555e6b40 cce20436213c323305b8b772f9c8ffb651790d3b dc167bf49b9ad28fff9dc6bd9b26b55ab37bb978 f07b8afb86f6670742f28e3cb9706dd745322129 f85968f88c973d8b83f7bb3a374f4801e963fb32
+
+Package: dde-tray-loader-dev
+Source: dde-tray-loader
+Version: 2.0.44
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 67
+Conflicts: dde-dock-dev
+Replaces: dde-dock-dev
+Provides: dde-dock-dev (= 6.1.0)
+Homepage: http://www.deepin.org/
+Priority: optional
+Section: unknown
+Filename: pool/main/d/dde-tray-loader/dde-tray-loader-dev_2.0.44_amd64.deb
+Size: 19948
+SHA256: 53fc0c2c4b8b385c0b43e7611ad3e7b9965dcaadd3e7c6c50c2f8880bf7bcdfb
+SHA1: db4762ade4ad6fb6cbde9ecbc82fa27d3bd23219
+MD5sum: f2d75251bfb2f889e3f7b446b2823922
+Description: deepin desktop-environment - tray plugins module development files
+ Tray plugins module development files of deepin desktop-environment
+
+Package: dde-wirelesscasting-plugin
+Source: dde-control-center
+Version: 6.1.113
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 921
+Depends: libc6 (>= 2.14), libdde-shell (>= 2.0.61+wb1), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 14)
+Recommends: dde-tray-loader
+Homepage: https://github.com/linuxdeepin/dde-control-center
+Priority: optional
+Section: admin
+Filename: pool/main/d/dde-control-center/dde-wirelesscasting-plugin_6.1.113_amd64.deb
+Size: 232108
+SHA256: 0efc54e9cd42ed01e62e25099f890f1efbaf2112f054bd52ea52f77aeb2cfed4
+SHA1: 108aa11aa4bbe93630c3befbed80886af649b4d4
+MD5sum: 48a5154f248d0b5eaaa3c74b39a43329
+Description: deepin desktop-environment - wireless casting plugin for dde-dock
+ wireless casting plugin module
+
+Package: dde-wlroots-dev
+Source: dde-wlroots
+Version: 0.20.2.1
+Architecture: amd64
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 4191
+Depends: libwayland-dev (>= 1.26.0), libdrm-dev (>= 2.4.134), libxkbcommon-dev, libpixman-1-dev (>= 0.46.4), libudev-dev, libseat-dev, libdisplay-info-dev, libliftoff-dev (>= 0.4.0), libinput-dev (>= 1.19.0), libegl-dev, libgbm-dev, libgles-dev, libvulkan-dev, liblcms2-dev, libxcb1-dev, libxcb-dri3-dev, libxcb-present-dev, libxcb-render0-dev, libxcb-render-util0-dev, libxcb-shm0-dev, libxcb-xfixes0-dev, libxcb-xinput-dev, libxcb-composite0-dev, libxcb-ewmh-dev, libxcb-icccm4-dev, libxcb-res0-dev, libxcb-shape0-dev, libxcb-errors-dev
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/dde-wlroots
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-wlroots/dde-wlroots-dev_0.20.2.1_amd64.deb
+Size: 657084
+SHA256: 0e61d57b868b39d1f6fa432bbf7a5ae2dd8cd1ca9a5e6227873b23ed30cc94ae
+SHA1: 1fc435e8db3c2a839d76b4cf60b7d87ec56c4f97
+MD5sum: 67dde45531e4a0a057c3beba5dae5d6c
+Description: static wlroots for treeland - development files
+ wlroots 0.20.2 built as a static library (libdde-wlroots.a), with the
+ public headers, the wlroots-private protocol XMLs and the dde-wlroots
+ pkg-config metadata that waylib and treeland need at build time.
+ .
+ The archive is linked into the consumers' own shared objects, so no package
+ from this source is needed at runtime.
+
+Package: ddm
+Version: 0.5.0
+Architecture: amd64
+Maintainer: justforlxz <zhangdingyuan@deepin.org>
+Installed-Size: 875
+Depends: libc6 (>= 2.34), libddm (>= 0.5.0), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libpam0g (>= 0.99.7.1), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6network6 (>= 6.6.1~), libstdc++6 (>= 14), libsystemd0, libwayland-client0 (>= 1.20.0), debconf (>= 0.5) | debconf-2.0, dde-seatd, dde-dconfig-daemon, treeland, libpam-systemd
+Recommends: deepin-keyring-whitebox
+Provides: x-display-manager
+Homepage: https://github.com/linuxdeepin/ddm.git
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/ddm/ddm_0.5.0_amd64.deb
+Size: 224516
+SHA256: a95589015f5bac3e1ced49d67dbfa1a12a245586813d16376af7aead09e7595d
+SHA1: 88cbc3d5a20b16ec1e0b9beb6253f4d660b3904a
+MD5sum: 6cdeacc52f8c859e8e602d92490c8382
+Description: a modern display manager for Wayland sessions aiming to be fast, simple and beautiful.
+
+Package: ddm-dbgsym
+Source: ddm
+Version: 0.5.0
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: justforlxz <zhangdingyuan@deepin.org>
+Installed-Size: 6804
+Depends: ddm (= 0.5.0)
+Priority: optional
+Section: debug
+Filename: pool/main/d/ddm/ddm-dbgsym_0.5.0_amd64.deb
+Size: 6551308
+SHA256: 14d2c5dd3c3a74d0bfb0195e5e020e7ceeb721b3c634d26eb3f2b4cae8914956
+SHA1: 0a0eb3af1921d8499be5900ed038a06bb157995d
+MD5sum: de7ee038affcd33cab5a1738795b889a
+Description: debug symbols for ddm
+Build-Ids: 180342ef46ef346b84a5e88cf71fb65727478452 cbf6065c96c582fd6eb3d1973af40363c478950e
+
+Package: deepin-desktop-schemas
+Version: 6.0.13
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 345
+Depends: dconf-gsettings-backend | gsettings-backend
+Conflicts: deepin-default-gsettings
+Breaks: dde-daemon (<< 2.92.2), deepin-default-gsettings, deepin-wm (<< 0.2.1), startdde (<< 2.91.0)
+Replaces: deepin-default-gsettings
+Homepage: https://github.com/linuxdeepin/deepin-desktop-schemas
+Priority: optional
+Section: misc
+Filename: pool/main/d/deepin-desktop-schemas/deepin-desktop-schemas_6.0.13_amd64.deb
+Size: 42596
+SHA256: d7b4a2a96adb727c27a1f9dd5538be4069b5952052a7f135affd7a176c97909a
+SHA1: e11dd10e62451e1dec5d165bb572f282cd1f2b4e
+MD5sum: 6ec3a331fa3f1229dfbc5f7eb19ac1d2
+Description: GSettings deepin desktop-wide schemas
+ deepin-desktop-schemas contains a collection of GSettings schemas for
+ settings shared by various components of a desktop.
+
+Package: deepin-icon-theme
+Version: 2026.02.27
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 256995
+Suggests: papirus-icon-theme
+Conflicts: deepin-cursor-theme
+Homepage: https://github.com/linuxdeepin/deepin-icon-theme
+Priority: optional
+Section: x11
+Filename: pool/main/d/deepin-icon-theme/deepin-icon-theme_2026.02.27_all.deb
+Size: 32622124
+SHA256: 851f7dc9391c912f7c63a27d12bf28901ace2c4cb47bca285d00253d2a066f10
+SHA1: 0f1e1357b5ba8d4e0c2985be163b802c8c30f405
+MD5sum: 9832ada39145302c309e064b199d4799
+Description: Deepin Icons
+ This package is DeepinIconTheme
+
+Package: deepin-livewallpaper-campfire-camping-in-the-forest
+Source: deepin-wallpapers
+Version: 1.7.28
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 24648
+Homepage: https://www.deepin.org/
+Priority: optional
+Section: utils
+Filename: pool/main/d/deepin-wallpapers/deepin-livewallpaper-campfire-camping-in-the-forest_1.7.28_all.deb
+Size: 24424032
+SHA256: c24f208da6731f5cbb405b36c314adec2c48dbf39ef1a0a649d5cfb29e015593
+SHA1: cf8eaed483e2fcb6b588a67ea35eadef52001b54
+MD5sum: 63918152d7b595ef6c8831208d7998a9
+Description: dde live wallpaper - Campfire Camping In The Forest
+ Live wallpaper "Campfire Camping In The Forest" for dde
+
+Package: deepin-livewallpaper-cosmic-galaxy-nebula
+Source: deepin-wallpapers
+Version: 1.7.28
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 39901
+Homepage: https://www.deepin.org/
+Priority: optional
+Section: utils
+Filename: pool/main/d/deepin-wallpapers/deepin-livewallpaper-cosmic-galaxy-nebula_1.7.28_all.deb
+Size: 40265448
+SHA256: 2ce18189862c82f64eb9b7ad55136029c7d36af350e9103764c415478b5e134a
+SHA1: b220c1fd39b7276356e355a56036d97f4610cfa5
+MD5sum: d0dcfe6800fc49ad29fb34b72452abc9
+Description: dde live wallpaper - Cosmic Galaxy Nebula
+ Live wallpaper "Cosmic Galaxy Nebula" for dde
+
+Package: deepin-livewallpaper-default
+Source: deepin-wallpapers
+Version: 1.7.28
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 32172
+Homepage: https://www.deepin.org/
+Priority: optional
+Section: utils
+Filename: pool/main/d/deepin-wallpapers/deepin-livewallpaper-default_1.7.28_all.deb
+Size: 32915636
+SHA256: 97531ae939b58db9431a1a3e6540d409c9eea9159c0558c54f12bd3727593fa0
+SHA1: 4b20788b416afb9c2fec358c26ad108a2c34a2a6
+MD5sum: 9835f2669e74bd0a692a0b2f3532d4dd
+Description: dde default live wallpaper
+ Default live wallpaper for dde
+
+Package: deepin-livewallpaper-sailfish-in-the-deep-sea
+Source: deepin-wallpapers
+Version: 1.7.28
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 25115
+Homepage: https://www.deepin.org/
+Priority: optional
+Section: utils
+Filename: pool/main/d/deepin-wallpapers/deepin-livewallpaper-sailfish-in-the-deep-sea_1.7.28_all.deb
+Size: 24899836
+SHA256: ad24f8fca87c5885677d5e46ff71f1ef1b9bbcf6516836b784998e0fcf1400a6
+SHA1: e66d784186373d5d8d87347b3c5690204496d760
+MD5sum: efc032f5863f16f466e927d96c02c79d
+Description: dde live wallpaper - Sailfish In The Deep Sea
+ Live wallpaper "Sailfish In The Deep Sea" for dde
+
+Package: deepin-livewallpaper-summer-night-breeze
+Source: deepin-wallpapers
+Version: 1.7.28
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 24664
+Homepage: https://www.deepin.org/
+Priority: optional
+Section: utils
+Filename: pool/main/d/deepin-wallpapers/deepin-livewallpaper-summer-night-breeze_1.7.28_all.deb
+Size: 24381820
+SHA256: 2e299e153abd143258537bae9ad6c11096990409fa325466c1fa7f024f39801b
+SHA1: 527ed8b493614ff10560773e65eff3fda069601c
+MD5sum: b4eeb6c4a706194d2cc0ede074267e36
+Description: dde live wallpaper - Summer Night Breeze
+ Live wallpaper "Summer Night Breeze" for dde
+
+Package: deepin-movie
+Source: deepin-movie-reborn
+Version: 6.5.62
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 23846
+Depends: libc6 (>= 2.38), libdrm2 (>= 2.3.1), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.12.0), libmpris-qt6-1 (>= 1.0.0.1), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6network6 (>= 6.7.2), libqt6opengl6 (>= 6.1.2), libqt6openglwidgets6 (>= 6.1.2), libqt6sql6 (>= 6.1.2), libqt6svg6 (>= 6.6.0), libqt6svgwidgets6 (>= 6.6.0), libqt6widgets6 (>= 6.3.0), libqt6xml6 (>= 6.6.0), libstdc++6 (>= 14), libva-x11-2 (>= 1.0.3), libva2 (>= 1.0.3), libx11-6, libxcb-shape0, libxcb1, libxtst6 (>= 2:1.2.6), qt6-base-private-abi (= 6.11.2), dconf-gsettings-backend | gsettings-backend, va-driver-all, libavcodec63 (>= 7:6.0), libavformat63 (>= 7:6.0), libavutil61 (>= 7:6.0), libffmpegthumbnailer4v5, libmpv1 (>= 0.29) | libmpv2 (>= 0.36), libpulse0 (>= 0.99.1), libgstreamer-plugins-base1.0-0 (>= 1.0.0), libgstreamer1.0-0 (>= 1.4.0)
+Recommends: libgpuinfo, uos-reporter, deepin-event-log
+Homepage: https://www.deepin.org/
+Priority: extra
+Section: libdevel
+Filename: pool/main/d/deepin-movie-reborn/deepin-movie_6.5.62_amd64.deb
+Size: 9966956
+SHA256: 81614c4f00074e073c0c9ed80321f77319e72b2f054f54f3f13dd60ec6b6bca0
+SHA1: 50937a9aeb708567dd0d0016469a2bc8bf6fe7c0
+MD5sum: b2f8f5d15c6108e86e08dd9ebe6d4420
+Description: movie player
+ Movie is a full-featured video player, supporting playing local and streaming media in multiple video formats.
+
+Package: deepin-power-control
+Version: 2.0.9
+Architecture: amd64
+Maintainer: LinuxDeepin <linuxdeepin@deepin.org>
+Installed-Size: 4997
+Depends: libc6 (>= 2.34), iw, tlp
+Homepage: https://www.deepin.org
+Priority: optional
+Section: admin
+Filename: pool/main/d/deepin-power-control/deepin-power-control_2.0.9_amd64.deb
+Size: 1610040
+SHA256: 47de26ddbd54cb533b3b12bf27bfb9779ebd085b2f877a9fd3632ecd65c173bf
+SHA1: 59d23815c8c784d8cf8be44c85b992c2afd4633d
+MD5sum: 5a4115632f1c3100a966f61231ddb4a1
+Description: Deepin Power Control
+ This tool manages power modes and WiFi adaptive power saving.
+ It includes a daemon that monitors network traffic to adjust
+ wireless power states dynamically.
+
+Package: deepin-pw-check
+Version: 6.0.12
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 7388
+Depends: libc6 (>= 2.34), libglib2.0-0t64 (>= 2.70.0), libgtk-3-0t64 (>= 3.0.0), policykit-1
+Homepage: http://www.deepin.org
+Priority: optional
+Section: devel
+Filename: pool/main/d/deepin-pw-check/deepin-pw-check_6.0.12_amd64.deb
+Size: 2278356
+SHA256: 6abee6a749dc118bf50fb181fdd5b6d7737f1efdf7adf42ac0df28a2a4b418c2
+SHA1: e87e6c9743740c867c226fdb4c8490cbe3039b61
+MD5sum: 18eb1450e47ce894c83076b03c7a75ed
+Description: deepin password check interface
+ deepin-pw-check is a tool to verify the validity of the password
+
+Package: deepin-pw-check-dbgsym
+Source: deepin-pw-check
+Version: 6.0.12
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 6512
+Depends: deepin-pw-check (= 6.0.12)
+Priority: optional
+Section: debug
+Filename: pool/main/d/deepin-pw-check/deepin-pw-check-dbgsym_6.0.12_amd64.deb
+Size: 2636896
+SHA256: d1e52907497cd6f0c615fde797ab2d794403e884a81265c33c2fa547817d8ada
+SHA1: 3361b9d1634ad0982cf0b4f41295ed63aa3760a4
+MD5sum: f5619e0e281333fdd37c85865bbca4eb
+Description: debug symbols for deepin-pw-check
+Build-Ids: 59ade69a5a825f7d92d9b9531bd714e466ff9fe4
+
+Package: deepin-service-manager
+Version: 1.0.25
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 330
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.1.2), libqt6gui6 (>= 6.1.2), libstdc++6 (>= 14), libsystemd0 (>= 221)
+Recommends: dde-services
+Homepage: https://github.com/linuxdeepin
+Priority: optional
+Section: admin
+Filename: pool/main/d/deepin-service-manager/deepin-service-manager_1.0.25_amd64.deb
+Size: 92436
+SHA256: 081e96833ace8c9dd642911263cdd93a8139196eb928ec1cc256f6f417e27eff
+SHA1: dc224dc1d574c892c1ff9857308c08f3810caccb
+MD5sum: 06bbe5d2ec1c33c6e9d3fe122a0776b1
+Description: deepin desktop-environment - service manager frame
+ Load system plug-ins for unified management
+
+Package: deepin-wallpapers
+Version: 1.7.28
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 95607
+Depends: deepin-wallpapers-platform, deepin-wallpapers-extra, deepin-livewallpaper-default
+Conflicts: deepin-wallpapers-nonfree
+Breaks: deepin-desktop-base (<< 2017.11.2)
+Replaces: deepin-wallpapers-nonfree
+Homepage: https://www.deepin.org/
+Priority: optional
+Section: utils
+Filename: pool/main/d/deepin-wallpapers/deepin-wallpapers_1.7.28_all.deb
+Size: 88053460
+SHA256: 78c136856258d0fedd6a2a41cec0004a1bd6fa0f98dd8ba75ef8d0b0f43b2da8
+SHA1: 3f6d4114918ec7cc8d00e4fb86f0bacbfd78bdcb
+MD5sum: 7d4d67e7578adb46d36fd825406beff0
+Description: dde wallpapers
+ Default wallpapers for dde
+
+Package: deepin-wallpapers-extra
+Source: deepin-wallpapers
+Version: 1.7.28
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 48283
+Homepage: https://www.deepin.org/
+Priority: optional
+Section: utils
+Filename: pool/main/d/deepin-wallpapers/deepin-wallpapers-extra_1.7.28_all.deb
+Size: 48890468
+SHA256: 3d4d096db56bb765b8db4b0118bacf297fcf0930d4623195e751bd230f995119
+SHA1: f3b0b674609d442dc87a0486f0a4b44ae9f85d3d
+MD5sum: 226535782399977b29909290526250e9
+Description: additional dde wallpapers
+ Additional Unsplash and Deepin wallpaper assets for dde
+
+Package: deepin-wallpapers-platform
+Source: deepin-wallpapers
+Version: 1.7.28
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 47073
+Homepage: https://www.deepin.org/
+Priority: optional
+Section: utils
+Filename: pool/main/d/deepin-wallpapers/deepin-wallpapers-platform_1.7.28_all.deb
+Size: 47835928
+SHA256: f02f75ce89e7492146402f1db9e9173965a8b10424ea03ff08fb389cc65d17ca
+SHA1: eb0462f2c4480a6ad214dab95a1d6f0c46517725
+MD5sum: 560c35b0bac028ab78a42c403ed11cf1
+Description: dde platform wallpapers
+ Platform-specific wallpaper variants for dde
+
+Package: dtk6-exhibition
+Source: dtkdeclarative
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 21973
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6gui6 (>= 6.1.2), libqt6qml6 (>= 6.6.0), libqt6quick6 (>= 6.6.0), libqt6quickcontrols2-6 (>= 6.6.0), libstdc++6 (>= 5), libdtk6declarative (= 6.7.54), qml6-module-qtquick-controls2-styles-chameleon (= 6.7.54)
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libs
+Filename: pool/main/d/dtkdeclarative/dtk6-exhibition_6.7.54_amd64.deb
+Size: 10563400
+SHA256: 1bada8a7503836734432080bcc49bb0dec64b684896f450e03b8ac82a4883941
+SHA1: 7df70ea38ec6c5a42dffd122457e720e280bfde2
+MD5sum: 72710059cc5945f516404b973d47c32f
+Description: Deepin Tool Kit QML Controls example (DTK6 with Qt6)
+ This package contains an application.
+ .
+ This package is built for DTK6 with Qt6.
+
+Package: dtk6-exhibition-dbgsym
+Source: dtkdeclarative
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 22231
+Depends: dtk6-exhibition (= 6.7.54)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkdeclarative/dtk6-exhibition-dbgsym_6.7.54_amd64.deb
+Size: 289896
+SHA256: db4f25f61d6e01ca1cb8e6882fd9674f23d9b4d2d6d33e5d867ec4ef0665d440
+SHA1: 0a791f36c30d1daf754b949f7439c2eecb4428cb
+MD5sum: af172fb9eca471d376438f3cdd3b0731
+Description: debug symbols for dtk6-exhibition
+Build-Ids: 5eb00f052101df31b3a804f625d5659a573a42a3
+
+Package: dtk6widget-examples
+Source: dtkwidget
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 18650
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6gui6 (>= 6.11.2), libqt6printsupport6 (>= 6.1.2), libqt6widgets6 (>= 6.3.0), libstdc++6 (>= 5), libdtkdata
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkwidget/dtk6widget-examples_6.7.54_amd64.deb
+Size: 14805440
+SHA256: a7bb7b6d55ef8f4a677af30d746cd6021c71785584172f51c115804078284161
+SHA1: a9dcf6d25b286ac47ea6e973de0e3d0caab07633
+MD5sum: 2aa93cd5cb1f1deab7506cb86eec581a
+Description: dtk6widget-examples is generated by dtk6widget.
+ DtkWidget is Deepin graphical user interface for deepin desktop development.
+ .
+ This package contains example application which are
+ needed for developing Deepin applications.
+
+Package: dtk6widget-examples-dbgsym
+Source: dtkwidget
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 22240
+Depends: dtk6widget-examples (= 6.7.54)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkwidget/dtk6widget-examples-dbgsym_6.7.54_amd64.deb
+Size: 4145028
+SHA256: 3ef79dd465b4a0e5810d76311b21c4bfd156dfecf980636d18a413893ae8c840
+SHA1: 11304eaedab3ddd1ce87c49ef4b0ebd702354adc
+MD5sum: 42c5e5d609dcb61cd44f296a667d54be
+Description: debug symbols for dtk6widget-examples
+Build-Ids: 13a1be1578b4b67221fe19494d6f0e91456c785e
+
+Package: golang-github-erikstmartin-go-testdb-dev
+Source: golang-github-erikstmartin-go-testdb
+Version: 0.0~git20160219.0.8d10e4a-2
+Architecture: all
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Installed-Size: 49
+Multi-Arch: foreign
+Homepage: https://github.com/erikstmartin/go-testdb
+Priority: optional
+Section: golang
+Filename: pool/main/g/golang-github-erikstmartin-go-testdb/golang-github-erikstmartin-go-testdb-dev_0.0~git20160219.0.8d10e4a-2_all.deb
+Size: 8500
+SHA256: 37b8747991fe920f42f4f4338d0a12ec7f14b4afd87101bfec209ec74428eff1
+SHA1: 3e10bc65b83d4d3a07c9671569e13e6223767e92
+MD5sum: c5a80df2353d0bfb647948552d3acad8
+Description: Framework for stubbing responses from go's driver.Driver interface
+ go-testdb Framework for stubbing responses from go's driver.Driver
+ interface.
+ .
+ This can be used to sit in place of your sql.Db so that you can stub
+ responses for sql calls, and remove database dependencies for your
+ test suite.
+ .
+ This project is in its infancy, but has worked well for all the use
+ cases i've had so far, and continues to evolve as new scenarios are
+ uncovered. Please feel free to send pull-requests, or submit feature
+ requests if you have scenarios that are not accounted for yet.  Setup The
+ only thing needed for setup is to include the go-testdb package, then
+ you can create your db connection specifying "testdb" as your driver.
+
+Package: golang-github-jinzhu-gorm-dev
+Source: golang-github-jinzhu-gorm
+Version: 1.9.6-2
+Architecture: all
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Installed-Size: 502
+Depends: golang-github-denisenkom-go-mssqldb-dev, golang-github-go-sql-driver-mysql-dev, golang-github-jinzhu-inflection-dev, golang-github-lib-pq-dev, golang-github-mattn-go-sqlite3-dev
+Multi-Arch: foreign
+Homepage: https://github.com/jinzhu/gorm
+Priority: optional
+Section: golang
+Filename: pool/main/g/golang-github-jinzhu-gorm/golang-github-jinzhu-gorm-dev_1.9.6-2_all.deb
+Size: 80768
+SHA256: 5978d89e86934020380a4cdbc03d667e1155d02f8bdc3f70b0cf27c2f737ec72
+SHA1: e9d9f9ded58e2e5cfb8f05d287a5a316c0135700
+MD5sum: 0e597295d88040d9312e804bcddb265b
+Description: ORM library for Golang
+ The fantastic ORM library for Golang, aims to be developer friendly.
+ .
+ Overview
+ .
+   * Full-Featured ORM (almost)
+   * Chainable API
+   * Auto Migrations
+   * Relations (Has One, Has Many, Belongs To, Many To Many, Polymorphism)
+   * Callbacks (Before/After Create/Save/Update/Delete/Find)
+   * Preloading (eager loading)
+   * Transactions
+   * Embed Anonymous Struct
+   * Soft Deletes
+   * Customizable Logger
+   * Iteration Support via Rows
+   * Every feature comes with tests
+   * Developer Friendly
+ .
+ go doc format documentation for this project can be viewed online without
+ installing the package by using the GoDoc page at:
+ http://godoc.org/github.com/jinzhu/gorm
+
+Package: golang-github-jouyouyun-hardware-dev
+Source: golang-github-jouyouyun-hardware
+Version: 0.1.8-1
+Architecture: all
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Installed-Size: 94
+Depends: usbutils
+Homepage: https://github.com/jouyouyun/hardware
+Priority: optional
+Section: golang
+Filename: pool/main/g/golang-github-jouyouyun-hardware/golang-github-jouyouyun-hardware-dev_0.1.8-1_all.deb
+Size: 14260
+SHA256: 955dc1fb746a6d28c796e996a17049b4ed64ca74e43558b673527db9e542b538
+SHA1: 9e586937bc49901ce1cccb80c3d5761943c63d14
+MD5sum: e00e1a4499a8c7a4a0b63a718caa3e2b
+Description: Golang Library for Get hardware info
+ Supported the following hardware info:
+ cpu,memory,dmi,disk,graphic,network,sound,peripherals,
+ backlight,bluetooth,camera,battery.
+ Contains every device name, vendor, product etc.
+
+Package: golang-github-kelvins-sunrisesunset-dev
+Source: golang-github-kelvins-sunrisesunset
+Version: 1.0-3
+Architecture: all
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Installed-Size: 33
+Multi-Arch: foreign
+Homepage: https://github.com/kelvins/sunrisesunset
+Priority: optional
+Section: devel
+Filename: pool/main/g/golang-github-kelvins-sunrisesunset/golang-github-kelvins-sunrisesunset-dev_1.0-3_all.deb
+Size: 6704
+SHA256: eea410f5a391a1784719779f5e58a2c6c8965cf2b74e4c50132799e61e768493
+SHA1: 906e3028941bf32c26d9439c0838eb1a2539a496
+MD5sum: 04bb7a9a08f381375822822952fdb090
+Description: Go package that provides the sunrise and sunset equation. (library)
+ This package is used to calculate the apparent sunrise and sunset times based
+ on latitude, longitude, date and UTC offset. It was created based on the
+ Corrected Sunrise, Sunset, Noon Times in Seconds - and Solar Angles Matlab
+ function developed by Richard Droste, that was created based on the
+ spreadsheets available in the Earth System Research Laboratory website
+ from the National Oceanic & Atmospheric Administration (NOAA).
+
+Package: golang-github-linuxdeepin-go-dbus-factory-dev
+Source: golang-github-linuxdeepin-go-dbus-factory
+Version: 2.0.31
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 4356
+Depends: golang-github-linuxdeepin-go-lib-dev, golang-github-stretchr-testify-dev
+Homepage: https://github.com/linuxdeepin/go-dbus-factory
+Priority: optional
+Section: devel
+Filename: pool/main/g/golang-github-linuxdeepin-go-dbus-factory/golang-github-linuxdeepin-go-dbus-factory-dev_2.0.31_all.deb
+Size: 207764
+SHA256: 653d40e382414f47ee0a02db4cfc5bf00939eddca906e6dd34db937988e5249c
+SHA1: 0057739539e341a83d6de729c04ce33576def84f
+MD5sum: 75c6d8340762cc5ce11193bc38a88410
+Description: mirrored from https://cr.deepin.io/#/admin/projects/go-dbus-factory
+ Convenient go binding code for automatically generating DBus services
+
+Package: golang-github-linuxdeepin-go-lib-dev
+Source: golang-github-linuxdeepin-go-lib
+Version: 6.0.15
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 1987
+Depends: golang-github-linuxdeepin-go-x11-client-dev, golang-github-youpy-go-wav-dev, golang-github-fsnotify-fsnotify-dev, golang-github-mozillazg-go-pinyin-dev, golang-golang-x-image-dev, golang-gir-gobject-2.0-dev (>> 1.2.0+), golang-gir-gio-2.0-dev (>> 1.2.0+), golang-gir-glib-2.0-dev (>> 1.2.0+), golang-dbus-dev, libpulse-dev, libgtk-3-dev, libasound2-dev, libpam0g-dev, golang-golang-x-net-dev, golang-golang-x-crypto-dev, libssl-dev
+Conflicts: golang-dlib-dev
+Replaces: golang-dlib-dev
+Homepage: https://github.com/linuxdeepin/go-lib
+Priority: extra
+Section: devel
+Filename: pool/main/g/golang-github-linuxdeepin-go-lib/golang-github-linuxdeepin-go-lib-dev_6.0.15_all.deb
+Size: 366040
+SHA256: ff3179e5fce35affb6ad4863cebca5003df91539638fb35fb912bf462f1cb2b3
+SHA1: 9eb306aee53818d92c60091d1f1304dc63d79d88
+MD5sum: 3f67488686b33411ebf5f0e065a216cf
+Description: Go bindings for Deepin Desktop Environment development
+ DLib is a set of Go bindings/libraries for DDE development.
+ Containing dbus (forking from guelfey), glib, gdkpixbuf, pulse and more.
+
+Package: golang-github-rickb777-date-dev
+Source: golang-github-rickb777-date
+Version: 1.20.1-1
+Architecture: all
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Installed-Size: 300
+Depends: golang-github-rickb777-plural-dev, golang-golang-x-text-dev, golang-gomega-dev, tzdata
+Homepage: https://github.com/rickb777/date
+Priority: optional
+Section: devel
+Filename: pool/main/g/golang-github-rickb777-date/golang-github-rickb777-date-dev_1.20.1-1_all.deb
+Size: 56760
+SHA256: 6bc1d89707eba9e3bcbda6e7105fb674137ca99ef97f79f34d1060b1d90d3fd4
+SHA1: a9ef4ca035cbd2737ea3a12f134aaff68542157a
+MD5sum: eadd890dbb167e4cbf986a8da0a35e97
+Description: Go package for working with dates (library)
+ This package introduces a light-weight Date type that is storage-efficient
+ and convenient for calendrical calculations and date parsing and
+ formatting (including years outside the [0,9999] interval).
+
+Package: golang-github-teambition-rrule-go-dev
+Source: golang-github-teambition-rrule-go
+Version: 1.8.1-2
+Architecture: all
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Installed-Size: 219
+Depends: tzdata, tzdata-legacy
+Homepage: https://github.com/teambition/rrule-go
+Priority: optional
+Section: devel
+Filename: pool/main/g/golang-github-teambition-rrule-go/golang-github-teambition-rrule-go-dev_1.8.1-2_all.deb
+Size: 24636
+SHA256: 1004a76124e15275cce869f3c158917e79c8a8392bc91208b3c0a1752d3a53f8
+SHA1: 89e9b4e226659b10e1c2d3b482a6a14535281e97
+MD5sum: d0ec7a2ddc94a1f321a9c393841fb267
+Description: Go library for working with recurrence rules for calendar dates. (library)
+ The rrule golang module offers a complete implementation of the
+ recurrence rules documented in the iCalendar RFC. It is a partial
+ port of the rrule module from the excellent python-dateutil library.
+
+Package: golang-github-youpy-go-wav-dev
+Source: golang-github-youpy-go-wav
+Version: 0.3.2+ds-1
+Architecture: all
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Installed-Size: 37
+Depends: golang-github-zaf-g711-dev, golang-github-youpy-go-riff-dev
+Homepage: https://github.com/youpy/go-wav
+Priority: optional
+Section: golang
+Filename: pool/main/g/golang-github-youpy-go-wav/golang-github-youpy-go-wav-dev_0.3.2+ds-1_all.deb
+Size: 6504
+SHA256: 48c3791e8d712c5b7391fcdac9b0f0ca6ca22a08d58aec894770a1d12c4c295a
+SHA1: 485c54f5c02833e046456644af36b93e64203ca5
+MD5sum: 0bae58074f5956f07e505e23e1b4bc0f
+Description: Go library to read/write WAVE(RIFF waveform Audio) Format
+ A Go library to read/write WAVE(RIFF waveform Audio) Format.
+ supported Format:
+ PCM
+ IEEE float (read-only)
+ G.711 A-law (read-only)
+ G.711 µ-law (read-only)
+
+Package: libdareader-dev
+Source: libdareader
+Version: 1.0-1
+Architecture: amd64
+Maintainer: chenlinxuan <chenlinxuan@uniontech.com>
+Installed-Size: 17
+Depends: libdareader1 (= 1.0-1)
+Multi-Arch: same
+Priority: optional
+Section: libdevel
+Filename: pool/main/libd/libdareader/libdareader-dev_1.0-1_amd64.deb
+Size: 2444
+SHA256: 83b811fef475a031fd8bfd1d47a9141615ede46b6170a15d8415cfb821a3fd5e
+SHA1: a835fa89373ceb831574abfb6cfca49c65153cb7
+MD5sum: 7c7d1c981c269dddbf2a4511204ebd5a
+Description: dev lib for read image/video data from deepin-authentication
+ this package is a dev lib for read image/video data from deepin-authentication.
+
+Package: libdareader1
+Source: libdareader
+Version: 1.0-1
+Architecture: amd64
+Maintainer: chenlinxuan <chenlinxuan@uniontech.com>
+Installed-Size: 32
+Depends: libc6 (>= 2.4), libgcc-s1 (>= 3.0), libstdc++6 (>= 13.1)
+Multi-Arch: same
+Priority: optional
+Section: libs
+Filename: pool/main/libd/libdareader/libdareader1_1.0-1_amd64.deb
+Size: 5708
+SHA256: 9cd4203889ea2163b7dee2bd28e3755c8284dd8ff7a8ce1319089992df5b7adf
+SHA1: 58d75fa942349140f5e0f1ff7f9cbccdd5c6e87d
+MD5sum: 27ebce597cdafda7ff0e7ab1db64f278
+Description: lib for read image/video data from deepin-authentication
+ this package is a lib for read image/video data from deepin-authentication.
+
+Package: libdareader1-dbgsym
+Source: libdareader
+Version: 1.0-1
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: chenlinxuan <chenlinxuan@uniontech.com>
+Installed-Size: 55
+Depends: libdareader1 (= 1.0-1)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/libd/libdareader/libdareader1-dbgsym_1.0-1_amd64.deb
+Size: 41700
+SHA256: c361f8986c68cb898c3260958bd6e5ebd2c7c1f1abea042be87d67f419097685
+SHA1: e9cf3900bc8f87ade2304ce09d8e0d9fa5918bd3
+MD5sum: c429058b5a6d52ba2911793f0ed4da5a
+Description: debug symbols for libdareader1
+Build-Ids: 7a9404a49cf6898688d0f2947dbc9fbaab393fbb
+
+Package: libdde-file-manager
+Source: dde-file-manager
+Version: 6.6.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 16276
+Depends: libappimage1.0abi1t64 (>= 1.0.4-3~), libc6 (>= 2.38), libdfm-extension (= 6.6.11), libdfm6-burn, libdfm6-io, libdfm6-mount, libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6log (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.58.0), libheif1 (>= 1.0.0), libicu78 (>= 78.1-1~), libminizip1t64, libmount1 (>= 2.19.1), libpoppler-cpp3 (>= 26.07.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6network6 (>= 6.1.2), libqt6sql6 (>= 6.8.2), libqt6svg6 (>= 6.6.0), libqt6svgwidgets6 (>= 6.6.0), libqt6waylandclient6 (>= 6.10.2), libqt6widgets6 (>= 6.7.2), libstdc++6 (>= 14), libwayland-client0 (>= 1.20.0), libx11-6, zlib1g (>= 1:1.1.4), gvfs-backends (>= 1.27.3), cryptsetup, gnome-keyring
+Conflicts: dfmplugin-disk-encrypt
+Breaks: dde-file-manager (<< 6.5.147)
+Replaces: dde-file-manager (<< 6.5.147), dfmplugin-disk-encrypt
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-file-manager/libdde-file-manager_6.6.11_amd64.deb
+Size: 3940732
+SHA256: 084234a890aeb99a93abde3cdb7a2619b7205241b5c2b671bac4d3aa69bc3b62
+SHA1: 2bc1b8da05c20e16b95a33c49a10c8c50bdad382
+MD5sum: 26c40179aa88a4417a67ef0ba82915ef
+Description: DDE File Manager core librarys
+ This package contains the shared libraries.
+
+Package: libdde-seat-dev
+Source: dde-seatd
+Version: 0.9.3-3
+Architecture: amd64
+Maintainer: zhangjide <zhangjide@uniontech.com>
+Installed-Size: 22
+Depends: libdde-seat1 (= 0.9.3-3)
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/dde-seatd
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-seatd/libdde-seat-dev_0.9.3-3_amd64.deb
+Size: 4552
+SHA256: 7f3e8045b731dd085cde55ee073e004fed51cfa469a4ade6dd3abb728f4f62dc
+SHA1: f45a8a268c862a21157298a468e60fa47c3f8db7
+MD5sum: 41ecdb01e363098f888938918a6f03e5
+Description: development files for the dde-seat seat management library
+ This package contains headers, pkg-config metadata and linker symlinks for
+ building software against libdde-seat.
+
+Package: libdde-seat1
+Source: dde-seatd
+Version: 0.9.3-3
+Architecture: amd64
+Maintainer: zhangjide <zhangjide@uniontech.com>
+Installed-Size: 49
+Depends: dde-seatd, libc6 (>= 2.17)
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/dde-seatd
+Priority: optional
+Section: libs
+Filename: pool/main/d/dde-seatd/libdde-seat1_0.9.3-3_amd64.deb
+Size: 14484
+SHA256: 35149e65152c29bc62c01a7c5fd81bc0d09081ad84dcd0c2dcf50c816666fd1b
+SHA1: 76f42265a64a2349d2657ec1eb329bdb153ee64d
+MD5sum: cbca3d64a8b8c8f5529215dfcf3fde3e
+Description: flexible seat and user management library for dde-seatd
+ This library provides runtime access to seat and user management through the
+ dde-seatd protocol and socket path used by DDM and Treeland integration.
+
+Package: libdde-shell
+Source: dde-shell
+Version: 2.0.61+wb1
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 789
+Depends: libc6 (>= 2.14), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6gui6 (>= 6.2.0), libqt6qml6 (>= 6.6.0), libqt6quick6 (>= 6.6.0), libqt6quicktemplates2-6 (>= 6.6.0), libqt6waylandclient6 (>= 6.10.2), libstdc++6 (>= 14), libwayland-client0 (>= 1.20.0), libx11-6, libxcb-ewmh2 (>= 0.4.2), libxcb-icccm4 (>= 0.4.2), libxcb-shape0, libxcb1, libxtst6 (>= 2:1.2.6), qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2)
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/dde-shell
+Priority: optional
+Section: DDE
+Filename: pool/main/d/dde-shell/libdde-shell_2.0.61+wb1_amd64.deb
+Size: 205152
+SHA256: 0d1bfa2ed0d222de21079d3ba5c93fe15261e52fb0ec90d29b77eb8815aea123
+SHA1: eb52eb045c35e451f4d1f0e4391b229e83f3c239
+MD5sum: 2b772f1ce13ee0c8aa31fb7a78f9c704
+Description: DDE Shell library
+ DDE Shell is a plugin system that integrates plugins
+ developed based on this plugin system into DDE.
+
+Package: libdde-shell-dbgsym
+Source: dde-shell
+Version: 2.0.61
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 5096
+Depends: libdde-shell (= 2.0.61)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-shell/libdde-shell-dbgsym_2.0.61_amd64.deb
+Size: 4973252
+SHA256: 5feddb52b8d2be86fb713867348a356d769d5e06f412222078740ef3c196497d
+SHA1: 52e641f3e8973b114193432045afa1f7d8bc284e
+MD5sum: 22f3fbfd43afa1dc73b6e60e29580482
+Description: debug symbols for libdde-shell
+Build-Ids: 0ba2b04eb003401d90ecc37c3144ecdfc23c8cb0 cfbfa83ba8da072f713a2fa78d812744e9ba5876
+
+Package: libdde-shell-dev
+Source: dde-shell
+Version: 2.0.61+wb1
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 81
+Depends: libdde-shell (= 2.0.61+wb1), libdtk6core-dev, qt6-base-dev, qt6-declarative-dev, qt6-tools-dev
+Homepage: https://github.com/linuxdeepin/dde-shell
+Priority: optional
+Section: DDE
+Filename: pool/main/d/dde-shell/libdde-shell-dev_2.0.61+wb1_amd64.deb
+Size: 30676
+SHA256: 68fb5b69035ea39425924b1eb51221f3b6813df0f5e3a382c7f543ff2b5b53be
+SHA1: fb5d0d02be7cb2a4f0977cf47b7d970e01786328
+MD5sum: f5f8963a8e7cfd1ef357c1d3986749cc
+Description: DDE Shell development files
+ Development headers and CMake config files for building
+ plugins based on the dde-shell plugin system.
+
+Package: libdde-shell-dock
+Source: dde-shell
+Version: 2.0.61+wb1
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 136
+Depends: libc6 (>= 2.14), libdde-shell (>= 2.0.61+wb1), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.1.2), libstdc++6 (>= 5)
+Breaks: libdde-shell-dock-dev (<< 2.0.39)
+Replaces: libdde-shell-dock-dev (<< 2.0.39)
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/dde-shell
+Priority: optional
+Section: DDE
+Filename: pool/main/d/dde-shell/libdde-shell-dock_2.0.61+wb1_amd64.deb
+Size: 51560
+SHA256: bc66f1914d7e7421996f907ff1efa0f051217f49578643b855e32cd0e41e9afd
+SHA1: d81daa5b936cf029f345a5d72042fcfca4bdb768
+MD5sum: 808650feceafab4d8ef48decd5ca6a0c
+Description: DDE Shell dock library
+ DDE Shell Dock is a library for dock item info.
+
+Package: libdde-shell-dock-dbgsym
+Source: dde-shell
+Version: 2.0.61
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 789
+Depends: libdde-shell-dock (= 2.0.61)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/dde-shell/libdde-shell-dock-dbgsym_2.0.61_amd64.deb
+Size: 771260
+SHA256: 1da1c4419fe2d503234a0836e268680f17ce38f6d49707739cd7077ac9064b73
+SHA1: 9191ae31f1b787d1ec7cd5fc706da09579d4690b
+MD5sum: a731a951159a07f33e50ca74abed06fe
+Description: debug symbols for libdde-shell-dock
+Build-Ids: f8b3da0f5ec3829923cc7b411dedd737f137de8d
+
+Package: libdde-shell-dock-dev
+Source: dde-shell
+Version: 2.0.61+wb1
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 54
+Depends: libdde-shell-dock (= 2.0.61+wb1), libdde-shell-dev (= 2.0.61+wb1), qt6-base-dev, qt6-declarative-dev
+Homepage: https://github.com/linuxdeepin/dde-shell
+Priority: optional
+Section: DDE
+Filename: pool/main/d/dde-shell/libdde-shell-dock-dev_2.0.61+wb1_amd64.deb
+Size: 26904
+SHA256: adbe0dd00cbc45d90d867b154b67b38f292e094b095f2e0ddac2887cc85322f4
+SHA1: 6308d4fb32a0cefdc8c96cc54033e180644b2745
+MD5sum: 3a47ca7c9e44dd64a3d72e9e3aec3fb6
+Description: DDE Shell dock devel library
+ DDE Shell Dock is a library for dock item info.
+
+Package: libddm
+Source: ddm
+Version: 0.5.0
+Architecture: amd64
+Maintainer: justforlxz <zhangdingyuan@deepin.org>
+Installed-Size: 56
+Depends: libc6 (>= 2.4), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6network6 (>= 6.6.1~), libstdc++6 (>= 5.2), libxau6 (>= 1:1.0.11)
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/ddm.git
+Priority: optional
+Section: libs
+Filename: pool/main/d/ddm/libddm_0.5.0_amd64.deb
+Size: 15572
+SHA256: 5f12b4ddb7968d30b61cbfa754b5a27db15f2b0eb23f414860eb7dfa4c736901
+SHA1: e810c3b4ab3ca597265297e76ee8dec6ea1168b7
+MD5sum: 589846f50e36835190362b9e90738dde
+Description: DDM library
+  provide PAM libraries
+
+Package: libddm-dbgsym
+Source: ddm
+Version: 0.5.0
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: justforlxz <zhangdingyuan@deepin.org>
+Installed-Size: 407
+Depends: libddm (= 0.5.0)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/ddm/libddm-dbgsym_0.5.0_amd64.deb
+Size: 396464
+SHA256: e5f4aec827f8065b11628039122b4cb43e451404ef8c9145fbd3a5076cab70f0
+SHA1: c7573a0e06108d097b65a4819c2ad5bdda6cbf3e
+MD5sum: 3b4f210f95085543acd8a0cd491dc174
+Description: debug symbols for libddm
+Build-Ids: e4fa372bfe4d88c39d029e044cc5ed72ac2b4204
+
+Package: libddm-dev
+Source: ddm
+Version: 0.5.0
+Architecture: amd64
+Maintainer: justforlxz <zhangdingyuan@deepin.org>
+Installed-Size: 37
+Depends: libddm (= 0.5.0), qt6-base-dev
+Homepage: https://github.com/linuxdeepin/ddm.git
+Priority: optional
+Section: libs
+Filename: pool/main/d/ddm/libddm-dev_0.5.0_amd64.deb
+Size: 8140
+SHA256: 985e0ff823244b738b60d2c4f17b7e6e5df554b285a3e7a3928d1e5d3ee57be9
+SHA1: 9138d18002373e561a909e65c002df4ff6ed8287
+MD5sum: 779f3f508b4aaa3e811a77824c412ce9
+Description: DDM devel library
+  provide PAM headers
+
+Package: libdeepin-pdfium
+Source: deepin-pdfium
+Version: 1.5.8
+Architecture: amd64
+Maintainer: deepin <packages@deepin.com>
+Installed-Size: 5095
+Depends: libc6 (>= 2.43), libchardet1t64 (>= 1.0.6), libfreetype6 (>= 2.3.5), libgcc-s1 (>= 3.0), libicu78 (>= 78.1-1~), libjpeg62-turbo (>= 1.3.1), liblcms2-2 (>= 2.2+git20110628), libopenjp2-7 (>= 2.2.0), libqt6core6t64 (>= 6.11.2), libqt6gui6 (>= 6.1.2), libstdc++6 (>= 14), zlib1g (>= 1:1.1.4)
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/deepin-pdfium/libdeepin-pdfium_1.5.8_amd64.deb
+Size: 2019192
+SHA256: 83082da9c80e8055209e63ce685820fdc83cbf0254315161b67751c45fcd128d
+SHA1: 586e8b87086a59c3d0c5c669454f356ea8c2d350
+MD5sum: 67669b68811d3c108d1ba0efe4dc4cbc
+Description: A libaray about PDF.
+ A library for parsing and editing and displaying PDF.
+
+Package: libdeepin-pdfium-dev
+Source: deepin-pdfium
+Version: 1.5.8
+Architecture: amd64
+Maintainer: deepin <packages@deepin.com>
+Installed-Size: 39
+Depends: libdeepin-pdfium
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/deepin-pdfium/libdeepin-pdfium-dev_1.5.8_amd64.deb
+Size: 8320
+SHA256: a7d9be758bc7c827f168af5a1f136c342545c6af0f109626c248155a4dd72e68
+SHA1: c3ccc694f5c518fb6456f2294e177ba690826ba3
+MD5sum: 5c0c757f86acb8736445252dec757fc4
+Description: A libaray about PDF dev.
+ A libaray that provides for parsing and editing and displaying PDF interface dev.
+
+Package: libdeepin-pw-check
+Source: deepin-pw-check
+Version: 6.0.12
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 266
+Depends: libc6 (>= 2.34), libcrack2 (>= 2.8.14), libcrypt1 (>= 1:4.1.0), libiniparser4 (>= 4.0), libpam0g (>= 1.1.0), libpam-runtime
+Breaks: libpam-cracklib
+Replaces: libpam-cracklib
+Homepage: http://www.deepin.org
+Priority: optional
+Section: devel
+Filename: pool/main/d/deepin-pw-check/libdeepin-pw-check_6.0.12_amd64.deb
+Size: 34380
+SHA256: cc57e2a0ea12c818357d3c44c6ba94df4d9bab119a077d4cbe0204be193f77d3
+SHA1: c95a7c6ec571676d0feabe84bac16bb7d8b384b1
+MD5sum: a8caf47319cbea22332038cc132075ed
+Description: deepin password check interface
+ deepin-pw-check is a tool to verify the validity of the password
+
+Package: libdeepin-pw-check-dbgsym
+Source: deepin-pw-check
+Version: 6.0.12
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 38
+Depends: libdeepin-pw-check (= 6.0.12)
+Priority: optional
+Section: debug
+Filename: pool/main/d/deepin-pw-check/libdeepin-pw-check-dbgsym_6.0.12_amd64.deb
+Size: 4724
+SHA256: 2f7aa8c431e3813b93b973c1c05d8b9a7a6fbef27917170551a024f9bd64a299
+SHA1: 22e7cb1639441d7cebb7573c643f4403fb121853
+MD5sum: 63b3525f1e13135a28767038374c33e7
+Description: debug symbols for libdeepin-pw-check
+Build-Ids: 35f921e7c833303b5a40eed22aca6f3c9acf376c 796b6312eaa51bea9481f74ea2f58d9bc5102c85 bacb7900df2f5726788898d110c15b171ff3284a
+
+Package: libdeepin-pw-check-dev
+Source: deepin-pw-check
+Version: 6.0.12
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 73
+Depends: libdeepin-pw-check
+Homepage: http://www.deepin.org
+Priority: optional
+Section: devel
+Filename: pool/main/d/deepin-pw-check/libdeepin-pw-check-dev_6.0.12_amd64.deb
+Size: 13128
+SHA256: a3124d713252ca5e37f0d5698f8bd0a5dc66b91989ffcc3a349876d1d250dc46
+SHA1: 7b1a0a172feb6c7298fb5665291f98a6d6a3db36
+MD5sum: 6bb2823b420b06a58177d41167f2b6f8
+Description: deepin password check interface
+ deepin-pw-check is a tool to verify the validity of the password
+
+Package: libdeepin-service-framework
+Source: deepin-service-manager
+Version: 1.0.25
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 155
+Depends: libc6 (>= 2.4), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.1.2), libstdc++6 (>= 5.2), libsystemd0 (>= 221)
+Homepage: https://github.com/linuxdeepin
+Priority: optional
+Section: admin
+Filename: pool/main/d/deepin-service-manager/libdeepin-service-framework_1.0.25_amd64.deb
+Size: 46160
+SHA256: 54d1ab46b3f27ff6968750a4d1e88118238069f19a0a373b2323ececb55e6e0a
+SHA1: ee271892f18104e7a4da9c0d13339f13d0db3fe6
+MD5sum: c13aacb327a8cff1a5c4b21005e1a4af
+Description: deepin desktop-environment - service frame
+
+Package: libdeepin-service-framework-dev
+Source: deepin-service-manager
+Version: 1.0.25
+Architecture: amd64
+Maintainer: Deepin Sysdev <sysdev@deepin.com>
+Installed-Size: 19
+Depends: libdeepin-service-framework (= 1.0.25)
+Homepage: https://github.com/linuxdeepin
+Priority: optional
+Section: admin
+Filename: pool/main/d/deepin-service-manager/libdeepin-service-framework-dev_1.0.25_amd64.deb
+Size: 4240
+SHA256: 3217349da45470b6aaa09e34463d0068a3438b0ff62b5f3d80473b809fd73c20
+SHA1: 09272790d25a89525bb0e81ac4e2911a57d4ceda
+MD5sum: 10785562e579a721d5513318152b4344
+Description: deepin desktop-environment - service frame for development
+
+Package: libdfm-extension
+Source: dde-file-manager
+Version: 6.6.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 92
+Depends: libc6 (>= 2.14), libgcc-s1 (>= 3.0), libstdc++6 (>= 5.2)
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-file-manager/libdfm-extension_6.6.11_amd64.deb
+Size: 38052
+SHA256: ab333756551c46c0d4b75f850a24725feaba72a7895281df0117ba9737107563
+SHA1: 5389bef32c7875f47cc5624e5c86ad11f4e90898
+MD5sum: 00058ed18e3c0def7ef67942d87cd25c
+Description: extension library of dde-file-manager
+ Extension library of dde-file-manager which is provided for third parties
+
+Package: libdfm-extension-dev
+Source: dde-file-manager
+Version: 6.6.11
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 63
+Depends: libdfm-extension (= 6.6.11)
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dde-file-manager/libdfm-extension-dev_6.6.11_amd64.deb
+Size: 30036
+SHA256: 31d24507de107b1c78011b1544b5e083add63681cbc3bd91ef5273d6e12824ae
+SHA1: 00fad119373431a74a65de6f8076f86ba828c912
+MD5sum: 1bf3d7c85d23fc591625e5774013489e
+Description: Development package for libdfm-extension
+ This package contains the header files and pkgconfig
+ of libdfm-extension
+
+Package: libdfm6-burn
+Source: util-dfm
+Version: 1.4.6
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 569
+Depends: libc6 (>= 2.38), libgcc-s1 (>= 3.0), libisoburn1t64 (>= 1.5.8), libqt6core6t64 (>= 6.11.2), libssl3t64 (>= 3.0.0), libstdc++6 (>= 13.1), dvd+rw-tools
+Recommends: libudfburn
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/u/util-dfm/libdfm6-burn_1.4.6_amd64.deb
+Size: 186808
+SHA256: 13bc1b9433f1da7144c1998e592c175b55410ffab914628ac6dfacca0900c742
+SHA1: ef3f81e4ce534b064e5081c1a02090179d5fae9f
+MD5sum: fc1518293e4fd52df90a494b2cf6fe2f
+Description: A library about burning CD.
+ A library that provides burning CD interface.
+
+Package: libdfm6-burn-dev
+Source: util-dfm
+Version: 1.4.6
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 32
+Depends: libdfm6-burn (= 1.4.6), libisoburn-dev
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/u/util-dfm/libdfm6-burn-dev_1.4.6_amd64.deb
+Size: 9496
+SHA256: 573639fb14b798ad9632d9efdb5e3e92093be8e78d099ecf8728d7b643eb2a9e
+SHA1: 976c4060e6866ba4d5e9ec1035ce1fb6911b111b
+MD5sum: 335abc08323f8d6492a3d3be1f61e0e1
+Description: A library about mount burning CD.
+ A library that provides burning CD interface dev.
+
+Package: libdfm6-io
+Source: util-dfm
+Version: 1.4.6
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 529
+Depends: libc6 (>= 2.33), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.83.0), libmediainfo0v5 (>= 0.7.56), libqt6core6t64 (>= 6.11.2), libstdc++6 (>= 14), libglibmm-2.4-1v5
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/u/util-dfm/libdfm6-io_1.4.6_amd64.deb
+Size: 161260
+SHA256: b3f7cdfc9c75af61f46bf147c0bf596a99b88dd215133b0f95d6719b17f4c462
+SHA1: efb7f3fb8306d8b5e4442de6205be31657440fac
+MD5sum: 06ef171b44b822e9428c7dbfd2eaa60b
+Description: A library about I/O.
+ A library that provides I/O interface.
+
+Package: libdfm6-io-dev
+Source: util-dfm
+Version: 1.4.6
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 73
+Depends: libdfm6-io (= 1.4.6)
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/u/util-dfm/libdfm6-io-dev_1.4.6_amd64.deb
+Size: 16984
+SHA256: 121fb5bd536f64b8eaf6d3f325c9370d1a54387eea54265f6fad37e36d60d492
+SHA1: 0047f79ccc1d4d75cc07878c0d8cc10c6a6614ef
+MD5sum: d9c03e7f6cbf0ee6d59f0d69f55ecf3b
+Description: A library about I/O dev.
+ A library that provides I/O interface dev.
+
+Package: libdfm6-mount
+Source: util-dfm
+Version: 1.4.6
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 686
+Depends: libc6 (>= 2.27), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.83.0), libmount1 (>= 2.24.2), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.3.0), libqt6widgets6 (>= 6.1.2), libsecret-1-0 (>= 0.7), libstdc++6 (>= 14), libudisks2-0 (>= 2.8.1)
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/u/util-dfm/libdfm6-mount_1.4.6_amd64.deb
+Size: 183192
+SHA256: 87ba004d8a932cca815d7d32b766b12fe6c907e840fd42758b09b6079b34bd9a
+SHA1: a4b513dd55614519471e55144c673e19a172df6d
+MD5sum: 0aec50ff1cc3346e5f48441712419a83
+Description: A library about mount and umount.
+ A library that provides mount and umount interface.
+
+Package: libdfm6-mount-dev
+Source: util-dfm
+Version: 1.4.6
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 65
+Depends: libdfm6-mount (= 1.4.6), libsecret-1-dev, libudisks2-dev
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/u/util-dfm/libdfm6-mount-dev_1.4.6_amd64.deb
+Size: 16056
+SHA256: 626614c016790f617d94b97b78ee8ccc936768b8da0e39eb07649045a71ae7c1
+SHA1: 415b86b83c3f72762a78647dd2bf5aba3cba961d
+MD5sum: 730fe4a5e0a72270a802729874ed41f8
+Description: A library about mount and umount dev.
+ A library that provides mount and umount interface dev.
+
+Package: libdfm6-search
+Source: util-dfm
+Version: 1.4.6
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 1316
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), liblucene++0t64 (>= 3.0.9), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.4.0), libstdc++6 (>= 13.1)
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/u/util-dfm/libdfm6-search_1.4.6_amd64.deb
+Size: 346052
+SHA256: fd1572b6977488aaefec0da129dfdeb01e986866aa837065f1f25c60a2f88848
+SHA1: c11272b8d516cb6fce8adf553c4f22465dbb808f
+MD5sum: 6f974db654513e3434ee62bf4a74bd4d
+Description: A library about searching files.
+ A library that provides file searching interface.
+
+Package: libdfm6-search-dev
+Source: util-dfm
+Version: 1.4.6
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@linuxdeepin.com>
+Installed-Size: 135
+Depends: libdfm6-search (= 1.4.6)
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/u/util-dfm/libdfm6-search-dev_1.4.6_amd64.deb
+Size: 27404
+SHA256: f6f808fe2febc75e575e2e74b61eac0b83f26470f8f0baa79489a9db0bda3ba5
+SHA1: 72c4bbb4050ae747f5ad38adbd70ee0d0a707485
+MD5sum: 5c0d96c023cb8864f9d0d40d8888a4a1
+Description: A library about searching files dev.
+ A library that provides file searching interface dev.
+
+Package: libdmr
+Source: deepin-movie-reborn
+Version: 6.5.62
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 1400
+Depends: libc6 (>= 2.38), libdrm2 (>= 2.3.1), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.12.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6network6 (>= 6.7.2), libqt6opengl6 (>= 6.1.2), libqt6openglwidgets6 (>= 6.1.2), libqt6sql6 (>= 6.1.2), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 14), qt6-base-private-abi (= 6.11.2), libavcodec63 (>= 7:6.0), libavformat63 (>= 7:6.0), libavutil61 (>= 7:6.0), libffmpegthumbnailer4v5, libmpv1 (>= 0.29) | libmpv2 (>= 0.36), libpulse0 (>= 0.99.1), libgstreamer-plugins-base1.0-0 (>= 1.0.0), libgstreamer1.0-0 (>= 1.4.0)
+Multi-Arch: same
+Homepage: https://www.deepin.org/
+Priority: extra
+Section: libdevel
+Filename: pool/main/d/deepin-movie-reborn/libdmr_6.5.62_amd64.deb
+Size: 428020
+SHA256: ecea05b31b981ebee6ce0c0d8924ecbb56669e1be14acbb90439803b24448619
+SHA1: 55643ac6e32d9e90eefa186d8e75778e150e4c81
+MD5sum: 55bae72f03063ca5b966a0a65c0bdd8e
+Description: movie player widget library
+ deepin movie player widget library
+
+Package: libdmr-dev
+Source: deepin-movie-reborn
+Version: 6.5.62
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 59
+Depends: libdmr (= 6.5.62), libgsettings-qt-dev
+Homepage: https://www.deepin.org/
+Priority: extra
+Section: libdevel
+Filename: pool/main/d/deepin-movie-reborn/libdmr-dev_6.5.62_amd64.deb
+Size: 19768
+SHA256: 36adf85632c0daa8aab46aa134972ff938db3b4c602af05eee2da5368a5e3680
+SHA1: cf740a3730f4a7309ead6ee47bf6c3132034dbf1
+MD5sum: 8b494e8bda2c4b3cbbf6eb6c4b911e15
+Description: movie player widget library development headers
+ deepin movie player widget library development headers
+
+Package: libdtk6core
+Source: dtkcore
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 1405
+Depends: libc6 (>= 2.34), libdbus-1-3 (>= 1.10), libdtk6log (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6xml6 (>= 6.6.0), libstdc++6 (>= 14), qt6-base-private-abi (= 6.11.2), lshw
+Multi-Arch: same
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkcore/libdtk6core_6.7.54_amd64.deb
+Size: 505864
+SHA256: 298e42cb545904c4ca59df9c111bd847d573cfe6a891ca1dd9b76b8bd12abe61
+SHA1: 5c1da96757778d627ca4a1416213cd33f12007aa
+MD5sum: da867858683b47e110771ac501e8b494
+Description: Development ToolKit Core Library (DTK6 with Qt6)
+ DTK Core is the base library of deepin Qt/C++ applications.
+ .
+ This package contains the shared libraries for DTK6 applications.
+
+Package: libdtk6core-bin
+Source: dtkcore
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 819
+Depends: libc6 (>= 2.34), libdtk6core (= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.7.2), libqt6xml6 (>= 6.1.2), libstdc++6 (>= 13.1), qt6-base-private-abi (= 6.11.2)
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkcore/libdtk6core-bin_6.7.54_amd64.deb
+Size: 333604
+SHA256: e77ed61874bbb3bdcd7c493227f5e842f1fecc0f1ef30c90f8cd91596a3435cf
+SHA1: 2281c9e1e7164c9c98ea40fd780622fc4a246ab7
+MD5sum: 023e289c498b45d695a4cfdc32016e18
+Description: Development ToolKit Core Utilities (DTK6 with Qt6)
+ DTK Core is the base library of deepin Qt/C++ applications.
+ .
+ This package contains the utilities of DTK6 Core.
+
+Package: libdtk6core-bin-dbgsym
+Source: dtkcore
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 3799
+Depends: libdtk6core-bin (= 6.7.54)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkcore/libdtk6core-bin-dbgsym_6.7.54_amd64.deb
+Size: 3473228
+SHA256: 7ee63dcf77ff6abe6266532e7bc5dc8bedd1b12ca297e602606c06656ae5a550
+SHA1: f43235be8c7c333ac8f82d0cf51d75cf996cfc5d
+MD5sum: 110f5c47fd4fad8daeed4be669c7f0fb
+Description: debug symbols for libdtk6core-bin
+Build-Ids: 14b6c42907a7a2fff3fed4a1f0adc3d043a29e34 154dac1ac895d95d3ba5b21c2c19d2892251023c 1fe9a07e73cb4b45a8343b22ce1ea5b56006a647 4ffa18f807342174573e9e0f7bc019e91396ac37 8a41802e08948ba5f55b6f32a6aa40562c5024ea d918ee31e4eb5198a3606eb1bce0ef704bc2e2bf
+
+Package: libdtk6core-dbgsym
+Source: dtkcore
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 9020
+Depends: libdtk6core (= 6.7.54)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkcore/libdtk6core-dbgsym_6.7.54_amd64.deb
+Size: 8938048
+SHA256: 349f615129dd9f16c9da239461522c63e45081373675f29362628632a3d7c783
+SHA1: fa41e4c3d47178c60586af04fb4678f9f24f217d
+MD5sum: d43b673e822a052bf1b921e71c88c365
+Description: debug symbols for libdtk6core
+Build-Ids: aa99bc65623fed28d4b8ad67c0d0c2eff6178562
+
+Package: libdtk6core-dev
+Source: dtkcore
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 283
+Depends: libdtk6core (= 6.7.54), libdtk6core-bin (= 6.7.54), libdtkcommon-dev (>= 5.6.16), libdtk6log-dev
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkcore/libdtk6core-dev_6.7.54_amd64.deb
+Size: 40800
+SHA256: d94c940069fad523feeb1c57fea2028b56d89befe6e0dc39fcd0858ff2be7ea7
+SHA1: c543c271bbcc6e6b337dc76e722a2a355cbce74b
+MD5sum: 6f32fa9df3803d3ad2885a0356e08ed0
+Description: Development ToolKit Core Devel Library (DTK6 with Qt6)
+ DTK Core is the base library of deepin Qt/C++ applications.
+ .
+ This package contains the header files and development library symbolic links of DTK6 Core.
+
+Package: libdtk6core-doc
+Source: dtkcore
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 2626
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkcore/libdtk6core-doc_6.7.54_amd64.deb
+Size: 1876068
+SHA256: 02162b6e09f16b53b33596bc4baad8e900bcb0a2957c0b0dfdf2013ed7c40ed3
+SHA1: 72863307cd9698259c926401775238f7b8bcbfb8
+MD5sum: 143a7b5c5fe64de5590d7a7e55e64f7d
+Description: Development ToolKit Core Documentation
+ DTK Core is the base library of deepin Qt/C++ applications.
+ .
+ This package contains the doc files of DtkCore.
+
+Package: libdtk6declarative
+Source: dtkdeclarative
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 8036
+Depends: libc6 (>= 2.32), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libgcc-s1 (>= 3.0), libgl1, libopengl0, libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.1.2), libqt6gui6 (>= 6.9.1), libqt6opengl6 (>= 6.1.2), libqt6qml6 (>= 6.10.2), libqt6qmlmodels6 (>= 6.6.0), libqt6quick6 (>= 6.8.2), libstdc++6 (>= 14), qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2)
+Multi-Arch: same
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libs
+Filename: pool/main/d/dtkdeclarative/libdtk6declarative_6.7.54_amd64.deb
+Size: 1518052
+SHA256: 60c28250009d72a12596339a3ea93712146225589200a1a2fcfd23c6de0fa168
+SHA1: 46e86a010499b41907e0984c6c0d22f873b92e55
+MD5sum: df3e4446903ac2888e7849b61b90ecf9
+Description: Deepin Tool Kit Declarative library (DTK6 with Qt6)
+ Dtkdeclarative is base library of Deepin Qt/QtQuick applications.
+ .
+ This package contains the shared libraries.
+ This package is built for DTK6 with Qt6.
+
+Package: libdtk6declarative-dbgsym
+Source: dtkdeclarative
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 32927
+Depends: libdtk6declarative (= 6.7.54)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkdeclarative/libdtk6declarative-dbgsym_6.7.54_amd64.deb
+Size: 31137616
+SHA256: 8fe3bae5d50be0ddea1b8314898b43f227bfc935858234e6d9530479fab3c33b
+SHA1: 18e79cd7e55477c2ec98c8e9e897c1d0186102c8
+MD5sum: ecef0047997f5767e578fe16587ffc53
+Description: debug symbols for libdtk6declarative
+Build-Ids: 1e85622093485ddd4152d3d3c7f69635d92edba2 a42a4cef67c7bc4734e831c3b90cbf0ba352916c edd430cf84958a9456d539365f6ca1caa8bb9c5d f891f73d640f655b51f51b3fb89ed30fd2e3e2f9
+
+Package: libdtk6declarative-dev
+Source: dtkdeclarative
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 119
+Depends: libdtk6declarative (= 6.7.54), libdtk6core-dev, libdtk6gui-dev (>> 6.7.42), libdtkcommon-dev (>> 6.7.42), qt6-base-dev, qt6-declarative-dev
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libs
+Filename: pool/main/d/dtkdeclarative/libdtk6declarative-dev_6.7.54_amd64.deb
+Size: 21980
+SHA256: cd57f9301ad9b74439a9f17d1014e46c36f1fd7a167bf20da379250bc446e4a8
+SHA1: 38b8058e650fd08af1058c19ca2ccaec8eb6ae5e
+MD5sum: a3456657d3fede4c9eb016e74d256b91
+Description: Deepin Tool Kit Declarative Devel library (DTK6 with Qt6)
+ Dtkdeclarative is base library of Deepin Qt/QtQuick applications.
+ .
+ This package contains the header files and shared libraries of DtkDeclarative.
+ This package is built for DTK6 with Qt6.
+
+Package: libdtk6declarative-doc
+Source: dtkdeclarative
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 4688
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libs
+Filename: pool/main/d/dtkdeclarative/libdtk6declarative-doc_6.7.54_amd64.deb
+Size: 3527684
+SHA256: 9ff9959745be80e21ec1b4ebf0c7347a1aa6fb4ed4a7094d4e1d74613e681f3d
+SHA1: ff00c5b66e84309e2b2201fa2e479a38ace078a6
+MD5sum: d9adf69f718596e694b9bc2fbe5b89dc
+Description: Deepin Tool Kit Declarative Devel library (DTK6 with Qt6 Document)
+ Dtkdeclarative is base library of Deepin Qt/QtQuick applications.
+
+Package: libdtk6gui
+Source: dtkgui
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 1668
+Depends: libc6 (>= 2.29), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libglib2.0-0t64 (>= 2.12.0), libgomp1 (>= 4.9), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.4.0), libqt6gui6 (>= 6.8.2), libqt6network6 (>= 6.1.2), libqt6waylandclient6 (>= 6.10.2), libstdc++6 (>= 14), libwayland-client0 (>= 1.20.0), qt6-base-private-abi (= 6.11.2), qt6-image-formats-plugins
+Multi-Arch: same
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkgui/libdtk6gui_6.7.54_amd64.deb
+Size: 443384
+SHA256: ae4b80d57e24b47c62e19774daa86ab067cb46f2fbdfbdb3780a8991079e2698
+SHA1: c292d690e1fc761cbfed02def422263be3e7f0ab
+MD5sum: e2025ee18803c1a60e10fd1206e6f01b
+Description: Development ToolKit Gui Library (DTK6 with Qt6)
+ DTK Gui is the base library of deepin Qt/C++ applications.
+ .
+ This package contains the shared libraries for DTK6 applications.
+
+Package: libdtk6gui-bin
+Source: dtkgui
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 308
+Depends: libc6 (>= 2.38), libdtk6core (>= 6.7.54), libdtk6gui (= 6.7.54), libgcc-s1 (>= 3.0), libqt6concurrent6 (>= 6.1.2), libqt6core6t64 (>= 6.11.2), libqt6gui6 (>= 6.4.0), libqt6widgets6 (>= 6.1.2), libstdc++6 (>= 13.1), libx11-6
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkgui/libdtk6gui-bin_6.7.54_amd64.deb
+Size: 76832
+SHA256: 86f5d669cda536e102c8b474ce0bcc79589ae3f4e200e8c24ee4d300eea640f2
+SHA1: d917e559f7cce5cf126db7399b14a0d5127e298e
+MD5sum: 1aa7bd4eccf23969cdc9c853c50744ed
+Description: Development ToolKit Gui Utilities (DTK6 with Qt6)
+ DTK Gui is the base library of deepin Qt/C++ applications.
+ .
+ This package contains the utilities of DTK6 Gui.
+
+Package: libdtk6gui-bin-dbgsym
+Source: dtkgui
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 1549
+Depends: libdtk6gui-bin (= 6.7.54)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkgui/libdtk6gui-bin-dbgsym_6.7.54_amd64.deb
+Size: 1432028
+SHA256: c97039731d5df146b7f63880c90f7003d06c00b86fcc7983ded66db575197a49
+SHA1: f25d0e3f0e3ea8230634f4d55c5cd0b3980a330b
+MD5sum: d7a73fba8cd615f4692e82d6cb30fd84
+Description: debug symbols for libdtk6gui-bin
+Build-Ids: 0efcc1c54d7ccc93e24df19a876d831d8d567d27 1018f754254867de181cc1b356b3568af8c46641 27e559aca56ed5b545d647454feb5f8d78688f15 3dda411409788403b59d779344e8f1ef97e83b9e 704e9a6676b1a8d08635a6728a527293e8bd601c a90882e360be28f3ae6a200bdf9261c034c6113c c8b040ea37320a71b6b5c1bde0f12379cc072244
+
+Package: libdtk6gui-dbgsym
+Source: dtkgui
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 9552
+Depends: libdtk6gui (= 6.7.54)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkgui/libdtk6gui-dbgsym_6.7.54_amd64.deb
+Size: 9350636
+SHA256: 21524c04cd3075c52b5777a9a06b68995040a26db122b9dfadbb7710d30e02a7
+SHA1: 59995e1faa5825d64dc72a3b780cf81bb141f5fa
+MD5sum: fb147b12f296ccecb15fa401910963d6
+Description: debug symbols for libdtk6gui
+Build-Ids: e7673e0b3722872dff08d5c01619d09df8daae1a
+
+Package: libdtk6gui-dev
+Source: dtkgui
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 146
+Depends: libdtk6gui (= 6.7.54), libdtk6gui-bin (= 6.7.54), libdtkcommon-dev (>= 5.6.16), libdtk6core-dev
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkgui/libdtk6gui-dev_6.7.54_amd64.deb
+Size: 24712
+SHA256: 0177d15029a3e141a03c4bbe776de5065c43fc7ff311f3c6cf7cf5f65c77f3b9
+SHA1: 2e947b73ebb12f323012bd588a90fc73a7ec9e17
+MD5sum: fe19141c284e3dd0c29fe66ff9bdb47c
+Description: Development ToolKit Gui Devel Library (DTK6 with Qt6)
+ DTK Gui is the base library of deepin Qt/C++ applications.
+ .
+ This package contains the header files and development library symbolic links of DTK6 Gui.
+
+Package: libdtk6gui-doc
+Source: dtkgui
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 4229
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkgui/libdtk6gui-doc_6.7.54_amd64.deb
+Size: 2925296
+SHA256: bdcfa907a7fb7ad5490cef697fbe2ab9f90a87b7435d555cd8ae7505736e8501
+SHA1: 5e749b511ac8ab9288ac01c39dd06c1973e7716a
+MD5sum: 35fabcd5b240da9e2bc1bb61e901d615
+Description: Development ToolKit Gui (Document)
+ DTK Gui is the base library of deepin Qt/C++ applications.
+ .
+ This package contains the qt Document of DTK6 Gui.
+
+Package: libdtk6log
+Source: dtklog
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 200
+Depends: libc6 (>= 2.32), libfmt12 (>= 12.2.1+ds1), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libspdlog1.17-fmt12, libstdc++6 (>= 14), libsystemd0, qt6-base-private-abi (= 6.11.2)
+Multi-Arch: same
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtklog/libdtk6log_6.7.54_amd64.deb
+Size: 62732
+SHA256: 8826c5c4c0efac6ab0e07b693ee18d9c2eb4c7ad96ff21e8edb650f1caec06bb
+SHA1: fd83fb8f5900d14014a8af510815bbb8bb433b66
+MD5sum: 564c52cef0b4984550301fe5d75ff482
+Description: Simple, convinient and thread safe logger for Qt-based C++ apps (DTK6 with Qt6)
+ This package contains the shared libraries.
+
+Package: libdtk6log-dbgsym
+Source: dtklog
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 1567
+Depends: libdtk6log (= 6.7.54)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtklog/libdtk6log-dbgsym_6.7.54_amd64.deb
+Size: 1543368
+SHA256: f555ecf6be247a1cc66b1528e8e1e9669d82bb09601a9111aebe26cc8b85221c
+SHA1: 9fb300d00da70e9399009325192765a860ef046a
+MD5sum: ac0a1851086b1886bd68835943a5114c
+Description: debug symbols for libdtk6log
+Build-Ids: 38aaa6a3d8f8bce5e109afe4fd300dbb2fb55578
+
+Package: libdtk6log-dev
+Source: dtklog
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 55
+Depends: libdtk6log (= 6.7.54)
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtklog/libdtk6log-dev_6.7.54_amd64.deb
+Size: 9668
+SHA256: b6eebacfc477b7e8bf282cd230bc9dda56fc8e2b62b07161381482e541378763
+SHA1: cf7b2d5f15ba897c3f784d6372f5b53d6c6fa3e6
+MD5sum: b093e208ddac139980585221c80a31bc
+Description: Simple, convinient and thread safe logger for Qt-based C++ apps (DTK6 with Qt6)
+ This package contains the header files and static libraries of dlog
+
+Package: libdtk6systemsettings
+Source: dtksystemsettings
+Version: 6.6.22
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 1687
+Depends: libc6 (>= 2.14), libcrypt1 (>= 1:4.1.0), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libstdc++6 (>= 5.2)
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtksystemsettings/libdtk6systemsettings_6.6.22_amd64.deb
+Size: 319088
+SHA256: d92fd7da074f965ef148e5c13d2b87418e4ab6f19b92140f500315fa30658e94
+SHA1: 5977bd2e3f0d6a3ef13b22b46b201abeef31ceb9
+MD5sum: f556df74367e7f8e4cb92f5a04101e4f
+Description: Deepin Tool Kit systemsettings library (DTK6 with Qt6)
+ libdtk6systemsettings is base library of Deepin Qt/C++ applications.
+ .
+ This package contains the shared libraries for DTK6 applications.
+
+Package: libdtk6systemsettings-dbgsym
+Source: dtksystemsettings
+Version: 6.6.22
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 9595
+Depends: libdtk6systemsettings (= 6.6.22)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtksystemsettings/libdtk6systemsettings-dbgsym_6.6.22_amd64.deb
+Size: 9279016
+SHA256: b244772b5e4acce25c4c92c08a9bafbb06433eca3a91d66c407a38357a82bebd
+SHA1: d8e667c12171bf4f2916bb0661b47078dd8b9f52
+MD5sum: 3b819c27df6302f5f29762bb5f0ff455
+Description: debug symbols for libdtk6systemsettings
+Build-Ids: d699e3110d7140887b2ffa41dead2800f6f12e1d
+
+Package: libdtk6systemsettings-dev
+Source: dtksystemsettings
+Version: 6.6.22
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 1379
+Depends: libdtk6systemsettings (= 6.6.22)
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtksystemsettings/libdtk6systemsettings-dev_6.6.22_amd64.deb
+Size: 784508
+SHA256: 20b24c20d04164fff2505c5c1670044c268223791a22e4b98b24048a13377930
+SHA1: 2223f0b0b23538c60b08a00be82b5c938d875dc1
+MD5sum: e08bfec18a0f6915dd717b1c96f46023
+Description: Deepin Tool Kit systemsettings devel library (DTK6 with Qt6)
+ libdtk6systemsettings-dev is base devel library of Deepin Qt/C++ applications.
+ .
+ This package contains the header files and development library symbolic links of DTK6 systemsettings.
+
+Package: libdtk6widget
+Source: dtkwidget
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 4675
+Depends: libc6 (>= 2.38), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.11.2), libqt6network6 (>= 6.1.2), libqt6printsupport6 (>= 6.1.2), libqt6widgets6 (>= 6.7.2), libstartup-notification0 (>= 0.10), libstdc++6 (>= 14), libx11-6 (>= 2:1.2.99.901), libxcb-util1 (>= 0.4.0), libxcb1, libxext6, libxi6 (>= 2:1.2.99.4), qt6-base-private-abi (= 6.11.2), libdtkdata
+Multi-Arch: same
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkwidget/libdtk6widget_6.7.54_amd64.deb
+Size: 1174644
+SHA256: e2125eedc7a04f57c023c19063503d296e7f64b45cd3a16d8a90db4ebca05fed
+SHA1: 66a0484560ce0a4d1790a52060cbf4bf2839b9b6
+MD5sum: a4477e0e4314d6f6d99c822d2e1d98e8
+Description: Deepin graphical user interface library (DTK6 with Qt6)
+ DtkWidget is Deepin graphical user interface for deepin desktop development.
+ .
+ This package contains the shared libraries.
+
+Package: libdtk6widget-bin
+Source: dtkwidget
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 44
+Depends: libc6 (>= 2.34), libdtk6gui (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6gui6 (>= 6.1.2), libqt6svg6 (>= 6.6.0), libstdc++6 (>= 4.1.1), libdtk6widget (= 6.7.54)
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkwidget/libdtk6widget-bin_6.7.54_amd64.deb
+Size: 15652
+SHA256: f0c15b92ee2fe32343e98c9368e992563359b1bd8d2ea95cc9ba7b4b289b0d37
+SHA1: 0f728c871dfa881a98e6922fcbdcf510a8100a2a
+MD5sum: bd55397547c9cd5de45a4fad58d377b9
+Description: Deepin graphical user interface library utilities (DTK6 with Qt6)
+ DtkWidget is Deepin graphical user interface for deepin desktop development.
+ .
+ This package contains the utilities which are
+ needed for developing Deepin applications.
+
+Package: libdtk6widget-bin-dbgsym
+Source: dtkwidget
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 345
+Depends: libdtk6widget-bin (= 6.7.54)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkwidget/libdtk6widget-bin-dbgsym_6.7.54_amd64.deb
+Size: 331928
+SHA256: 31ccff4e1bc72f3c6ef7f20ff75b9f67270755755fa66e46254b5c9518dbb16c
+SHA1: 5e2b9f34cc126e3f51bd269d4e05278c730e1a2a
+MD5sum: 7186ee3b1d01eb8c64d041238d7b17cf
+Description: debug symbols for libdtk6widget-bin
+Build-Ids: d64fdd8cd968f21f8a9931c3bd82a7b1db4ccbef
+
+Package: libdtk6widget-dbgsym
+Source: dtkwidget
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 27418
+Depends: libdtk6widget (= 6.7.54)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkwidget/libdtk6widget-dbgsym_6.7.54_amd64.deb
+Size: 27070932
+SHA256: 669fdf32f4ed0e041b75d0bc6b57e5543e12e131cf91977b7938d8f093834fb6
+SHA1: 52a0d2ecd0f3eab50fba37ba2f0f00bdfb82b396
+MD5sum: f8caf18fbc6a65fb3a1a9a5dab3e4c0d
+Description: debug symbols for libdtk6widget
+Build-Ids: 655d4c9fb5194f3df4dd44e2288f6d753e3c5d43
+
+Package: libdtk6widget-dev
+Source: dtkwidget
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 511
+Depends: libdtk6widget (= 6.7.54), libdtk6core-dev, libdtk6gui-dev, libcups2-dev
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkwidget/libdtk6widget-dev_6.7.54_amd64.deb
+Size: 63416
+SHA256: ce1bfc21f21a08e76afc452b0168169a735ba3539f1103feaf2552dd54e63c2c
+SHA1: 45b73bc8e642c51f6e7ec706942421436e8518d7
+MD5sum: 6fcff5f566b7b02793eb71f9c563e9e1
+Description: Deepin graphical user interface library (DTK6 with Qt6)
+ DtkWidget is Deepin graphical user interface for deepin desktop development.
+ .
+ This package contains the header files and static libraries which are
+ needed for developing Deepin applications.
+
+Package: libdtk6widget-doc
+Source: dtkwidget
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 9655
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkwidget/libdtk6widget-doc_6.7.54_amd64.deb
+Size: 7565072
+SHA256: 292ccaac5fbd60c6b8c3103299a6a9a9a7900e42eba9a79301944da76179b75d
+SHA1: b392b4e60cbcdff18870fdd8667ce1ccc3870ce7
+MD5sum: f3e8595490e920eaed8d4fb83318dab3
+Description: Deepin graphical user interface library (DTK6 with Qt6 Document)
+ DtkWidget is Deepin graphical user interface for deepin desktop development.
+ .
+ This package contains example application which are
+ needed for developing Deepin applications.
+
+Package: libdtkcommon-dev
+Source: dtkcommon
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 25
+Conflicts: libdtkcore-dev (<< 5.4.10)
+Replaces: libdtkcore-dev (<< 5.4.10)
+Homepage: http://www.deepin.org/
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkcommon/libdtkcommon-dev_6.7.54_amd64.deb
+Size: 5900
+SHA256: af02b5a69c038b986e6cc0b716e044b060dd3264d46488319c5d1f7536560b68
+SHA1: 63d692ee623851839b707472617e93d510d1d0c1
+MD5sum: b41f85accca62f5a1bf8ba0421a59904
+Description: dtk common files
+ Used to store public build files
+
+Package: libdtkdata
+Source: dtkcommon
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 18
+Conflicts: libdtkcommon
+Replaces: libdtkcommon
+Homepage: http://www.deepin.org/
+Priority: optional
+Section: libdevel
+Filename: pool/main/d/dtkcommon/libdtkdata_6.7.54_amd64.deb
+Size: 4804
+SHA256: d1905094691bbab36a5d3eb042202b44fc1ae8a065b4595860b61fb0c4233cb2
+SHA1: 4b58709f954ae59c799abf1734a1c5f6ad5c64fb
+MD5sum: 91e2e47740cf51bd5d699d59378b0377
+Description: dtk common files
+ Used to store public configuration files
+
+Package: libimageeditor6
+Source: image-editor
+Version: 6.5.2
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 12868
+Depends: libc6 (>= 2.38), libdfm6-io, libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6widget (>= 6.7.54), libgcc-s1 (>= 3.0), libqt6concurrent6 (>= 6.1.2), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.3.0), libqt6gui6 (>= 6.11.2), libqt6network6 (>= 6.1.2), libqt6printsupport6 (>= 6.1.2), libqt6svg6 (>= 6.6.0), libqt6widgets6 (>= 6.3.0), libstdc++6 (>= 14), libtiff6 (>= 4.0.3)
+Recommends: libqt6libqgtk2, kimageformat6-plugins, deepin-ocr, ffmpegthumbnailer, ffmpeg
+Conflicts: libimage-viewer
+Replaces: libimage-viewer
+Homepage: http://www.deepin.org
+Priority: optional
+Section: utils
+Filename: pool/main/i/image-editor/libimageeditor6_6.5.2_amd64.deb
+Size: 1029328
+SHA256: 6ad32f8b50b6745d323e359f6d519d0c21c0aee9d8752d03e1d446a55ef5bfc9
+SHA1: 7469a8cb2e3abc6e93400e9b9273a8c6e3d4e612
+MD5sum: 3d0a8292ad4f206f4bcfa5a163d6b7ec
+Description: Image Viewer library.
+ Deepin Image Viewer library.
+
+Package: libimageeditor6-dev
+Source: image-editor
+Version: 6.5.2
+Architecture: amd64
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 41
+Depends: libimageeditor6 (= 6.5.2)
+Recommends: libqt6libgtk2, kimageformat6-plugins, deepin-ocr
+Conflicts: libimage-viewer-dev
+Replaces: libimage-viewer-dev
+Homepage: http://www.deepin.org
+Priority: optional
+Section: utils
+Filename: pool/main/i/image-editor/libimageeditor6-dev_6.5.2_amd64.deb
+Size: 10364
+SHA256: 4c52d1a9e573edb31532412391e5866fb767df312355c2f5254847bb778f074e
+SHA1: 41ac638f35b20b5853380d3fea0799610a7efaca
+MD5sum: 18a564863b930af9576e9e51bbab4324
+Description: Image Viewer library development headers.
+ Deepin Image Viewer library development headers.
+
+Package: libwaylib
+Source: waylib
+Version: 0.6.13
+Architecture: amd64
+Maintainer: JiDe Zhang <zhangjide@deepin.org>
+Installed-Size: 3154
+Depends: libc6 (>= 2.33), libdrm2 (>= 2.4.113), libegl1, libgcc-s1 (>= 3.0), libopengl0, libpixman-1-0 (>= 0.25.2), libqt6core6t64 (>= 6.11.2), libqt6gui6 (>= 6.4.0), libqt6qml6 (>= 6.6.0), libqt6quick6 (>= 6.7.2), libstdc++6 (>= 14), libwayland-server0 (>= 1.20.92), libwlroots-0.19 (>= 0.19.0), libxcb1, libxkbcommon0 (>= 0.5.0), qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2)
+Multi-Arch: same
+Priority: optional
+Section: libdevel
+Filename: pool/main/w/waylib/libwaylib_0.6.13_amd64.deb
+Size: 622336
+SHA256: b2dc47391ce7c28de0581b16703247dbefe7ddf44b48845c3ef2afa8a156a3d9
+SHA1: 13b78816fc500f76c1defae45278a9019b3005dd
+MD5sum: 605d30d7030f7a00c93579e00e0d0d79
+Description: A wrapper for wlroots based on Qt
+ .
+ This package contains the shared libraries.
+
+Package: libwaylib-dbgsym
+Source: waylib
+Version: 0.6.13
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: JiDe Zhang <zhangjide@deepin.org>
+Installed-Size: 25893
+Depends: libwaylib (= 0.6.13)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/w/waylib/libwaylib-dbgsym_0.6.13_amd64.deb
+Size: 25507956
+SHA256: bf75897c3229f8fa418cc0d477285c2696022e726621a8ea8d98b6840a9ecd69
+SHA1: 1a40cc0a063e119cb1a19e77c1b286f3b2dce3cf
+MD5sum: 2593148210376c524d5b6569c63d60f9
+Description: debug symbols for libwaylib
+Build-Ids: d8e3208a2c27f73ea1cc881093aa2695e9cd1e8b
+
+Package: libwaylib-dev
+Source: waylib
+Version: 0.6.13
+Architecture: amd64
+Maintainer: JiDe Zhang <zhangjide@deepin.org>
+Installed-Size: 214
+Depends: libwaylib (= 0.6.13), libwlroots-0.19-dev, qt6-base-dev-tools (>= 6.6.0), qt6-base-private-dev (>= 6.6.0), qt6-declarative-private-dev (>= 6.6.0), wlr-protocols
+Priority: optional
+Section: libdevel
+Filename: pool/main/w/waylib/libwaylib-dev_0.6.13_amd64.deb
+Size: 29716
+SHA256: b9b1d669f22a8b58eeea1ae639878051b1c3ff51f367563fecadc9f1e8d8a903
+SHA1: d3d93a9c4c42393399b7dca285794ce87e08ffd9
+MD5sum: e426b0fd3920dde952e8f6bc3517eb08
+Description: A devel package for libwaylib
+ .
+ This package contains the header files and static libraries of waylib.
+
+Package: libwlroots-0.19
+Source: wlroots
+Version: 0.19.0-0deepin2
+Architecture: amd64
+Maintainer: Sway and related packages team <team+swaywm@tracker.debian.org>
+Installed-Size: 1392
+Depends: libc6 (>= 2.38), libdisplay-info3 (>= 0.3.0), libdrm2 (>= 2.4.122), libegl1, libgbm1 (>= 21.1.0), libgles2, libinput10 (>= 1.26.0), libliftoff0 (>= 0.4.1), libpixman-1-0 (>= 0.44.0), libseat1 (>= 0.5.0), libudev1 (>= 183), libvulkan1 (>= 1.2.131.2), libwayland-client0 (>= 1.23.1), libwayland-server0 (>= 1.23.1), libxcb-composite0, libxcb-dri3-0 (>= 1.13), libxcb-errors0 (>= 1.0.1), libxcb-ewmh2 (>= 0.4.2), libxcb-icccm4 (>= 0.4.2), libxcb-present0, libxcb-render-util0, libxcb-render0, libxcb-res0 (>= 1.10), libxcb-shm0 (>= 1.10), libxcb-xfixes0 (>= 1.15), libxcb-xinput0 (>= 1.17.0), libxcb1, libxkbcommon0 (>= 0.5.0)
+Multi-Arch: same
+Homepage: https://gitlab.freedesktop.org/wlroots/wlroots/
+Priority: optional
+Section: libs
+Filename: pool/main/w/wlroots/libwlroots-0.19_0.19.0-0deepin2_amd64.deb
+Size: 434724
+SHA256: 9821196ea554dadfa58dcfd9bc78d87761b0a067eac4832c80432b77e7cc4b9c
+SHA1: 537181d961865e08cba50e8e3cf3e76628ebcf05
+MD5sum: 7da25f19fd4e648a588ccddcb4b6f276
+Description: Modular wayland compositor library - shared library
+ wlroots is a set of pluggable, composable modules to build a Wayland
+ composior.
+ .
+ This package contains the shared library.
+
+Package: libwlroots-0.19-dbgsym
+Source: wlroots
+Version: 0.19.0-0deepin2
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Sway and related packages team <team+swaywm@tracker.debian.org>
+Installed-Size: 1639
+Depends: libwlroots-0.19 (= 0.19.0-0deepin2)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/w/wlroots/libwlroots-0.19-dbgsym_0.19.0-0deepin2_amd64.deb
+Size: 1434616
+SHA256: 8c58b9bafb92af32dcb0cb768ee72c96d1dc802d8612d3009a3c4e9edb6b29b8
+SHA1: 24c5caa473b8d23bfe921a384caff33fffb806d0
+MD5sum: 72770ac4c9846056cb8947832584f4fa
+Description: debug symbols for libwlroots-0.19
+Build-Ids: 50fef7ad23fa1414fa55e7171e1f954f9a21fef9
+
+Package: libwlroots-0.19-dev
+Source: wlroots
+Version: 0.19.0-0deepin2
+Architecture: amd64
+Maintainer: Sway and related packages team <team+swaywm@tracker.debian.org>
+Installed-Size: 456
+Depends: libwlroots-0.19 (= 0.19.0-0deepin2), libcap-dev, libdisplay-info-dev, libdrm-dev (>= 2.4.114), libegl-dev, libgbm-dev, libgles2-mesa-dev, libinput-dev, libpixman-1-dev, libseat-dev, libsystemd-dev, libliftoff-dev (>= 0.4.0), libudev-dev, libvulkan-dev, libwayland-dev (>= 1.22), libxcb1-dev, libxcb-composite0-dev, libxcb-dri3-dev, libxcb-errors-dev, libxcb-ewmh-dev, libxcb-icccm4-dev, libxcb-image0-dev, libxcb-present-dev, libxcb-render0-dev, libxcb-render-util0-dev, libxcb-res0-dev, libxcb-shm0-dev, libxcb-xfixes0-dev, libxcb-xinput-dev, libxkbcommon-dev, libx11-xcb-dev, wayland-protocols (>= 1.24)
+Multi-Arch: same
+Homepage: https://gitlab.freedesktop.org/wlroots/wlroots/
+Priority: optional
+Section: libdevel
+Filename: pool/main/w/wlroots/libwlroots-0.19-dev_0.19.0-0deepin2_amd64.deb
+Size: 72932
+SHA256: 1a6b5fdea64c54b9caee04c7b3b9a74cc5d61fb950167ce1f42847c8c4ef1a3d
+SHA1: c89183c54d0e985ee07c03933a3a8aad914934b7
+MD5sum: 98661319b3302d1bce6e460f8269e0f9
+Description: Modular wayland compositor library - development headers
+ wlroots is a set of pluggable, composable modules to build a Wayland
+ compositor.
+ .
+ This package contains the development headers.
+
+Package: libwlroots-0.19-examples
+Source: wlroots
+Version: 0.19.0-0deepin2
+Architecture: amd64
+Maintainer: Sway and related packages team <team+swaywm@tracker.debian.org>
+Installed-Size: 413
+Depends: libc6 (>= 2.34), libcairo2 (>= 1.2.4), libegl1, libgles2, libwayland-client0 (>= 1.23.1), libwayland-egl1 (>= 1.23.1), libwayland-server0 (>= 1.23.1), libwlroots-0.19 (>= 0.19.0), libxkbcommon0 (>= 0.5.0)
+Homepage: https://gitlab.freedesktop.org/wlroots/wlroots/
+Priority: optional
+Section: libs
+Filename: pool/main/w/wlroots/libwlroots-0.19-examples_0.19.0-0deepin2_amd64.deb
+Size: 68856
+SHA256: 91e79b2a436a9e874bbbed8152e2b9ed0f57cea6d0b61de9bc0ca4636399e99b
+SHA1: 37aa8d58c9bd46218799bf7f169cf24c4092a098
+MD5sum: c731943231f3e4b8bd643de3b5f6acd4
+Description: Modular wayland compositor library - binaries
+ wlroots is a set of pluggable, composable modules to build a Wayland
+ composior.
+ .
+ This package contains various examples on how to use wlroots.
+
+Package: libwlroots-0.19-examples-dbgsym
+Source: wlroots
+Version: 0.19.0-0deepin2
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Sway and related packages team <team+swaywm@tracker.debian.org>
+Installed-Size: 461
+Depends: libwlroots-0.19-examples (= 0.19.0-0deepin2)
+Priority: optional
+Section: debug
+Filename: pool/main/w/wlroots/libwlroots-0.19-examples-dbgsym_0.19.0-0deepin2_amd64.deb
+Size: 134968
+SHA256: b84336d0a2bff932b44e3168a355c71abefbfef9eb42c66f5f65dd6bde5e620b
+SHA1: bc065e34d8ed73be302fe2c858f321e9c08b1a74
+MD5sum: a5a107b5248bafbdc743c5707deeffaf
+Description: debug symbols for libwlroots-0.19-examples
+Build-Ids: 101411bc6d67f08fb6728c1b3be8a2ab9903a2f9 1d207f4467dbf2322242d39e2b01d93fa89e0362 26b6b09ac103271347f969f4de277f9598260b18 50e3a6d85b3293ce034fd58ce98e9dc419e0fc68 6e45a8b5bf6d9908908993bc53af62761d399e85 7bae71bc29ec51216a869449002a376ba1086ef7 ac362166d83f98b65a969b907b7468c66c97ba35 b6d5b58b1cf8c4619d434671becbb8b0f4450efc c6cc65bad9a84148850c859254d81d8759124fa9 ed94097c89fa4175b26f8f26c7f71072f0a96b36
+
+Package: qml6-module-qtquick-controls2-styles-chameleon
+Source: dtkdeclarative
+Version: 6.7.54
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 127
+Depends: libc6 (>= 2.14), libgcc-s1 (>= 3.0), libqt6core6t64 (>= 6.11.2), libqt6qml6 (>= 6.6.0), libqt6quickcontrols2-6 (>= 6.6.0), libstdc++6 (>= 5), qt6-declarative-private-abi (= 6.11.2), qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtquick-shapes, qml6-module-qt5compat-graphicaleffects, qml6-module-qtqml-workerscript, qml6-module-qtquick-templates, qml6-module-qtquick-effects, libdtk6declarative (= 6.7.54)
+Homepage: http://www.deepin.org
+Priority: optional
+Section: libs
+Filename: pool/main/d/dtkdeclarative/qml6-module-qtquick-controls2-styles-chameleon_6.7.54_amd64.deb
+Size: 24672
+SHA256: ffbd52f4a7c4bf3d4e9e99bb11421637acf7586a55a1e0b72459e71a8eba3eea
+SHA1: 81d061ceb337975a16e83aebf4f6ab653507a41c
+MD5sum: 45430fff84883a322d0e45841dc83eb2
+Description: Deepin Tool Kit Qt Quick Controls 2 QML module (DTK6 with Qt6)
+ Dtkdeclarative is base library of Deepin Qt/QtQuick applications.
+ .
+ This package is built for DTK6 with Qt6.
+
+Package: qml6-module-qtquick-controls2-styles-chameleon-dbgsym
+Source: dtkdeclarative
+Version: 6.7.54
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Shanshan Ye <yeshanshan@uniontech.com>
+Installed-Size: 610
+Depends: qml6-module-qtquick-controls2-styles-chameleon (= 6.7.54)
+Priority: optional
+Section: debug
+Filename: pool/main/d/dtkdeclarative/qml6-module-qtquick-controls2-styles-chameleon-dbgsym_6.7.54_amd64.deb
+Size: 592268
+SHA256: d9d6d6d4f037494cea11ea3ce5b8c613721b82e555ffbd4b2f570f6280dfa0f8
+SHA1: b3cfa369e26e9f953d0edfd0be9f99af97dd9be1
+MD5sum: bc8a973a9b4addb2565adc0985cb8ada
+Description: debug symbols for qml6-module-qtquick-controls2-styles-chameleon
+Build-Ids: f9b95bb286f92cf6da64e5c5b44e2b6f8f1e7459
+
+Package: qwlroots
+Version: 0.5.4
+Architecture: amd64
+Maintainer: rewine <lhongxu@outlook.com>
+Installed-Size: 1932
+Depends: libwlroots-0.19-dev
+Replaces: libqwlroots1
+Multi-Arch: same
+Homepage: https://github.com/vioken/qwlroots.git
+Priority: optional
+Section: libdevel
+Filename: pool/main/q/qwlroots/qwlroots_0.5.4_amd64.deb
+Size: 138380
+SHA256: e117bd2bd06f50e80adc780948369b339818ac0fc259878c022b99cef328aaaa
+SHA1: 0f49817161ca01ee998cf6498781d2e31c2486dc
+MD5sum: 0460962f55055d6fe7395ec301031b61
+Description: Qt and QML bindings for wlroots
+  qwlroots is a binding of wlroots, which provides a Qt style development interface.
+ It aims to simplify wlroots API calling methods with Qt, and serve the needs of
+ calling wlroots within Qt projects.
+ .
+ This package contains the development headers and static library.
+
+Package: sea-icon-theme
+Source: deepin-icon-theme
+Version: 2026.02.27
+Architecture: all
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Installed-Size: 6224
+Conflicts: deepin-icon-theme (<< 15.12.65)
+Homepage: https://github.com/linuxdeepin/deepin-icon-theme
+Priority: optional
+Section: x11
+Filename: pool/main/d/deepin-icon-theme/sea-icon-theme_2026.02.27_all.deb
+Size: 2013244
+SHA256: a11d2942875aa4838242f3fbf22f3a967707f9becea08e1f3d8a1aa7030fd857
+SHA1: 41375a0f00635674047568837ec3416ee28ea932
+MD5sum: b5177dd9c4f2158a90f7f68ff4c1e070
+Description: Deepin Sea Icons
+ This package is DeepinIconTheme Sea
+
+Package: treeland
+Version: 0.12.1
+Architecture: amd64
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 19786
+Depends: qml6-module-qtquick-layouts, qml6-module-qtquick-effects, qml6-module-qtquick-particles, treeland-data (= 0.12.1), xwayland, accountsservice, treeland-wallpaper-factory, libc6 (>= 2.35), libddm (>= 0.5.0), libdisplay-info3 (>= 0.3.0), libdrm2 (>= 2.4.122), libdtk6core (>= 6.7.54), libdtk6gui (>= 6.7.54), libdtk6systemsettings (>= 6.6.22), libegl1, libgbm1 (>= 21.1.0), libgcc-s1 (>= 3.0), libgles2, libinput10 (>= 1.26.0), liblcms2-2 (>= 2.6), libliftoff0 (>= 0.4.1), libopengl0, libpam0g (>= 0.99.7.1), libpixman-1-0 (>= 0.44.0), libqt6concurrent6 (>= 6.8.0), libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.2), libqt6gui6 (>= 6.8.2), libqt6httpserver6 (>= 6.8.2), libqt6network6 (>= 6.8.2), libqt6qml6 (>= 6.10.2), libqt6quick6 (>= 6.8.2), libqt6quickcontrols2-6 (>= 6.8.0), libqt6quicktemplates2-6 (>= 6.8.0), libqt6remoteobjects6 (>= 6.7.2), libqt6waylandclient6 (>= 6.10.2), libqt6websockets6 (>= 6.6.0), libseat1 (>= 0.5.0), libstdc++6 (>= 14), libsystemd0 (>= 254), libudev1 (>= 183), libvulkan1 (>= 1.2.131.2), libwayland-client0 (>= 1.23.1), libwayland-server0 (>= 1.24.0), libxau6 (>= 1:1.0.11), libxcb-composite0, libxcb-dri3-0 (>= 1.13), libxcb-errors0 (>= 1.0.1), libxcb-ewmh2 (>= 0.4.2), libxcb-icccm4 (>= 0.4.2), libxcb-present0, libxcb-randr0 (>= 1.3), libxcb-render-util0, libxcb-render0, libxcb-res0 (>= 1.10), libxcb-shape0, libxcb-shm0 (>= 1.10), libxcb-xfixes0 (>= 1.15), libxcb-xinput0 (>= 1.17.0), libxcb1 (>= 1.11.1), libxkbcommon0 (>= 0.5.0), qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2), qt6-remoteobjects-private-abi (= 6.11.2)
+Recommends: ddm (>= 0.5.0)
+Conflicts: libwaylib, qwlroots
+Replaces: libwaylib, qwlroots
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/treeland.git
+Priority: optional
+Section: dde
+Filename: pool/main/t/treeland/treeland_0.12.1_amd64.deb
+Size: 4048008
+SHA256: 9b9708565d1ef231b693627dde57b05c397bed96618e29895f60a11f25a78347
+SHA1: 3efc77353c9aa156097ccf6dc4a57c77f3f6655b
+MD5sum: 47e5c7bb552ba071026743eea3dcbd59
+Description: a Wayland compositor based on wlroots and QML, designed with an attractive and elegant appearance.
+
+Package: treeland-data
+Source: treeland
+Version: 0.12.1
+Architecture: all
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 107
+Homepage: https://github.com/linuxdeepin/treeland.git
+Priority: optional
+Section: dde
+Filename: pool/main/t/treeland/treeland-data_0.12.1_all.deb
+Size: 29380
+SHA256: 9ccc8702afab00536938b20b5dfd875bd63ae6d228dd7ddbb20353deae8512e3
+SHA1: 24b2fa98c4d29757476bb68888faedb2d59bdce4
+MD5sum: 1d511eec24775a1ce2b0256799caa9f3
+Description: data files of treeland.
+
+Package: treeland-dbgsym
+Source: treeland
+Version: 0.12.1
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 95122
+Depends: treeland (= 0.12.1)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/t/treeland/treeland-dbgsym_0.12.1_amd64.deb
+Size: 90537704
+SHA256: 9b14b9bfa8cd17f6fe77562a65caf6e986a982dfe1f77dff0d8881202c7e9393
+SHA1: 736a7d448aad22f7c1a6f4499f6561620146de1b
+MD5sum: 3dd0b4ec976916219d03531ca0e44265
+Description: debug symbols for treeland
+Build-Ids: 248183eb2c4a2cf927c4d8281bf9d79c6a3be2d8 3591f926b150e3c01a9a624c0bd6ac9553da4ac7 3b6fe4899597835418abc736e86f210dca7f02c8 3cd8d085199db2e358d8ff1ff6ea208f2640ae2e 428d485407fdc5219bbb0a532264774623b3d8f9 6722acb369be60536835c92d9e165df9c2171665 6b435ebb7dc19cb13acdb44373009a4c01186126 9c3b32f49d5f10d35a48a85faf5f13155867272b adc1002960da9b6ae8bf78ba9ea4b2eaae6b53ac ce6657c59b7f29e37d6ecdb010b9a5edc1239019 fd94cff3afee2db87072df449ca09e3bcf8b8ce6
+
+Package: treeland-examples
+Source: treeland
+Version: 0.12.1
+Architecture: amd64
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 2258
+Depends: libc6 (>= 2.38), libegl1, libgcc-s1 (>= 3.0), libgl1, libopengl0, libqt6core6t64 (>= 6.11.2), libqt6dbus6 (>= 6.8.0), libqt6gui6 (>= 6.11.2), libqt6qml6 (>= 6.10.2), libqt6quick6 (>= 6.8.0), libqt6quickcontrols2-6 (>= 6.8.0), libqt6waylandclient6 (>= 6.10.2), libqt6widgets6 (>= 6.8.0), libstdc++6 (>= 14), libwayland-client0 (>= 1.23.1), libxcb1, qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2), treeland (>= 0.12.1)
+Multi-Arch: same
+Homepage: https://github.com/linuxdeepin/treeland.git
+Priority: optional
+Section: dde
+Filename: pool/main/t/treeland/treeland-examples_0.12.1_amd64.deb
+Size: 599544
+SHA256: 3fb62099d112374bae49717fa591a9e3cabf2bb188b26261145bd220b79760e8
+SHA1: 26cd3d412781185a2634c22a35ec4b7fc58aca7a
+MD5sum: 5edd2c26d07416d61d4495cf7c54ff0a
+Description: examples for treeland.
+
+Package: treeland-examples-dbgsym
+Source: treeland
+Version: 0.12.1
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 12026
+Depends: treeland-examples (= 0.12.1)
+Multi-Arch: same
+Priority: optional
+Section: debug
+Filename: pool/main/t/treeland/treeland-examples-dbgsym_0.12.1_amd64.deb
+Size: 10710480
+SHA256: 4315ae8fb281b7efadf536e8b0926fdee3bf864fadd31410593eaf5dc4405f17
+SHA1: 5d66e386a91ebd1ae29cf9f42133ea149a24b1c6
+MD5sum: 4e2fc4b9e488d28c7506c948f9be799c
+Description: debug symbols for treeland-examples
+Build-Ids: 00382aca3f0d053a291c8cc64217aeaf6943f30a 09c0476be1d5d5afc47cb71abc7485fc1f7dee9e 39de8b276194256bf8aaaa1fa1f25e035cf3de9d 3d3e4d53b2d53db707ab17f8963ce07c48ddc1ac 4996c0e45d2f632964213bca28cf60a15cde0143 4af0744343369ef8e5642c6ae165ad3d609b3554 59a12e28bbdec2d2f77bb39b9d30559ace240759 60fdc4ac06fa94c3062b2091e79f7233b43ff72e 611a96e49583815dde2098cfd77a8136cf46bb26 67f9bd1bcbd4f587dc020a9c82a9b62908a3d43a 6ebc654b588a0d96727e289ae103f40502a42f78 7b114a07b960c5e92da2c1345662ca1ff4e96457 a6ccd20a57f4cedf59e5b21943b783b014fd51d8 aed3e104c9ee0227c7556e2ef8079cbf004027ff b0416c4e5e5b7a8ee81e554051f7d342c24bd94b b3aeb34ed55cb4345604a6fa348f7ccd3fc13c02 b4e8196c18f2b9d5b086d264c141209b26448c03 b594cc7c4247e338d121add576a96d0fd9584be4 b6967b6e4903bc5824c93347386a563cc33f8f20 ce0a04e7be54c12510042f9ee66d5054810d2f76 d468403ec7d756b2d6f4c0dfbe3051b95f6654c8 dc12b40ca13931cd067d84690e5630528f072c9e dc7369cce621314f31493753a6e4cfdcc31ab0d6 e2ae2102ae8863f3e348bfa346099b24cefc071b e5f20bc89ab813914e85cbe41c15b6329e700b9a ee82df0af403c205fa1782a9823e6df6c98f068c ffee7e2c80533544e6e41866c126ee013ac4e319
+
+Package: treeland-protocols
+Version: 0.9.1
+Architecture: all
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 556
+Homepage: https://github.com/linuxdeepin/treeland-protocols
+Priority: optional
+Section: dde
+Filename: pool/main/t/treeland-protocols/treeland-protocols_0.9.1_all.deb
+Size: 79212
+SHA256: 6147a4831e07b2edcdaef5816a0481b6a0da82b44106e04310388183a82aa6b8
+SHA1: c82694daaacb0c14ce50c96061d2b6887b23d3db
+MD5sum: 8cfdca2be562710156362a857b38b414
+Description: wayland protocols of treeland.
+
+Package: treeland-wallpaper-factory
+Source: treeland
+Version: 0.12.1
+Architecture: amd64
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 232
+Depends: libc6 (>= 2.34), libdtk6core (>= 6.7.54), libgcc-s1 (>= 3.0), libmpv2 (>= 0.29), libqt6core6t64 (>= 6.11.2), libqt6gui6 (>= 6.8.0), libqt6opengl6 (>= 6.8.0), libqt6qml6 (>= 6.8.0), libqt6quick6 (>= 6.8.0), libqt6waylandclient6 (>= 6.10.2), libstdc++6 (>= 5.2), libwayland-client0 (>= 1.23.1), qt6-base-private-abi (= 6.11.2), qt6-declarative-private-abi (= 6.11.2), treeland (= 0.12.1)
+Homepage: https://github.com/linuxdeepin/treeland.git
+Priority: optional
+Section: dde
+Filename: pool/main/t/treeland/treeland-wallpaper-factory_0.12.1_amd64.deb
+Size: 79864
+SHA256: fb783d9daf509c55756f1951f3c5ca883b46f1222a35a433c3dcce26f0c4e232
+SHA1: d18e58a90a3333556e571b96e91bf901f6ecf1dd
+MD5sum: 21a145bd1e5ffb35363ca23670d02489
+Description: Treeland wallpaper factory client.
+
+Package: treeland-wallpaper-factory-dbgsym
+Source: treeland
+Version: 0.12.1
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 2303
+Depends: treeland-wallpaper-factory (= 0.12.1)
+Priority: optional
+Section: debug
+Filename: pool/main/t/treeland/treeland-wallpaper-factory-dbgsym_0.12.1_amd64.deb
+Size: 2224556
+SHA256: f1bd296dc2c05d5964843d65b6a475cbf07981f2e3411883bd9199768056e410
+SHA1: b30fd7ab8b3de4efa8c13e91fd5b1527efe24e02
+MD5sum: 3345c89ca470f2ef123951e257c9ed53
+Description: debug symbols for treeland-wallpaper-factory
+Build-Ids: 9628de134b6617746b9456a1ab568df06e2e960f
+
+Package: treeland-wayland-session
+Source: treeland
+Version: 0.12.1
+Architecture: all
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 26
+Depends: treeland (= 0.12.1)
+Homepage: https://github.com/linuxdeepin/treeland.git
+Priority: optional
+Section: dde
+Filename: pool/main/t/treeland/treeland-wayland-session_0.12.1_all.deb
+Size: 16172
+SHA256: bb16f7593e0d1fa4ec74b6af5c2dbdf0e8e85d6d37218312d0588e09adddb8c3
+SHA1: 61bf476bd34d841e6941a80c32e685f5eb45d695
+MD5sum: 162f18bfcc2222852d3197cab8e13606
+Description: treeland user session files of treeland.
+
+Package: wlr-protocols
+Version: 0.0+git20231016-0deepin
+Architecture: amd64
+Maintainer: rewine <luhongxu@deepin.org>
+Installed-Size: 124
+Homepage: https://gitlab.freedesktop.org/wlroots/wlr-protocols
+Priority: optional
+Section: x11
+Filename: pool/main/w/wlr-protocols/wlr-protocols_0.0+git20231016-0deepin_amd64.deb
+Size: 20656
+SHA256: 00cd21a888ccc5b349e5ad696b945880f201edeb027aaeefb4761747e8770fb4
+SHA1: 3a7ec8f3f9727462dc5991dfbaaa1dacd673040b
+MD5sum: 7dc0a57ac49f38674480511b6fd12cfa
+Description: Wayland protocols designed for use in wlroots
+  wlr-protocols contains Wayland protocols that add functionality not
+  available in the Wayland core protocol, and specific to wlroots-based
+  compositors. Such protocols either add completely new functionality, or
+  extend the functionality of some other protocol either in Wayland core,
+  or some other protocol in wayland-protocols.
+
