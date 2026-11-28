@@ -76,6 +76,20 @@ cat > "$APPEARANCE_CFG/icon_theme.json" <<'EOF'
   }
 }
 EOF
+# Sea 的上游继承链指向本镜像未安装的 deepin/Papirus，改用已安装的主题。
+SEA_INDEX=/usr/share/icons/Sea/index.theme
+if [ -f "$SEA_INDEX" ]; then
+  sed -i 's/^Inherits=.*/Inherits=bloom,Adwaita,hicolor/' "$SEA_INDEX"
+fi
+for gtk_dir in /etc/gtk-3.0 /etc/gtk-4.0; do
+  mkdir -p "$gtk_dir"
+  cat > "$gtk_dir/settings.ini" <<'EOF'
+[Settings]
+gtk-icon-theme-name=Sea
+gtk-theme-name=deepin
+EOF
+done
+
 # DTK 的 DCI provider 固定回落到 hicolor，需要预先放入 Dock 必需图标。
 install -d /usr/share/icons/hicolor/48x48/apps /usr/share/icons/hicolor/48x48/places
 cp -f /usr/share/icons/Sea/apps/scalable/preferences-system.svg \
@@ -88,6 +102,56 @@ cp -f /usr/share/icons/Adwaita/scalable/places/user-trash.svg \
   /usr/share/icons/hicolor/48x48/places/
 cp -f /usr/share/icons/Sea/apps/scalable/dde-file-manager.svg \
   /usr/share/icons/hicolor/48x48/apps/
+
+# 文件管理器侧栏使用 *-symbolic 名称；Sea 提供的是普通彩色 SVG。
+for size in 16 48; do
+  install -d "/usr/share/icons/hicolor/${size}x${size}/places"
+  for pair in \
+    user-home:user-home-symbolic \
+    folder-desktop:user-desktop-symbolic \
+    folder-videos:folder-videos-symbolic \
+    folder-music:folder-music-symbolic \
+    folder-pictures:folder-pictures-symbolic \
+    folder-documents:folder-documents-symbolic \
+    folder-downloads:folder-downloads-symbolic \
+    network-server:network-server-symbolic; do
+    src="${pair%%:*}"
+    dst="${pair#*:}"
+    cp -f "/usr/share/icons/Sea/places/scalable/${src}.svg" \
+      "/usr/share/icons/hicolor/${size}x${size}/places/${dst}.svg"
+  done
+done
+
+for icon in document-open-recent-symbolic user-trash-symbolic computer-symbolic; do
+  src="$(find /usr/share/icons/bloom -type f -name "${icon}.svg" -print -quit)"
+  [ -n "$src" ] || continue
+  for size in 16 48; do
+    cp -f "$src" "/usr/share/icons/hicolor/${size}x${size}/places/${icon}.svg"
+  done
+done
+
+# DFM6 内置 SVG 未由上游软件包安装到图标主题。
+install -d /usr/share/icons/hicolor/16x16/actions /usr/share/icons/hicolor/scalable/actions
+for icon in /tmp/file-manager-icons/*.svg; do
+  [ -f "$icon" ] || continue
+  install -m 0644 "$icon" /usr/share/icons/hicolor/16x16/actions/
+  install -m 0644 "$icon" /usr/share/icons/hicolor/scalable/actions/
+done
+if [ -f "$SEA_INDEX" ]; then
+  install -d /usr/share/icons/Sea/actions/16 /usr/share/icons/Sea/actions/scalable
+  for icon in /tmp/file-manager-icons/*.svg; do
+    [ -f "$icon" ] || continue
+    install -m 0644 "$icon" /usr/share/icons/Sea/actions/16/
+    install -m 0644 "$icon" /usr/share/icons/Sea/actions/scalable/
+  done
+  for dir in actions/16 actions/scalable; do
+    case ",$(sed -n 's/^Directories=//p' "$SEA_INDEX")," in
+      *",$dir,"*) ;;
+      *) sed -i "s#^Directories=.*#&,$dir#" "$SEA_INDEX" ;;
+    esac
+  done
+  gtk-update-icon-cache -f -t /usr/share/icons/Sea
+fi
 gtk-update-icon-cache -f -t /usr/share/icons/hicolor
 
 echo ">> Deepin 文件管理器：默认关联、搜索与主题"

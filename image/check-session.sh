@@ -93,6 +93,43 @@ if dpkg-query -W -f='${Status}' dde-file-manager 2>/dev/null | grep -q 'install 
     && [ -f /usr/share/applications/dde-file-manager.desktop ] \
     && xdg-mime query default inode/directory 2>/dev/null | grep -qx 'dde-file-manager.desktop'; then
   FILE_MANAGER_OK=1
+  for icon in \
+    user-home-symbolic user-desktop-symbolic folder-videos-symbolic \
+    folder-music-symbolic folder-pictures-symbolic folder-documents-symbolic \
+    folder-downloads-symbolic document-open-recent-symbolic user-trash-symbolic \
+    computer-symbolic network-server-symbolic dfm_viewlist_icons \
+    dfm_viewlist_details dfm_viewlist_tree dfm_viewoption dfm_sortby_arrange \
+    dfm_view_filter dfm_search_button; do
+    if ! find /usr/share/icons/hicolor -type f -name "${icon}.svg" -print -quit \
+        | grep -q .; then
+      echo "Missing file manager icon: $icon"
+      FILE_MANAGER_OK=0
+      break
+    fi
+  done
+  for icon in \
+    dfm_viewlist_icons dfm_viewlist_details dfm_viewlist_tree dfm_viewoption \
+    dfm_sortby_arrange dfm_view_filter dfm_search_button dfm_pin dfm_close \
+    dfm_close_round_normal dfm_vault dfm_recent dfm_success dfm_fail \
+    dfm_task_start dfm_task_pause dfm_task_stop; do
+    for path in \
+      "/usr/share/icons/hicolor/scalable/actions/${icon}.svg" \
+      "/usr/share/icons/Sea/actions/scalable/${icon}.svg"; do
+      if [ ! -s "$path" ]; then
+        echo "Missing file manager toolbar icon: $path"
+        FILE_MANAGER_OK=0
+        break
+      fi
+    done
+  done
+  if ! grep -q 'actions/scalable' /usr/share/icons/Sea/index.theme 2>/dev/null; then
+    echo "Sea icon theme does not index scalable actions"
+    FILE_MANAGER_OK=0
+  fi
+  if ! grep -qE '^Inherits=([^,]*,)*bloom(,|$)' /usr/share/icons/Sea/index.theme 2>/dev/null; then
+    echo "Sea icon theme does not inherit bloom"
+    FILE_MANAGER_OK=0
+  fi
 fi
 
 if dpkg-query -W -f='${Status}' deepin-wallpapers 2>/dev/null | grep -q 'install ok installed' \
